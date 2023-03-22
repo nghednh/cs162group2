@@ -30,5 +30,19 @@ struct Semester{
     Date startDate, endDate;
     Course* courseHead;
 };
+struct Course {
+	//detail of a course
+	string ID;
+	string name;
+	string teacherName;
+	int numberCredit;
+	int maxStudent;
+	Date d;
+
+	//next node of course in a semester of a school year
+	Course* courseNext = NULL;
+};
+
+
 
 
