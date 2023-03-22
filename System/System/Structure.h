@@ -12,6 +12,19 @@ struct Staff {
 	string password;
 	Staff* staffNext;
 };
+
+struct Student {
+	int No;
+	int StuID;
+	string firstName;
+	string lastName;
+	string gender;
+	string socialID;
+	string username;
+	string password;
+	Student* stuNext = NULL;
+};
+
 struct Class{
     string name;
     int numStu;
