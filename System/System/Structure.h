@@ -3,11 +3,13 @@
 #include <iostream>
 
 using namespace std;
+
 struct Date{
 	int day;
 	int month;
 	int year;
 };
+
 struct Staff {
 	string name;
 	string username;
@@ -34,31 +36,32 @@ struct Class{
     Student* stuHead;
 	Class* classNext;
 };
+
 struct SchoolYear{
-    int year;
+	string name; //ex: 2022-2023
     Class* classHead;
     SchoolYear* sYearNext;
 	Semester sm[3];
 };
+
 struct Semester{
-	//Semester 1, 2 or 3?
-    int num;
-	//Start date and end date
-    Date startDate, endDate;
-    Course* courseHead;
+	Date start;
+	Date end;
+	bool state; //if 1 - accessible
+	Course* courseHead;
 };
+
 struct Course {
-	//detail of a course
 	string ID;
 	string name;
+	string className;
 	string teacherName;
 	int numCredit;
 	int maxStudent = 50;
 	int numStudent;
-	Date d;
+	string day; //(MON / TUE / WED / THU / FRI / SAT)
+	string session; //(S1(7:30), S2(09:30), S3(13:30), S4(15:30)
 	Student* stuHead;
-
-	//next node of course in a semester of a school year
 	Course* courseNext;
 };
 
