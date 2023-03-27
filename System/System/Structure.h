@@ -1,5 +1,7 @@
 #pragma once
 #include <string>
+#include <iostream>
+
 using namespace std;
 struct Date{
 	int day;
@@ -35,6 +37,7 @@ struct SchoolYear{
     int year;
     Class* classHead;
     SchoolYear* sYearNext;
+	Semester sm[3];
 };
 struct Semester{
 	//Semester 1, 2 or 3?
@@ -48,14 +51,14 @@ struct Course {
 	string ID;
 	string name;
 	string teacherName;
-	int numberCredit;
-	int maxStudent;
+	int numCredit;
+	int maxStudent = 50;
+	int numStudent;
 	Date d;
 
 	//next node of course in a semester of a school year
-	Course* courseNext = NULL;
+	Course* courseNext;
 };
-
 
 
 
