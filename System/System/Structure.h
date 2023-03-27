@@ -21,6 +21,7 @@ struct Student {
 	string firstName;
 	string lastName;
 	string gender;
+	Date dateOfBirth;
 	string socialID;
 	string username;
 	string password;
@@ -55,6 +56,7 @@ struct Course {
 	int maxStudent = 50;
 	int numStudent;
 	Date d;
+	Student* stuHead;
 
 	//next node of course in a semester of a school year
 	Course* courseNext;
