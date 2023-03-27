@@ -16,8 +16,8 @@ struct Staff {
 };
 
 struct Student {
-	int No;
-	int StuID;
+	string No;
+	string StuID;
 	string firstName;
 	string lastName;
 	string gender;
