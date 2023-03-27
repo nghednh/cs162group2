@@ -25,7 +25,7 @@ void viewListCourses(Course* courseHead)
 	}
 }
 
-void viewListStudentsInCourse(Course* courseCur);	// lop sinh hoat
+void viewListStudentsInCourse(Course* courseCur)	// lop sinh hoat
 {
 	Student* stuCur = courseCur->stuHead;
 	while (stuCur != NULL)
