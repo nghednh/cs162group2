@@ -1,9 +1,11 @@
+#include "Structure.h"
+
 void viewListclasses(SchoolYear* sYearHead)
 {
-	Node* sYearCur = sYearHead;
+	SchoolYear* sYearCur = sYearHead;
 	while (sYearCur != NULL)
 	{
-		Node* classCur = sYearCur->classHead;
+		Class* classCur = sYearCur->classHead;
 		while (classCur != NULL)
 		{
 			cout << classCur->name << endl;
@@ -15,7 +17,7 @@ void viewListclasses(SchoolYear* sYearHead)
 
 void viewListCourses(Course* courseHead)
 {
-	Node* courseCur = courseHead;
+	Course* courseCur = courseHead;
 	while (courseCur != NULL)
 	{
 		cout << courseCur->name << endl;
@@ -25,7 +27,7 @@ void viewListCourses(Course* courseHead)
 
 void viewListStudentsInCourse(Course* courseCur);	// lop sinh hoat
 {
-	Node* stuCur = courseCur->stuHead;
+	Student* stuCur = courseCur->stuHead;
 	while (stuCur != NULL)
 	{
 		cout << stuCur->lastName << " " << stuCur->firstName << endl;
