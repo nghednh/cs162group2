@@ -21,10 +21,8 @@
     <ClCompile Include="View.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Structure.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClCompile Include="Source1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

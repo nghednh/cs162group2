@@ -1,13 +1,13 @@
-#include "structure.h"
+#include "Structure.h"
 
 //SIPPLEMENTARY FUNCTIONS
 //to trim a string
-void trimS(string& s) { 
+void trimS(string& s) { //to trim a string
 	s = s.substr(0, s.length() - 1);
 }
 
 //check if the course ID entered is appropriate or not
-bool trueOrFalse(Course* course, string s) { 
+bool trueOrFalse(Course* course, string s) { //check if the course ID entered is appropriate or not
 	while (course) {
 		if (s == course->ID) return 1;
 		course = course->courseNext;
@@ -16,13 +16,13 @@ bool trueOrFalse(Course* course, string s) {
 }
 
 //student register any course, his/her name will be exported to the CSV file
-void importStuToCourseCSV(SchoolYear* sy, string name, Student* stu) { 
+void importStuToCourseCSV(SchoolYear* sy, string name, Student* stu) { //student register any course, his/her name will be exported to the CSV file
 	ofstream ft(name + "_dsdkhp.txt", ofstream::app); //danh sach dang ky hoc phan
-	ft << sy->name << " " << stu->stuClass->name << " " << stu->StuID << endl;
+	ft << sy->name << " " << stu->className << " " << stu->StuID << endl;
 }
 
 //Add Student to a Course
-void addStuToCourse(Course* course, Student* s) { 
+void addStuToCourse(Course* course, Student* s) { //Add Student to a Course
 	StuInCourse* tmp = new StuInCourse();
 	tmp->stuInClass = s;
 	tmp->stuNext = course->stuHead;
@@ -62,7 +62,8 @@ void Staff::importScoreboard(Course* course) {
 }
 
 //21: View the scoreboard of a course
-void Staff::viewScoreboard(StuInCourse* s) {
+void Staff::viewScoreboard(Course* course) {
+	StuInCourse* s = course->stuHead;
 	while (s) {
 		cout << s->stuInClass->StuID << " " << s->stuInClass->firstName << " " << s->stuInClass->lastName << " " << s->totalM << " " << s->finalM << " " << s->midM << " " << s->otherM << endl;
 		s = s->stuNext;
@@ -71,7 +72,7 @@ void Staff::viewScoreboard(StuInCourse* s) {
 
 //22: Update a student's result.
 void Staff::updateRes(Course* course) {
-	ifstream fin(course->ID + "mark.txt"); //Read file from 20
+	ifstream fin(course->ID + "mark.txt"); //Read file from "20"
 
 	int cnt = 0;
 	string s;
@@ -107,25 +108,25 @@ void Staff::updateRes(Course* course) {
 }
 
 //24: View his/her scoreboard
-void Student::viewScoreBoard(SchoolYear* sy, Student* s, int numSm) {
-	Course* tmp = sy->sm[numSm].courseHead;
+void viewScoreBoard(Course* course, Student* s, int numSm) {
 	cout << "Scoreboard of " << s->firstName << " " << s->lastName << ": " << endl;
-	while (tmp) {
-		StuInCourse* tmp1 = tmp->stuHead;
-		while (tmp1 && tmp1->stuInClass != s) {
-			tmp1 = tmp1->stuNext;
+	while (course) {
+		StuInCourse* tmp = course->stuHead;
+		while (tmp && tmp->stuInClass != s) {
+			tmp = tmp->stuNext;
 		}
-		if (tmp1 != NULL) cout << tmp->name << " " << tmp1->totalM << " " << tmp1->finalM << " " << tmp1->midM << " " << tmp1->otherM;
-		tmp = tmp->courseNext;
+		if (tmp != NULL) cout << course->className << " " << tmp->totalM << " " << tmp->finalM << " " << tmp->midM << " " << tmp->otherM;
+		course = course->courseNext;
 	}
 }
 
 //From DSSV -> Add Student 
-void importStuFromCSV(Student*& p) {
-	ifstream fin("demo.txt");
+void Staff::importStuFromCSV(Class* c) {
+	ifstream fin(c->name + "dssv.txt");
 
-	if (p == NULL) p = new Student();
-	Student* tmp = p;
+	Student*& stu = c->stuHead;
+	if (stu == NULL) stu = new Student();
+	Student* tmp = stu;
 
 	int cnt = 0;
 	string s;
@@ -159,7 +160,7 @@ void importStuFromCSV(Student*& p) {
 }
 
 //Student can select Courses that are available for the semester
-bool Student::selectCourse(SchoolYear* sy, Student* stu, int numSm) {
+bool selectCourse(SchoolYear* sy, Student* stu, int numSm) {
 	if (numSm < 1 || numSm >3 || sy->sm[numSm].state == 0) return 0;
 
 	//Print out all courses for the student to choose
@@ -184,10 +185,10 @@ bool Student::selectCourse(SchoolYear* sy, Student* stu, int numSm) {
 		else cout << "Incorrect ID";
 	}
 	return 1;
-}
+} //not done yet
 
 //From DSDKHP -> Add Student to a Course
-void createCourseFromCSV(SchoolYear* sy, int numSm) {
+void Staff::createCourseFromCSV(SchoolYear* sy, int numSm) {
 	Course* tmp = sy->sm[numSm].courseHead;
 
 	while (tmp) {

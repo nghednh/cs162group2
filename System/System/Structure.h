@@ -11,20 +11,6 @@ struct Date {
 	string year;
 };
 
-struct Staff {
-	//elements
-	string name;
-	string username;
-	string password;
-	Staff* staffNext;
-
-	//functions
-	void exportListStuToCSV(Course* course);
-	void importScoreboard(Course* course);
-	void viewScoreboard(StuInCourse* s);
-	void updateRes(Course* p);
-};
-
 struct Student {
 	//detail
 	string No;
@@ -36,47 +22,14 @@ struct Student {
 	string socialID;
 	string username;
 	string password;
+	string className;
 
 	//node
 	Student* stuNext = NULL;
-	Class* stuClass = NULL;
 
-	//function
-	void viewScoreBoard(SchoolYear* sy, Student* p, int numSm);
-	bool selectCourse(SchoolYear* sy, Student* stu, int numSm);
-};
-
-struct Class {
-	//detail
-	string name;
-	int numStu;
-
-	//node
-	Student* stuHead;
-	Class* classNext;
-};
-
-struct SchoolYear {
-	//detail
-	string name; //ex: 2022-2023
-
-	//node
-	Class* classHead;
-	SchoolYear* sYearNext;
-
-	//array
-	Semester sm[3];
-};
-
-struct Semester {
-	//detail
-	Date start;
-	Date end;
-	bool state; //if 1 - accessible
-	int num; //Semester 1 or 2 or 3?
-
-	//node
-	Course* courseHead;
+	//function still bug
+	//void viewScoreBoard(SchoolYear* sy, Student* p, int numSm);
+	//bool selectCourse(SchoolYear* sy, Student* stu, int numSm);
 };
 
 struct StuInCourse {
@@ -107,4 +60,53 @@ struct Course {
 	//node
 	StuInCourse* stuHead;
 	Course* courseNext;
+};
+
+struct Class {
+	//detail
+	string name;
+	int numStu;
+
+	//node
+	Student* stuHead;
+	Class* classNext;
+};
+
+struct Semester {
+	//detail
+	Date start;
+	Date end;
+	bool state; //if 1 - accessible
+	int num; //Semester 1 or 2 or 3?
+
+	//node
+	Course* courseHead;
+};
+
+struct SchoolYear {
+	//detail
+	string name; //ex: 2022-2023
+
+	//node
+	Class* classHead;
+	SchoolYear* sYearNext;
+
+	//array
+	Semester sm[3];
+};
+
+struct Staff {
+	//elements
+	string name;
+	string username;
+	string password;
+	Staff* staffNext;
+
+	//functions
+	void importStuFromCSV(Class* c);
+	void createCourseFromCSV(SchoolYear* sy, int numSm);
+	void exportListStuToCSV(Course* course);
+	void importScoreboard(Course* course);
+	void viewScoreboard(Course* course);
+	void updateRes(Course* course);
 };

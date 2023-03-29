@@ -85,5 +85,3 @@ void changePassword(Student* stuCur, string newpass)
 {
 	stuCur->password = newpass;
 }
-
-void 
