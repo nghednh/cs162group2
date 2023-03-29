@@ -54,9 +54,10 @@ struct Course {
 	string teacherName;
 	int numCredit;
 	int maxStudent = 50;
-	int numStudent;
-	Date d;
+	int cntStudent;
+	string date;
 	Student* stuHead;
+	int session;
 
 	//next node of course in a semester of a school year
 	Course* courseNext;
