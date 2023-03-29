@@ -31,3 +31,24 @@ void inpYears(SchoolYear*& year) {
         }
     }
 }
+void inpCourses(Course*& course) {
+    Course* cur = course;
+    int n;
+    cin >> n;
+    while (n--) {
+        if (!course) {
+            course = new Course;
+            cur = course;
+        }
+        else {
+            cur->courseNext = new Course;
+            cur = cur->courseNext;
+        }
+        cin >> cur->ID;
+        cin.get();
+        getline(cin, cur->name);
+        cin >> cur->numCredit >> cur->maxStudent >> cur->cntStudent;
+        cin.get();
+        getline(cin, cur->teacherName);
+    }
+}
