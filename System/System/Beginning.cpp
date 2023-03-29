@@ -1,13 +1,14 @@
 #include "Structure.h"
 #include <iostream>
 #include <string.h>
+#include "Beginning.h"
 
 using namespace std;
 
 void inputDate(Date& datee) {
 	cin >> datee.day >> datee.month >> datee.year;
 }
-void inpYears(SchoolYear*& year) {
+void inputYear(SchoolYear*& year) {
     SchoolYear* cur = year = nullptr;
     int n;
     cin >> n;
@@ -31,7 +32,7 @@ void inpYears(SchoolYear*& year) {
         }
     }
 }
-void inpCourses(Course*& course) {
+void inputCourse(Course*& course) {
     Course* cur = course;
     int n;
     cin >> n;

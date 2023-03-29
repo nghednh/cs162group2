@@ -89,7 +89,7 @@ struct SchoolYear {
 
 	//node
 	Class* classHead;
-	SchoolYear* sYearNext;
+	SchoolYear* yearNext;
 
 	//array
 	Semester sm[3];
