@@ -10,22 +10,22 @@ void inputADate(Date d){
 }
 void createSemester(Semester s){
     cin >> s.num;
-    inputADate(s.startDate);
-    inputADate(s.endDate);
+    inputADate(s.start);
+    inputADate(s.end);
 }
 //Tim nam hc theo so nam
-SchoolYear* findSchoolYear(SchoolYear* sHead, int a){
+SchoolYear* findSchoolYear(SchoolYear* sHead, string a){
     SchoolYear* cur = sHead;
     while(cur){
-        if(cur->year == a)
+        if(cur->name == a)
             break;
         cur = cur->sYearNext;
     }
     return cur;
 }
 //Xac dinh semester so may va thuoc nam nao
-void addSemesterToSy(SchoolYear* sHead, Semester s, int year){
-    SchoolYear* tmp = findSchoolYear(sHead, year);
+void addSemesterToSy(SchoolYear* sHead, Semester s, string nameSy){
+    SchoolYear* tmp = findSchoolYear(sHead, nameSy);
     tmp->sm[s.num-1] = s;
 }
 
@@ -33,7 +33,7 @@ void addSemesterToSy(SchoolYear* sHead, Semester s, int year){
 bool addAStudentInCourse(Course* a, Student* newStu){
     if(a->cntStudent == a->maxStudent)
         return false;
-    Student* cur = a->stuHead;
+    Student* cur = a->stuHead->stuInClass;
     while(cur)
         cur = cur->stuNext;
     cur->stuNext = newStu;
@@ -47,7 +47,7 @@ void inputACourse(Course* a){
     cin >> a->name;
     cin >> a->teacherName;
     cin >> a->numCredit;
-    cin >> a->date;
+    cin >> a->day;
     cin >> a->session;
 }
 void addCourse(Semester s, Course* a){
@@ -60,8 +60,8 @@ void addCourse(Semester s, Course* a){
     courseCur = a;
     courseCur->courseNext = nullptr;
 }
-bool removeAStudentFromCourse(Course* a, int ID){
-    Student* cur = a->stuHead;
+bool removeAStudentFromCourse(Course* a, string ID){
+    Student* cur = a->stuHead->stuInClass;
     while(cur->stuNext){
         if(cur->stuNext->StuID == ID){
             Student* tmp = cur->stuNext;

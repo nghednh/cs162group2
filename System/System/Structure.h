@@ -73,6 +73,7 @@ struct Semester {
 	Date start;
 	Date end;
 	bool state; //if 1 - accessible
+	int num; //Semester 1 or 2 or 3?
 
 	//node
 	Course* courseHead;
