@@ -46,7 +46,7 @@ void viewListOfStudentInClass(Class* classCur)
 	}
 }
 
-Student* findStudent(string ID, SchoolYear* sYearHead)
+Student* findStudentByID(string ID, SchoolYear* sYearHead)
 {
 	int id = stoi(ID);
 	SchoolYear* sYearCur = sYearHead;
@@ -80,3 +80,10 @@ bool checkPassword(Student* stuCur, string pass)
 		return true;
 	else return false;
 }
+
+void changePassword(Student* stuCur, string newpass)
+{
+	stuCur->password = newpass;
+}
+
+void 
