@@ -19,7 +19,7 @@ SchoolYear* findSchoolYear(SchoolYear* sHead, string a){
     while(cur){
         if(cur->name == a)
             break;
-        cur = cur->sYearNext;
+        cur = cur->yearNext;
     }
     return cur;
 }

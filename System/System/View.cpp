@@ -12,7 +12,7 @@ void viewListClasses(SchoolYear* sYearHead)
 			cout << classCur->name << endl;
 			classCur = classCur->classNext;
 		}
-		sYearCur = sYearCur->sYearNext;
+		sYearCur = sYearCur->yearNext;
 	}
 }
 
@@ -69,7 +69,7 @@ Student* findStudentByID(string ID, SchoolYear* sYearHead)
 				classCur = classCur->classNext;
 			}
 		}
-		sYearCur = sYearCur->sYearNext;
+		sYearCur = sYearCur->yearNext;
 	}
 	return NULL;
 }

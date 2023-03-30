@@ -198,7 +198,7 @@ void Staff::createCourseFromCSV(SchoolYear* sy, int numSm) {
 			fin >> s;
 			SchoolYear* tmp1 = sy;
 			while (tmp1->name != s) {
-				tmp1 = tmp1->sYearNext;
+				tmp1 = tmp1->yearNext;
 			}
 
 			fin >> s;
