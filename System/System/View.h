@@ -6,3 +6,4 @@ void viewListOfStudentInClass(Class* classCur);
 Student* findStudentByID(string ID, SchoolYear* sYearHead);
 bool checkPassword(Student* stuCur, string pass);
 void changePassword(Student* stuCur, string newpass);
+void viewStudentProfile(Student* stuCur);

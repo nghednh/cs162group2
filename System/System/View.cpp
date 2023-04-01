@@ -86,3 +86,14 @@ void changePassword(Student* stuCur, string newpass)
 {
 	stuCur->password = newpass;
 }
+
+void viewStudentProfile(Student* stuCur)
+{
+	cout << "ID: " << stuCur->StuID << endl;
+	cout << "First name: " << stuCur->firstName << endl;
+	cout << "Last name: " << stuCur->lastName << endl;
+	cout << "Gender: " << stuCur->gender << endl;
+	cout << "Date of birth: " << stuCur->dateOfBirth.day << "/" << stuCur->dateOfBirth.month << "/" << stuCur->dateOfBirth.year << endl;
+	cout << "Social ID: " << stuCur->socialID << endl;
+	cout << "Class name: " << stuCur->className << endl;
+}
