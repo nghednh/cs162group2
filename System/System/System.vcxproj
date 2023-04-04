@@ -70,6 +70,10 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ExcludePath>C:\Users\Administrator\Downloads\dirent-master\dirent-master\include;$(ExcludePath)</ExcludePath>
+    <IncludePath>C:\Users\Administrator\Downloads\dirent-master\dirent-master\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -104,6 +108,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\Administrator\Downloads\dirent-master\dirent-master\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -129,6 +135,8 @@
   <ItemGroup>
     <ClCompile Include="Coures&amp;Semester.cpp" />
     <ClCompile Include="Beginning.cpp" />
+    <ClCompile Include="demo input.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="Source1.cpp" />
     <ClCompile Include="View.cpp" />
   </ItemGroup>
