@@ -92,6 +92,7 @@ struct SchoolYear {
 	Semester sm[3];
 };
 
+//May cai function nao lien quan den Student thi quang vao day
 struct InfoStu {
 	Student* stuInClass = NULL;
 	InfoStu* InfoStuNext = NULL;
