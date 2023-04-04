@@ -20,16 +20,13 @@ struct Student {
 	string gender;
 	Date dateOfBirth;
 	string socialID;
-	string username;
-	string password;
 	string className;
+	string password = dateOfBirth.day + dateOfBirth.month + dateOfBirth.year; //mac dinh
+	string nganh;
+	string lop;
 
 	//node
 	Student* stuNext = NULL;
-
-	//function still bug
-	//void viewScoreBoard(SchoolYear* sy, Student* p, int numSm);
-	//bool selectCourse(SchoolYear* sy, Student* stu, int numSm);
 };
 
 struct StuInCourse {
