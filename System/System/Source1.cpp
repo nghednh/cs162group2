@@ -174,7 +174,7 @@ void Staff::createCourseFromCSV(SchoolYear* sy, int numSm) {
 }
 
 //Dang nhap
-void username(Staff* staff, InfoStu* info, Staff* user1, InfoStu* user2) {
+void username(Staff* staff, InfoStu* info, Staff*& user1, InfoStu*& user2) {
 	string s1;
 	string s2;
 
