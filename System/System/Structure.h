@@ -20,16 +20,13 @@ struct Student {
 	string gender;
 	Date dateOfBirth;
 	string socialID;
-	string username;
-	string password;
 	string className;
+	string password = dateOfBirth.day + dateOfBirth.month + dateOfBirth.year; //mac dinh
+	string nganh;
+	string lop;
 
 	//node
 	Student* stuNext = NULL;
-
-	//function still bug
-	//void viewScoreBoard(SchoolYear* sy, Student* p, int numSm);
-	//bool selectCourse(SchoolYear* sy, Student* stu, int numSm);
 };
 
 struct StuInCourse {
@@ -58,8 +55,8 @@ struct Course {
 	int session; //(S1(7:30), S2(09:30), S3(13:30), S4(15:30)
 
 	//node
-	StuInCourse* stuHead;
-	Course* courseNext;
+	StuInCourse* stuHead = NULL;
+	Course* courseNext = NULL;
 };
 
 struct Class {
@@ -68,19 +65,19 @@ struct Class {
 	int numStu;
 
 	//node
-	Student* stuHead;
-	Class* classNext;
+	Student* stuHead = NULL;
+	Class* classNext = NULL;
 };
 
 struct Semester {
 	//detail
 	Date start;
 	Date end;
-	bool state; //if 1 - accessible
+	bool state = 0; //if 1 - accessible
 	int num; //Semester 1 or 2 or 3?
 
 	//node
-	Course* courseHead;
+	Course* courseHead = NULL;
 };
 
 struct SchoolYear {
@@ -88,25 +85,46 @@ struct SchoolYear {
 	string name; //ex: 2022-2023
 
 	//node
-	Class* classHead;
-	SchoolYear* yearNext;
+	Class* classHead = NULL;
+	SchoolYear* yearNext = NULL;
 
 	//array
 	Semester sm[3];
 };
 
+//May cai function nao lien quan den Student thi quang vao day
+struct InfoStu {
+	Student* stuInClass = NULL;
+	InfoStu* InfoStuNext = NULL;
+
+	//Main functions
+	void viewScoreBoard(Course* course, int numSm); //24
+
+	//Supplementary functions
+	bool checkCourseName(Course* course, string s);
+	void importStuToCourseCSV(SchoolYear* sy, string courseName, Student* stu);
+	bool selectCourse(SchoolYear* sy, Student* stu, int numSm);
+};
+
 struct Staff {
 	//elements
 	string name;
-	string username;
+	string ID; //username == ID
 	string password;
 	Staff* staffNext;
 
-	//functions
-	void importStuFromCSV(Class* c);
+	//Main functions
+
+	void exportCourseToCSV(Course* course); //19
+	void importScoreboard(Course* course); //20
+	void viewScoreboard(Course* course); //21
+	void updateRes(Course* course); //22
+
+	//Supplementary Functions
+	void addStuFromDSDKHP(Course* course, Student* s);
 	void createCourseFromCSV(SchoolYear* sy, int numSm);
-	void exportListStuToCSV(Course* course);
-	void importScoreboard(Course* course);
-	void viewScoreboard(Course* course);
-	void updateRes(Course* course);
+
+	Class* findClass(SchoolYear*& sy, string nameClass);
+	void addStuToClass(Class*& cl, Student*& stu);
+	void createAllClassesFromCSV(SchoolYear*& sy, InfoStu*& info);
 };
