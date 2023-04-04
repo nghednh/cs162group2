@@ -108,15 +108,22 @@ struct InfoStu {
 struct Staff {
 	//elements
 	string name;
-	string username;
+	string ID; //username == ID
 	string password;
 	Staff* staffNext;
 
-	//functions
-	void importStuFromCSV(Class* c);
+	//Main functions
+
+	void exportCourseToCSV(Course* course); //19
+	void importScoreboard(Course* course); //20
+	void viewScoreboard(Course* course); //21
+	void updateRes(Course* course); //22
+
+	//Supplementary Functions
+	void addStuFromDSDKHP(Course* course, Student* s);
 	void createCourseFromCSV(SchoolYear* sy, int numSm);
-	void exportListStuToCSV(Course* course);
-	void importScoreboard(Course* course);
-	void viewScoreboard(Course* course);
-	void updateRes(Course* course);
+
+	Class* findClass(SchoolYear*& sy, string nameClass);
+	void addStuToClass(Class*& cl, Student*& stu);
+	void createAllClassesFromCSV(SchoolYear*& sy, InfoStu*& info);
 };
