@@ -65,19 +65,19 @@ struct Class {
 	int numStu;
 
 	//node
-	Student* stuHead;
-	Class* classNext;
+	Student* stuHead = NULL;
+	Class* classNext = NULL;
 };
 
 struct Semester {
 	//detail
 	Date start;
 	Date end;
-	bool state; //if 1 - accessible
+	bool state = 0; //if 1 - accessible
 	int num; //Semester 1 or 2 or 3?
 
 	//node
-	Course* courseHead;
+	Course* courseHead = NULL;
 };
 
 struct SchoolYear {
