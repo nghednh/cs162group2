@@ -85,11 +85,24 @@ struct SchoolYear {
 	string name; //ex: 2022-2023
 
 	//node
-	Class* classHead;
-	SchoolYear* yearNext;
+	Class* classHead = NULL;
+	SchoolYear* yearNext = NULL;
 
 	//array
 	Semester sm[3];
+};
+
+struct InfoStu {
+	Student* stuInClass = NULL;
+	InfoStu* InfoStuNext = NULL;
+
+	//Main functions
+	void viewScoreBoard(Course* course, int numSm); //24
+
+	//Supplementary functions
+	bool checkCourseName(Course* course, string s);
+	void importStuToCourseCSV(SchoolYear* sy, string courseName, Student* stu);
+	bool selectCourse(SchoolYear* sy, Student* stu, int numSm);
 };
 
 struct Staff {
