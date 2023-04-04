@@ -55,8 +55,8 @@ struct Course {
 	int session; //(S1(7:30), S2(09:30), S3(13:30), S4(15:30)
 
 	//node
-	StuInCourse* stuHead;
-	Course* courseNext;
+	StuInCourse* stuHead = NULL;
+	Course* courseNext = NULL;
 };
 
 struct Class {
