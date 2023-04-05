@@ -113,3 +113,32 @@ void InfoStu::viewCourses(Semester s){
         cur = cur->courseNext;
     }
 }
+void viewOptions(){
+    cout << "UPDATE COURSE'S INFORMATION." <<  endl;
+    cout << endl; 
+    cout << "Options: " << endl;
+    cout << "1. Update ID." << endl;
+    cout << "2. Update course name." << endl;
+    cout << "3. Update class name." << endl;
+    cout << "4. Update teacher's name." << endl;
+    cout << "5. Update number of credits." << endl;
+    cout << "6. Update maximum students." << endl;
+    cout << "7. Update date of course taking place." << endl;
+    cout << "8. Update session of course." << endl; 
+    cout << "0. Stop updating and save" << endl;
+} 
+//Not done yet
+void updateIDCourseL(Course* c){
+
+}
+void updateCourseInfo(Course* course){
+    viewOptions();
+    int check = 10;
+    while(check != 0){
+        cin >> check;
+        switch (check){
+            case 1: 
+        }
+    }
+    
+}

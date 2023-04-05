@@ -45,16 +45,16 @@ struct Course {
 	//detail
 	string ID;
 	string name;
-	string className;
 	string teacherName;
 	int numCredit;
-	int maxStudent = 50;
+	int maxStudent; //default 50
 	int cntStudent;
 	Date d;
 	string day; //(MON / TUE / WED / THU / FRI / SAT)
 	int session; //(S1(7:30), S2(09:30), S3(13:30), S4(15:30)
 
 	//node
+	Class* classHead = NULL;
 	StuInCourse* stuHead = NULL;
 	Course* courseNext = NULL;
 };
