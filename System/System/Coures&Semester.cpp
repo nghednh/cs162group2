@@ -30,7 +30,7 @@ void addSemesterToSy(SchoolYear* sHead, Semester s, string nameSy){
 }
 
 //Them 1 hc sinh vao course
-bool addAStudentInCourse(Course* a, Student* newStu){
+bool Staff::addAStudentInCourse(Course* a, Student* newStu){
     if(a->cntStudent == a->maxStudent)
         return false;
     Student* cur = a->stuHead->stuInClass;
@@ -60,7 +60,7 @@ void addCourse(Semester s, Course* a){
     courseCur = a;
     courseCur->courseNext = nullptr;
 }
-bool removeAStudentFromCourse(Course* a, string ID){
+bool Staff::removeAStudentFromCourse(Course* a, string ID){
     Student* cur = a->stuHead->stuInClass;
     while(cur->stuNext){
         if(cur->stuNext->StuID == ID){
@@ -75,3 +75,41 @@ bool removeAStudentFromCourse(Course* a, string ID){
     return false; //Neu k co ID do thi bao hc sinh k tham gia khoa hoc.
 }
 
+bool Staff::deleteACourse(Course*& courseHead, string courseID){
+    Course* cur = courseHead;
+    while(cur->courseNext){
+        if(cur->courseNext->ID == courseID)
+            break;
+        cur = cur->courseNext;
+    }
+    if(cur->courseNext == NULL)
+        return false;
+    else{
+        Course* tmp = cur;
+        cur->courseNext = cur->courseNext->courseNext;
+        delete tmp;
+    }
+    return true;
+}
+
+//Student upgrade 14
+bool checkStuInCourse(Course* c, Student* stu){
+    StuInCourse* curStu = c->stuHead;
+    while(curStu){
+        if(curStu->stuInClass->StuID == stu->StuID)
+            return true;
+        curStu = curStu->stuNext;
+    }
+    return false;
+}
+void InfoStu::viewCourses(Semester s){
+    Course* cur = s.courseHead;
+    while(cur){
+        if(checkStuInCourse(cur, stuInClass)){
+            cout << "Your courses: ";
+            cout << cur->name << '[' << cur->ID << ']';
+            cout << endl;
+        }
+        cur = cur->courseNext;
+    }
+}
