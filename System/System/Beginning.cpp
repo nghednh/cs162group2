@@ -22,6 +22,7 @@ void inputYear(SchoolYear*& year) {
             cur->yearNext = new SchoolYear;
             cur = cur->yearNext;
         }
+        getline(cin, cur->name);
         int numberClass;
         cin >> numberClass;
         while (numberClass--) {
@@ -51,5 +52,25 @@ void inputCourse(Course*& course) {
         cin >> cur->numCredit >> cur->maxStudent >> cur->cntStudent;
         cin.get();
         getline(cin, cur->teacherName);
+    }
+}
+void addCourseToSemester(Course* coursee, Semester* semesterr) {
+    if (semesterr->courseHead == NULL) {
+        semesterr->courseHead == coursee;
+    }
+    else {
+        Course* cur = coursee;
+        cur->courseNext = semesterr->courseHead;
+        semesterr->courseHead = cur;
+    }
+}
+void addClassToSchoolYear(Class* classs, SchoolYear* schoolyearr) {
+    if (!schoolyearr->classHead) {
+        schoolyearr->classHead = classs;
+    }
+    else {
+        Class* cur = classs;
+        cur->classNext = schoolyearr->classHead;
+        schoolyearr->classHead = cur;
     }
 }
