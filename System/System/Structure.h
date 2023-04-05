@@ -101,6 +101,7 @@ struct InfoStu {
 	void viewScoreBoard(Course* course, int numSm); //24
 
 	//Supplementary functions
+	void viewCourses(Semester s); // View all the courses that the student participates in.
 	bool checkCourseName(Course* course, string s);
 	void importStuToCourseCSV(SchoolYear* sy, string courseName, Student* stu);
 	bool selectCourse(SchoolYear* sy, Student* stu, int numSm);
@@ -112,6 +113,7 @@ struct Staff {
 	string ID; //username == ID
 	string password;
 	Staff* staffNext;
+	Course* courseHead;
 
 	//Main functions
 
@@ -123,6 +125,9 @@ struct Staff {
 	//Supplementary Functions
 	void addStuFromDSDKHP(Course* course, Student* s);
 	void createCourseFromCSV(SchoolYear* sy, int numSm);
+	bool deleteACourse(Course*& courseHead, string courseID);
+	bool addAStudentInCourse(Course* a, Student* newStu);
+	bool removeAStudentFromCourse(Course* a, string ID);
 
 	Class* findClass(SchoolYear*& sy, string nameClass);
 	void addStuToClass(Class*& cl, Student*& stu);
