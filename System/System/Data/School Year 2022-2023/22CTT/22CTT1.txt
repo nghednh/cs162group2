@@ -1,6 +1,0 @@
-username,password
-10001,bf32uf
-10002,2732h3
-10003,3y892y
-10004,wejf89
-10005,32hfhh

@@ -2,6 +2,8 @@
 #include <filesystem>
 #include <fstream>
 #include <string>
+#include "Structure.h"
+#include "View.h"
 
 namespace fs = std::filesystem;
 using namespace std;
@@ -12,52 +14,72 @@ struct User {
     string password;
 };
 
-void processCSVFile(const path& file_path) {
+void processCSVFile(const path& file_path, Class* &classCur) {
     ifstream in;
     in.open(file_path);
     if (!in.is_open()) { 
         cout << "Cannot open file" << endl;
         return;
     }
-
-    string header;              // xoa dong 1
+    string header, line;              // xoa dong 1
     getline(in, header);
-
-    string line;
-    string username, password;
+    
+    classCur->stuHead = new Student;
+    Student* stuCur = classCur->stuHead;
 
     while (getline(in, line)) {
+        if (stuCur != classCur->stuHead)
+        {
+            stuCur->stuNext = new Student;
+            stuCur = stuCur->stuNext;
+        }
         stringstream ss(line);
+        getline(ss, stuCur->StuID, ',');
+        getline(ss, stuCur->firstName, ',');
+        getline(ss, stuCur->lastName, ',');
+        getline(ss, stuCur->gender, ',');
 
-        getline(ss, username, ',');
-        getline(ss, password, ',');
+        getline(ss, stuCur->dateOfBirth.day, ',');
+        getline(ss, stuCur->dateOfBirth.month, ',');
+        getline(ss, stuCur->dateOfBirth.year, ',');
+        getline(ss, stuCur->socialID, ',');
 
-        User user = { username, password };
-        cout << user.username << ", " << user.password << endl;
+        viewStudentProfile(stuCur);
     }
     in.close();
 }
 
-void read_files(const path& path) {
-    string name;
+void read_files(const path& path, SchoolYear* &yearCur) {
+
+    if (yearCur == NULL)    // Year Head
+        yearCur = new SchoolYear;
+    
+    Class* classCur = yearCur->classHead;
+    classCur = new Class;
 
     for (const auto& entry : directory_iterator(path)) {
-        if (entry.is_directory()) {    // if is folder
-            name = entry.path().filename().string();
-            cout << name << endl;
-            read_files(entry.path());  // recursion
+        if (entry.is_directory()) {                             // if is folder
+            yearCur->name = entry.path().filename().string();
+            read_files(entry.path(), yearCur);  // recursion
         }
         else {
-            name = entry.path().filename().stem().string();     // filename (-.txt)
-            cout << name << endl;
-            processCSVFile(entry.path());
+            if (classCur != yearCur->classHead)
+            {
+                classCur->classNext = new Class;
+                classCur = classCur->classNext;
+            }
+            classCur->name = entry.path().filename().stem().string();     // filename (-.txt)
+            processCSVFile(entry.path(), classCur);
         }
+        yearCur->yearNext = new SchoolYear;
+        yearCur = yearCur->yearNext;
     }
 }
 
 int main() {
-    path root_path("Data");
-    read_files(root_path);      // input all files in "Data";
+    SchoolYear* yearHead = NULL;
+    path root_path("Student Information");
+    read_files(root_path, yearHead);      // input all files in "Data"; 
     return 0;
 }
 
