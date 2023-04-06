@@ -8,3 +8,4 @@ bool addAStudentInCourse(Course* a, Student* newStu);
 void inputACourse(Course* a);
 void addCourse(Semester s, Course* a);
 bool removeAStudentFromCourse(Course* a, int ID);
+float final_GPA(Semester sm, Student* s);
