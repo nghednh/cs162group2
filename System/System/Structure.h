@@ -113,7 +113,6 @@ struct Staff {
 	string ID; //username == ID
 	string password;
 	Staff* staffNext;
-	Course* courseHead;
 
 	//Main functions
 
@@ -133,3 +132,4 @@ struct Staff {
 	void addStuToClass(Class*& cl, Student*& stu);
 	void createAllClassesFromCSV(SchoolYear*& sy, InfoStu*& info);
 };
+StuInCourse* checkStuInCourse(Course* c, Student* stu);

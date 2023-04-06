@@ -93,15 +93,16 @@ bool Staff::deleteACourse(Course*& courseHead, string courseID){
 }
 
 //Student upgrade 14
-bool checkStuInCourse(Course* c, Student* stu){
+StuInCourse* checkStuInCourse(Course* c, Student* stu){
     StuInCourse* curStu = c->stuHead;
     while(curStu){
         if(curStu->stuInClass->StuID == stu->StuID)
-            return true;
+            return curStu;
         curStu = curStu->stuNext;
     }
-    return false;
+    return NULL;
 }
+//s
 void InfoStu::viewCourses(Semester s){
     Course* cur = s.courseHead;
     while(cur){
@@ -128,16 +129,15 @@ void viewOptions(){
     cout << "0. Stop updating and save" << endl;
 } 
 //Not done yet
-void updateIDCourseL(Course* c){
+void view;
 
-}
 void updateCourseInfo(Course* course){
     viewOptions();
     int check = 10;
     while(check != 0){
         cin >> check;
         switch (check){
-            case 1: 
+            case 1:
         }
     }
     
