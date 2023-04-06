@@ -129,7 +129,18 @@ void viewOptions(){
     cout << "0. Stop updating and save" << endl;
 } 
 //Not done yet
-void view;
+float final_GPA(Semester sm, Student* s){
+    float gpa = 0;
+    Course* cur = sm.courseHead;
+    while(cur){
+        StuInCourse* tmp = checkStuInCourse(cur, s);
+        if(tmp)
+            gpa += tmp->totalM;
+        cur = cur->courseNext;
+    }
+    gpa = (gpa*4)/10;
+    return gpa;
+}
 
 void updateCourseInfo(Course* course){
     viewOptions();
