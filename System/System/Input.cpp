@@ -28,7 +28,7 @@ void processCSVFile(const path& file_path, Class* &classCur) {
     Student* stuCur = classCur->stuHead;
 
     while (getline(in, line)) {
-        if (stuCur != classCur->stuHead)
+        if (stuCur->StuID != "")
         {
             stuCur->stuNext = new Student;
             stuCur = stuCur->stuNext;
@@ -44,42 +44,49 @@ void processCSVFile(const path& file_path, Class* &classCur) {
         getline(ss, stuCur->dateOfBirth.year, ',');
         getline(ss, stuCur->socialID, ',');
 
-        viewStudentProfile(stuCur);
+//        viewStudentProfile(stuCur);
     }
     in.close();
 }
 
 void read_files(const path& path, SchoolYear* &yearCur) {
 
-    if (yearCur == NULL)    // Year Head
-        yearCur = new SchoolYear;
-    
+    yearCur->classHead = new Class;
     Class* classCur = yearCur->classHead;
-    classCur = new Class;
 
     for (const auto& entry : directory_iterator(path)) {
         if (entry.is_directory()) {                             // if is folder
+            if (yearCur->name != "")
+            {
+                yearCur->yearNext = new SchoolYear;
+                yearCur = yearCur->yearNext;
+            }
             yearCur->name = entry.path().filename().string();
+//            cout << yearCur->name << endl;
             read_files(entry.path(), yearCur);  // recursion
         }
         else {
-            if (classCur != yearCur->classHead)
+            if (classCur->name != "")
             {
                 classCur->classNext = new Class;
                 classCur = classCur->classNext;
             }
             classCur->name = entry.path().filename().stem().string();     // filename (-.txt)
+//            cout << classCur->name << endl;
             processCSVFile(entry.path(), classCur);
         }
-        yearCur->yearNext = new SchoolYear;
-        yearCur = yearCur->yearNext;
     }
 }
 
 int main() {
     SchoolYear* yearHead = NULL;
+    yearHead = new SchoolYear;
+    SchoolYear* yearCur = yearHead;
+    
     path root_path("Student Information");
-    read_files(root_path, yearHead);      // input all files in "Data"; 
+    read_files(root_path, yearCur);      // input all files in "Data"; 
+
+    viewListOfStudentInClass(yearHead->classHead);
     return 0;
 }
 
