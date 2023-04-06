@@ -21,6 +21,7 @@ void processCSVFile(const path& file_path, Class* &classCur) {
         cout << "Cannot open file" << endl;
         return;
     }
+
     string header, line;              // xoa dong 1
     getline(in, header);
     
@@ -40,7 +41,6 @@ void processCSVFile(const path& file_path, Class* &classCur) {
             getline(ss, stuCur->firstName, ',');
             getline(ss, stuCur->lastName, ',');
             getline(ss, stuCur->gender, ',');
-
             getline(ss, stuCur->dateOfBirth.day, ',');
             getline(ss, stuCur->dateOfBirth.month, ',');
             getline(ss, stuCur->dateOfBirth.year, ',');
@@ -63,7 +63,6 @@ void read_files(const path& path, SchoolYear* &yearCur) {
                 yearCur = yearCur->yearNext;
             }
             yearCur->name = entry.path().filename().string();
-//            cout << yearCur->name << endl;
             read_files(entry.path(), yearCur);  // recursion
         }
         else {
@@ -73,7 +72,6 @@ void read_files(const path& path, SchoolYear* &yearCur) {
                 classCur = classCur->classNext;
             }
             classCur->name = entry.path().filename().stem().string();     // filename (-.txt)
-//            cout << classCur->name << endl;
             processCSVFile(entry.path(), classCur);
         }
     }
@@ -83,7 +81,7 @@ int main() {
     SchoolYear* yearHead = NULL;
     yearHead = new SchoolYear;
     SchoolYear* yearCur = yearHead;
-    
+
     path root_path("Student Information");
     read_files(root_path, yearCur);      // input all files in "Data"; 
     while (yearHead)
@@ -98,6 +96,15 @@ int main() {
         }
         yearHead = yearHead->yearNext;
     }
+
+  /*  path root_path = "Student Information";
+    read_info(root_path, yearCur);      // input all files in "Data"; 
+    
+    if (findStudentByID("19127026", yearHead) != NULL)
+        cout << findStudentByID("19127026", yearHead)->lastName << endl;
+    else cout << "Could not found" << endl;*/
+  
+
     return 0;
 }
 

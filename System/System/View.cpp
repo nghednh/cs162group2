@@ -60,14 +60,18 @@ Student* findStudentByID(string ID, SchoolYear* sYearHead)
 			while (classCur)
 			{
 				Student* stuCur = classCur->stuHead;
-				if (abs(stoi(stuCur->StuID) - id) < 1000)	// Name class ~ ID (22CTT1 ~ 22..)
+				if (classCur->stuHead == NULL) classCur = classCur;
+				else if (abs(stoi(stuCur->StuID) - id) < 1000)	// Name class ~ ID (22CTT1 ~ 22..)
 				{
 	//				while (stoi(stuCur->StuID) < id)		// stop if stuCur->StuID >= ID, Class sorted
 	//					stuCur = stuCur->stuNext;
 
 					while(stuCur)
+					{
 						if (stuCur->StuID == ID)
 							return stuCur;
+						stuCur = stuCur->stuNext;
+					}
 				}
 				classCur = classCur->classNext;
 			}
