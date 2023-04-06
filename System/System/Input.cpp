@@ -46,7 +46,11 @@ void processCSVFile(const path& file_path, Class* &classCur) {
 
 //        viewStudentProfile(stuCur);
     }
+    if (classCur->stuHead->StuID == "")
+        classCur->stuHead = NULL;
     in.close();
+
+
 }
 
 void read_files(const path& path, SchoolYear* &yearCur) {
@@ -85,8 +89,18 @@ int main() {
     
     path root_path("Student Information");
     read_files(root_path, yearCur);      // input all files in "Data"; 
-
-    viewListOfStudentInClass(yearHead->classHead);
+    while (yearHead)
+    {
+        cout << yearHead->name << endl;
+        Class* classCur = yearHead->classHead;
+        while (classCur)
+        {
+            cout << classCur->name << endl;
+            viewListOfStudentInClass(classCur);
+            classCur = classCur->classNext;
+        }
+        yearHead = yearHead->yearNext;
+    }
     return 0;
 }
 
