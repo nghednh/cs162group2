@@ -56,7 +56,7 @@ void inputCourse(Course*& course) {
 }
 void addCourseToSemester(Course* coursee, Semester* semesterr) {
     if (semesterr->courseHead == NULL) {
-        semesterr->courseHead == coursee;
+        semesterr->courseHead = coursee;
     }
     else {
         Course* cur = coursee;

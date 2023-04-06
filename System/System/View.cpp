@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <dirent.h>
 #include "Structure.h"
 
 void viewListClasses(SchoolYear* sYearHead)
@@ -38,6 +39,7 @@ void viewListStudentsInCourse(Course* courseCur)	// lop sinh hoat
 
 void viewListOfStudentInClass(Class* classCur)
 {
+	if (classCur == NULL) return;
 	Student* stuCur = classCur->stuHead;
 	while (stuCur)
 	{
@@ -95,5 +97,5 @@ void viewStudentProfile(Student* stuCur)
 	cout << "Gender: " << stuCur->gender << endl;
 	cout << "Date of birth: " << stuCur->dateOfBirth.day << "/" << stuCur->dateOfBirth.month << "/" << stuCur->dateOfBirth.year << endl;
 	cout << "Social ID: " << stuCur->socialID << endl;
-	cout << "Class name: " << stuCur->className << endl;
+//	cout << "Class name: " << stuCur->className << endl;
 }

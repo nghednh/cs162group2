@@ -24,33 +24,30 @@ void processCSVFile(const path& file_path, Class* &classCur) {
     string header, line;              // xoa dong 1
     getline(in, header);
     
-    classCur->stuHead = new Student;
-    Student* stuCur = classCur->stuHead;
+    if(!in.eof())
+    {
+        classCur->stuHead = new Student;
+        Student* stuCur = classCur->stuHead;
 
-    while (getline(in, line)) {
-        if (stuCur->StuID != "")
-        {
-            stuCur->stuNext = new Student;
-            stuCur = stuCur->stuNext;
+        while (getline(in, line)) {
+            if (stuCur->StuID != "")
+            {
+                stuCur->stuNext = new Student;
+                stuCur = stuCur->stuNext;
+            }
+            stringstream ss(line);
+            getline(ss, stuCur->StuID, ',');
+            getline(ss, stuCur->firstName, ',');
+            getline(ss, stuCur->lastName, ',');
+            getline(ss, stuCur->gender, ',');
+
+            getline(ss, stuCur->dateOfBirth.day, ',');
+            getline(ss, stuCur->dateOfBirth.month, ',');
+            getline(ss, stuCur->dateOfBirth.year, ',');
+            getline(ss, stuCur->socialID, ',');
         }
-        stringstream ss(line);
-        getline(ss, stuCur->StuID, ',');
-        getline(ss, stuCur->firstName, ',');
-        getline(ss, stuCur->lastName, ',');
-        getline(ss, stuCur->gender, ',');
-
-        getline(ss, stuCur->dateOfBirth.day, ',');
-        getline(ss, stuCur->dateOfBirth.month, ',');
-        getline(ss, stuCur->dateOfBirth.year, ',');
-        getline(ss, stuCur->socialID, ',');
-
-//        viewStudentProfile(stuCur);
     }
-    if (classCur->stuHead->StuID == "")
-        classCur->stuHead = NULL;
     in.close();
-
-
 }
 
 void read_files(const path& path, SchoolYear* &yearCur) {
