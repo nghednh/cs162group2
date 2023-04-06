@@ -14,7 +14,7 @@ struct Date {
 struct Student {
 	//detail
 	string No;
-	string StuID;
+	string StuID = "";
 	string firstName;
 	string lastName;
 	string gender;
@@ -41,6 +41,16 @@ struct StuInCourse {
 	StuInCourse* stuNext = NULL; //next of linkedlist
 };
 
+struct Class {
+	//detail
+	string name = "";
+	int numStu = 50;
+
+	//node
+	Student* stuHead = NULL;
+	Class* classNext = NULL;
+};
+
 struct Course {
 	//detail
 	string ID;
@@ -59,15 +69,6 @@ struct Course {
 	Course* courseNext = NULL;
 };
 
-struct Class {
-	//detail
-	string name;
-	int numStu;
-
-	//node
-	Student* stuHead = NULL;
-	Class* classNext = NULL;
-};
 
 struct Semester {
 	//detail
@@ -82,7 +83,7 @@ struct Semester {
 
 struct SchoolYear {
 	//detail
-	string name; //ex: 2022-2023
+	string name = ""; //ex: 2022-2023
 
 	//node
 	Class* classHead = NULL;

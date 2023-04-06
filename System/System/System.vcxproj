@@ -135,7 +135,6 @@
   <ItemGroup>
     <ClCompile Include="Coures&amp;Semester.cpp" />
     <ClCompile Include="Beginning.cpp" />
-    <ClCompile Include="demo input.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Source1.cpp" />
     <ClCompile Include="View.cpp" />
