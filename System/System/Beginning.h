@@ -8,3 +8,5 @@ void viewProfile(Staff* staff);
 void inputDate(Date& datee);
 void inputYear(SchoolYear*& year);
 void inputCourse(Course*& course);
+void addClasstoSchoolYear();
+void addCoursetoSemester();
