@@ -9,19 +9,13 @@ namespace fs = std::filesystem;
 using namespace std;
 using namespace fs;
 
-struct User {
-    string username;
-    string password;
-};
-
-void processCSVFile(const path& file_path, Class* &classCur) {
+void inputClassFromFile(const path& file_path, Class* &classCur) {
     ifstream in;
     in.open(file_path);
     if (!in.is_open()) { 
         cout << "Cannot open file" << endl;
         return;
     }
-
     string header, line;              // xoa dong 1
     getline(in, header);
     
@@ -50,7 +44,7 @@ void processCSVFile(const path& file_path, Class* &classCur) {
     in.close();
 }
 
-void read_files(const path& path, SchoolYear* &yearCur) {
+void readStudentInfo(const path& path, SchoolYear* &yearCur) {
 
     yearCur->classHead = new Class;
     Class* classCur = yearCur->classHead;
@@ -63,7 +57,7 @@ void read_files(const path& path, SchoolYear* &yearCur) {
                 yearCur = yearCur->yearNext;
             }
             yearCur->name = entry.path().filename().string();
-            read_files(entry.path(), yearCur);  // recursion
+            readStudentInfo(entry.path(), yearCur);  // recursion
         }
         else {
             if (classCur->name != "")
@@ -72,8 +66,24 @@ void read_files(const path& path, SchoolYear* &yearCur) {
                 classCur = classCur->classNext;
             }
             classCur->name = entry.path().filename().stem().string();     // filename (-.txt)
-            processCSVFile(entry.path(), classCur);
+            inputClassFromFile(entry.path(), classCur);
         }
+    }
+}
+
+void deleteAll(SchoolYear*& yearHead)
+{
+    while (yearHead)
+    {
+        while (yearHead->classHead)
+        {
+            Class* classTmp = yearHead->classHead;
+            yearHead->classHead = yearHead->classHead->classNext;
+            delete classTmp;
+        }
+        SchoolYear* yearTmp = yearHead;
+        yearHead = yearHead->yearNext;
+        delete yearTmp;
     }
 }
 
@@ -81,29 +91,10 @@ int main() {
     SchoolYear* yearHead = NULL;
     yearHead = new SchoolYear;
     SchoolYear* yearCur = yearHead;
+    readStudentInfo("Student Information", yearCur);
 
-    path root_path("Student Information");
-    read_files(root_path, yearCur);      // input all files in "Data"; 
-    while (yearHead)
-    {
-        cout << yearHead->name << endl;
-        Class* classCur = yearHead->classHead;
-        while (classCur)
-        {
-            cout << classCur->name << endl;
-            viewListOfStudentInClass(classCur);
-            classCur = classCur->classNext;
-        }
-        yearHead = yearHead->yearNext;
-    }
-
-  /*  path root_path = "Student Information";
-    read_info(root_path, yearCur);      // input all files in "Data"; 
-    
-    if (findStudentByID("19127026", yearHead) != NULL)
-        cout << findStudentByID("19127026", yearHead)->lastName << endl;
-    else cout << "Could not found" << endl;*/
-  
+    deleteAll(yearHead);
+    if (yearHead == NULL) cout << "da xoa" << endl;
 
     return 0;
 }
