@@ -9,4 +9,5 @@ void inputDate(Date& datee);
 void inputYear(SchoolYear*& year);
 void inputCourse(Course*& course);
 void addClasstoSchoolYear();
-void addCoursetoSemester();
+void addClassToSchoolYear(Class* classs, SchoolYear* schoolyearr);
+void addCourseToSemester(Course* coursee, Semester* semesterr)
