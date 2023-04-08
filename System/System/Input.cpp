@@ -39,6 +39,10 @@ void inputClassFromFile(const path& file_path, Class* &classCur) {
             getline(ss, stuCur->dateOfBirth.month, ',');
             getline(ss, stuCur->dateOfBirth.year, ',');
             getline(ss, stuCur->socialID, ',');
+
+            // setpassword && class
+            stuCur->className = classCur->name;
+            stuCur->password = stuCur->dateOfBirth.day + stuCur->dateOfBirth.month + stuCur->dateOfBirth.year;
         }
     }
     in.close();
@@ -79,11 +83,34 @@ void deleteAll(SchoolYear*& yearHead)
         {
             Class* classTmp = yearHead->classHead;
             yearHead->classHead = yearHead->classHead->classNext;
+
+            while (classTmp->stuHead)
+            {
+                Student* stuTmp = classTmp->stuHead;
+                classTmp->stuHead = classTmp->stuHead->stuNext;
+                delete stuTmp;
+            }
             delete classTmp;
         }
         SchoolYear* yearTmp = yearHead;
         yearHead = yearHead->yearNext;
         delete yearTmp;
+    }
+}
+
+void displayAll(SchoolYear* yearHead)
+{
+    while (yearHead)
+    {
+        cout << yearHead->name << endl;
+        Class* classCur = yearHead->classHead;
+        while (classCur)
+        {
+            cout << classCur->name << endl;
+            viewListOfStudentInClass(classCur);
+            classCur = classCur->classNext;
+        }
+        yearHead = yearHead->yearNext;
     }
 }
 
@@ -93,9 +120,8 @@ int main() {
     SchoolYear* yearCur = yearHead;
     readStudentInfo("Student Information", yearCur);
 
+    displayAll(yearHead);
     deleteAll(yearHead);
-    if (yearHead == NULL) cout << "da xoa" << endl;
-
     return 0;
 }
 

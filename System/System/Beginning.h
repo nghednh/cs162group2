@@ -10,4 +10,4 @@ void inputYear(SchoolYear*& year);
 void inputCourse(Course*& course);
 void addClasstoSchoolYear();
 void addClassToSchoolYear(Class* classs, SchoolYear* schoolyearr);
-void addCourseToSemester(Course* coursee, Semester* semesterr)
+void addCourseToSemester(Course* coursee, Semester* semester);
