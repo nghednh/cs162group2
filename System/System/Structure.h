@@ -14,7 +14,7 @@ struct Date {
 struct Student {
 	//detail
 	string No;
-	string StuID = "";
+	string StuID;
 	string firstName;
 	string lastName;
 	string gender;
@@ -22,11 +22,13 @@ struct Student {
 	string socialID;
 	string className;
 	string password = dateOfBirth.day + dateOfBirth.month + dateOfBirth.year; //mac dinh
-	string nganh;
-	string lop;
+	string curriculum;
+
+	int accumCredits = 0;
+	float accumScore = 0;
 
 	//node
-	Student* stuNext = NULL;
+	Student* stuNext = NULL; //next of linkedlist
 };
 
 struct StuInCourse {
