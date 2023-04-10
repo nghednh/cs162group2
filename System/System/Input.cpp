@@ -2,6 +2,7 @@
 #include <filesystem>
 #include <fstream>
 #include <string>
+#include <optional>
 #include "Structure.h"
 #include "View.h"
 
@@ -98,6 +99,22 @@ void deleteAll(SchoolYear*& yearHead)
     }
 }
 
+optional<path> findFileByName(const path& dir_path, const std::string& file_name) {
+    for (const auto& entry : directory_iterator(dir_path)) {
+        if (entry.is_directory()) {
+            auto result = findFileByName(entry.path(), file_name);
+            if (result) {
+                return result;
+            }
+        }
+        else if (entry.path().filename().stem().string() == file_name) {
+            return entry.path();
+        }
+    }
+    // Không tìm thấy file, trả về một đối tượng optional<path> rỗng
+    return nullopt;
+}
+
 void displayAll(SchoolYear* yearHead)
 {
     while (yearHead)
@@ -120,7 +137,16 @@ int main() {
     SchoolYear* yearCur = yearHead;
     readStudentInfo("Student Information", yearCur);
 
-    displayAll(yearHead);
+//    displayAll(yearHead);
+
+//    findStudentByID("19127027", yearHead)->password = "19127027";
+    auto result = findFileByName("Student Information", "19CLC2");
+    if (result) {
+        cout << "Found file at: " << result->string() << std::endl;
+    }
+    else {
+        cout << "File not found." << std::endl;
+    }
     deleteAll(yearHead);
     return 0;
 }
