@@ -37,6 +37,7 @@ struct StuInCourse {
 	float finalM;
 	float midM;
 	float otherM;
+	float GPA;
 
 	//node 
 	Student* stuInClass = NULL; //point to the node Student in a Class 
@@ -45,7 +46,7 @@ struct StuInCourse {
 
 struct Class {
 	//detail
-	string name = "";
+	string name;
 	int numStu = 50;
 	bool courseSes[6][4] = {}; //courses' sessions during days of week: empty session 0 and taken session 1
 
@@ -67,16 +68,17 @@ struct Course {
 	//detail
 	string ID;
 	string name;
+	string className; //ex: 22TT, 22TT1
 	string teacherName;
 	int numCredit;
-	int maxStudent; //default 50
+	int maxStudent = 50; //default 50
 	int cntStudent;
 	string date;
 	int session;
 	Day day[6]; //Mon - ... - Sat
 
 	//node
-	Class* classHead = NULL;
+	Class* classHead = NULL; //????
 	StuInCourse* stuHead = NULL;
 	Course* courseNext = NULL;
 };
@@ -86,7 +88,6 @@ struct Semester {
 	Date start;
 	Date end;
 	bool state = 0; //if 1 - accessible
-	int num; //Semester 1 or 2 or 3?
 
 	//node
 	Course* courseHead = NULL;
@@ -94,11 +95,11 @@ struct Semester {
 
 struct SchoolYear {
 	//detail
-	string name = ""; //ex: 2022-2023
+	string name; //ex: 2022-2023
 
 	//node
 	Class* classHead = NULL;
-	Course* courseHead = NULL;
+	Course* courseHead = NULL; 
 	SchoolYear* yearNext = NULL;
 
 	//array
@@ -108,6 +109,7 @@ struct SchoolYear {
 //May cai function nao lien quan den Student thi quang vao day
 struct InfoStu {
 	Student* stuInClass = NULL;
+	Class* infoClass = NULL;
 	InfoStu* InfoStuNext = NULL;
 
 	//Main functions
@@ -122,17 +124,17 @@ struct InfoStu {
 
 struct Staff {
 	//elements
-	string name;
 	string ID; //username == ID
-	string password;
+	string name;
+	string password =  "10diemLy"; //mac dinh
 	Staff* staffNext;
 
 	//Main functions
-
 	void exportCourseToCSV(Course* course); //19
 	void importScoreboard(Course* course); //20
 	void viewScoreboard(Course* course); //21
 	void updateRes(Course* course); //22
+	void viewScoreClass(SchoolYear* sy, int numSm, Class* cl); //24
 
 	//Supplementary Functions
 	void addStuFromDSDKHP(Course* course, Student* s);
