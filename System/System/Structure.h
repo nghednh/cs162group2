@@ -47,6 +47,7 @@ struct StuInCourse {
 struct Class {
 	//detail
 	string name;
+	int requiredCredits; //22TT1-165 tin chi de tot nghiep
 	int numStu = 50;
 	bool courseSes[6][4] = {}; //courses' sessions during days of week: empty session 0 and taken session 1
 
@@ -113,7 +114,7 @@ struct InfoStu {
 	InfoStu* InfoStuNext = NULL;
 
 	//Main functions
-	void viewScoreBoard(Course* course, int numSm); //24
+	void viewScoreBoard(SchoolYear* sy, int numSm); //24
 
 	//Supplementary functions
 	void viewCourses(Semester s); // View all the courses that the student participates in.
