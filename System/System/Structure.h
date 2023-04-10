@@ -45,10 +45,20 @@ struct Class {
 	//detail
 	string name = "";
 	int numStu = 50;
+	bool courseSes[6][4] = {}; //courses' sessions during days of week: empty session 0 and taken session 1
 
 	//node
 	Student* stuHead = NULL;
 	Class* classNext = NULL;
+};
+
+struct Session{
+	Class* cur_class = NULL;
+	bool isEmpty = true;
+};
+struct Day{
+	string name; //Mon - ... - Sat
+	Session s[4];
 };
 
 struct Course {
@@ -59,16 +69,15 @@ struct Course {
 	int numCredit;
 	int maxStudent; //default 50
 	int cntStudent;
-	Date d;
-	string day; //(MON / TUE / WED / THU / FRI / SAT)
-	int session; //(S1(7:30), S2(09:30), S3(13:30), S4(15:30)
+	string date;
+	int session;
+	Day day[6]; //Mon - ... - Sat
 
 	//node
 	Class* classHead = NULL;
 	StuInCourse* stuHead = NULL;
 	Course* courseNext = NULL;
 };
-
 
 struct Semester {
 	//detail

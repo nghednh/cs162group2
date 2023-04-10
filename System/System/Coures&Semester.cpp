@@ -47,9 +47,86 @@ void inputACourse(Course* a){
     cin >> a->name;
     cin >> a->teacherName;
     cin >> a->numCredit;
-    cin >> a->day;
+    cin >> a->date;
     cin >> a->session;
 }
+
+int numPresentAsDay(string day){
+    if(day == "MON")
+        return 0;
+    if(day == "TUE")
+        return 1;
+    if(day == "WED")
+        return 2;
+    if(day == "THU")
+        return 3;
+    if(day == "FRI")
+        return 4;
+    if(day == "SAT")
+        return 5;
+}
+
+string stringPresentAsDay(int n){
+    if(n == 0)
+        return "MON";
+    if(n == 1)
+        return "TUE";
+    if(n == 2)
+        return "WED";
+    if(n == 3)
+        return "THU";
+    if(n == 4)
+        return "FRI";
+    if(n == 5)
+        return "SAT";
+}
+//
+void viewAvailableSession(Class* c){
+    cout << "     MON   TUE   WED   THU   FRI   SAT   " << endl;
+    for(int j = 0; j < 4; j++){
+        cout << "S" << j+1 << "    ";
+        for(int i = 0; i < 6; i++){
+            if(c->courseSes[i][j])
+                cout << "T" << "     ";
+            else cout << "A" << "     "; 
+        }
+        cout << endl;
+        if(j == 1)
+            cout << "                  -" << "BREAK" << "-                  "<< endl;
+    }
+    cout << endl;
+    cout << "A: Available session" << endl;
+    cout << "T: Taken session";
+    cout << endl;
+}
+
+void classAttendToCourse(Course* a, Class* c){
+    //clear screen
+    cout << "\033[2J\033[1;1H";
+
+    //view all the sessions of the class
+    viewAvailableSession(c);
+
+    Class* cur = a->classHead;
+    while(cur->classNext)
+        cur = cur->classNext;
+    cur->classNext = c;
+    c->classNext = NULL;
+    // Input day of week for this course occur
+    string tmp;
+    cin >> tmp;
+    int d = numPresentAsDay(tmp);
+    
+    //Input the session
+    int ses;
+    cin >> ses; // Session 1 2 3 4
+    
+    //Mark this session has been taken
+    c->courseSes[d][ses] = true;
+    a->day[d].s[ses].cur_class = c;
+    a->day[d].s[ses].isEmpty = false;
+}
+
 void addCourse(Semester s, Course* a){
     inputACourse(a);
     Course* courseCur = s.courseHead;
@@ -114,21 +191,6 @@ void InfoStu::viewCourses(Semester s){
         cur = cur->courseNext;
     }
 }
-void viewOptions(){
-    cout << "UPDATE COURSE'S INFORMATION." <<  endl;
-    cout << endl; 
-    cout << "Options: " << endl;
-    cout << "1. Update ID." << endl;
-    cout << "2. Update course name." << endl;
-    cout << "3. Update class name." << endl;
-    cout << "4. Update teacher's name." << endl;
-    cout << "5. Update number of credits." << endl;
-    cout << "6. Update maximum students." << endl;
-    cout << "7. Update date of course taking place." << endl;
-    cout << "8. Update session of course." << endl; 
-    cout << "0. Stop updating and save" << endl;
-} 
-//Not done yet
 float final_GPA(Semester sm, Student* s){
     float gpa = 0;
     Course* cur = sm.courseHead;
@@ -141,7 +203,36 @@ float final_GPA(Semester sm, Student* s){
     gpa = (gpa*4)/10;
     return gpa;
 }
+void viewOptions(){
+    cout << "UPDATE COURSE'S INFORMATION." <<  endl;
+    cout << endl; 
+    cout << "Options: " << endl;
+    cout << "1. Update ID." << endl;
+    cout << "2. Update course name." << endl;
+    cout << "3. Update teacher's name." << endl;
+    cout << "4. Update number of credits." << endl;
+    cout << "5. Update maximum students." << endl;
+    cout << "6. Update session of course of a class (S1, S2, S3, S4 - MON...SAT)." << endl; 
+    cout << "0. Stop updating and save" << endl;
+} 
+void viewCourseInfo(Course* course){
+    cout << course->name << ' ' << course->ID << " by " << course->teacherName;
+    Class* cur = course->classHead;
+    cout << "Current classes attend to this course: " << endl;
+    while(cur){
+        if(cur->classNext == NULL){
+            cout << cur->name;
+            break;
+        }
+        cout << cur->name << " - ";
+        cur = cur->classNext;
+    }
+    cout << "Number of credits for this course: ";
+    cout << course->numCredit << endl;
+    cout << "Maximum students for this course: ";
+    cout << course->maxStudent << endl;
 
+}
 void updateCourseInfo(Course* course){
     viewOptions();
     int check = 10;
@@ -149,7 +240,69 @@ void updateCourseInfo(Course* course){
         cin >> check;
         switch (check){
             case 1:
+            {
+                cout << "New course's ID: ";
+                cin >> course->ID;
+                break;
+            }
+            case 2:
+            {
+                cout << "New course's name: ";
+                cin >> course->name;
+                break;
+            }
+            case 3:
+            {
+                cout << "New teacher's name: ";
+                cin >> course->teacherName;
+                break;
+            }
+            case 4:
+            {
+                cout << "New number of credits: ";
+                cin >> course->numCredit;
+                break;
+            }
+            case 5:
+            {
+                cout << "New maximum students: ";
+                cin >> course->maxStudent;
+                if(course->maxStudent > 50){
+                    cout << "The maximum student of a course can not be over 50. Please input again!" << endl;
+                    cout << "New maximum students: ";
+                    cin >> course->maxStudent;
+                }
+                break;
+            }
+            case 6:
+            {
+                string tmp;
+                cout << "The class's name you want to change its session: ";
+                cin >> tmp;
+                Class* cur = course->classHead;
+                while(cur){
+                    if(cur->name == tmp)
+                        break;
+                    cur = cur->classNext;
+                }
+                if(cur == NULL){
+                    cout << "NO class's name found! " << endl;
+                    break;
+                }
+                string old_day, new_day;
+                int old_ses, new_ses;
+                cout << "Please input your old session (Day + num-th session): ";
+                cin >> old_day >> old_ses;
+                cur->courseSes[numPresentAsDay(old_day)][old_ses] = false;
+                
+                //clear screen
+                cout << "\033[2J\033[1;1H";
+                viewAvailableSession(cur);
+                cout << "Please input the new session you want to access to (Day + num-th session): ";
+                cin >> new_day >> new_ses;
+                cur->courseSes[numPresentAsDay(new_day)][new_ses] = true;
+                break;
+            }
         }
     }
-    
 }
