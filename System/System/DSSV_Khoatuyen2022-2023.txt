@@ -1,0 +1,25 @@
+No	Student ID	First Malee	Last Malee	Gender	Date of birth	Social ID	Curriculum	Class
+1	22125001	Nguyen	An	Male	01/03/2004	79204049	Computer_Science	22TT1
+2	22125003	Tran	Anh	Male	31/03/2003	79204067	Computer_Science	22TT1
+3	22125005	Mai	Bach	Male	17/04/2004	79204047	Computer_Science	22TT1
+4	22125006	Ngo	Bach	Male	06/07/2004	79204025	Computer_Science	22TT1
+5	22125008	Luu	Bao	Male	07/04/2004	79204051	Computer_Science	22TT1
+6	22125011	Nguyen	Binh	Male	11/11/2004	79204067	Computer_Science	22TT2
+7	22125012	Pham	Buu	Male	23/11/2004	79204067	Computer_Science	22TT2
+8	22125013	Le	Cuong	Male	02/04/2004	79204021	Computer_Science	22TT2
+9	22125015	Truong	Dat	Male	24/07/2004	79204011	Computer_Science	22TT2
+10	22125018	Lam	Duy	Male	27/08/2004	79204053	Computer_Science	22TT2
+11	22125020	Nguyen	Giang	Female	16/04/2004	79204068	Computer_Science	22TT2
+12	22125024	Cao	Hau	Male	05/06/2004	79204014	Information_Technology	22CLC
+13	22125025	Huynh	Hau	Male	17/04/2004	79204071	Information_Technology	22CLC
+14	22125027	Duong	Hieu	Male	29/07/2004	79204049	Information_Technology	22CLC
+15	22125028	Le	Hieu	Male	30/05/2004	79204075	Information_Technology	22CLC
+16	22125029	Le	Hoang	Male	17/05/2004	79204092	Information_Technology	22CLC
+17	22125032	Tran	Huy	Male	08/02/2004	79204034	Information_Technology	22CLC
+18	22125036	Nguyen	Khanh	Female	02/11/2004	79204020	Information_Technology	22CLC
+19	22125002	Pham	Anh	Female	05/11/2004	79204033	Artificial_Intelligence	22TTNT
+20	22125004	Tran	Anh	Female	08/06/2004	79204020	Artificial_Intelligence	22TTNT
+21	22125009	Ngo	Bao	Male	04/12/2004	79204028	Artificial_Intelligence	22TTNT
+22	22125010	Phan	Bao	Male	01/06/2004	79204022	Artificial_Intelligence	22TTNT
+23	22125014	Tran	Dang	Male	21/04/2004	79204075	Artificial_Intelligence	22TTNT
+24	22125016	Nguyen	Dinh	Male	28/06/2004	79204068	Artificial_Intelligence	22TTNT

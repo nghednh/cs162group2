@@ -1,0 +1,23 @@
+No	Student ID	First Name	Last Name	Gender	Date of birth	Social ID	Curriculum	Class											
+1	20125006	Hoang	Anh	Male	07/09/2002	79242416	Computer_Science	20CTT											
+2	20125032	Chu	Phuc	Female	13/08/2002	79257861	Computer_Science	20CTT											
+3	20125033	Diep	Nghiem	Male	09/03/2002	79221517	Computer_Science	20CTT											
+4	20125039	Nguyen	Minh	Male	24/08/2002	79227928	Computer_Science	20CTT											
+5	20125046	Dang	Triet	Male	20/04/2002	79299620	Computer_Science	20CTT											
+6	20125005	Thi	Nhut	Male	19/09/2002	79266595	Information_Technology	20CLC1											
+7	20125019	Dang	Khiem	Male	22/09/2002	79298336	Information_Technology	20CLC1											
+8	20125040	Bui	An	Male	10/03/2002	79229524	Information_Technology	20CLC1											
+9	20125118	Ho	Bao	Male	25/09/2002	79254730	Information_Technology	20CLC1											
+10	20125124	Vo	Truong	Male	05/11/2002	79212716	Information_Technology	20CLC1											
+11	20127254	To	Nghi	Female	08/06/2002	79238161	Information_Technology	20CLC1											
+12	20127136	Da?ng	Du?c	Male	04/12/2002	79226709	Information_Technology	20CLC2											
+13	20127299	Tran	Quang	Male	01/06/2002	79224366	Information_Technology	20CLC2											
+14	20127410	Tran	Tan	Male	21/04/2002	79242854	Information_Technology	20CLC2											
+15	20127589	Vo	Phat	Male	28/06/2002	79275048	Information_Technology	20CLC2											
+16	20127043	Nguyen	Khoa	Male	26/06/2002	79267521	Software_Engineering	20VP											
+17	20126041	Nguyen	Man	Male	19/01/2002	79272816	Software_Engineering	20VP											
+18	20126054	Cao	Quang	Male	13/01/2002	79258901	Software_Engineering	20VP											
+19	20126023	Duong	Phuc	Male	10/02/2002	79297467	Software_Engineering	20VP											
+20	20126029	Tran	Triet	Male	27/09/2002	79274382	Software_Engineering	20VP											
+21	20126058	Pham	Thu	Female	20/09/2002	79256192	Software_Engineering	20VP											
+																			

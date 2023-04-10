@@ -1,0 +1,18 @@
+No	Student ID	First Name	Last Name	Gender	Date of birth	Social ID	Curriculum	Class
+1	21125090	Tran	Phuc	Male	26/06/2003	79229237	Computer_Science	21CTT1
+2	21125081	Nguyen	Minh	Male	14/02/2003	79249547	Computer_Science	21CTT1
+3	21125161	Bui	Hoang	Male	08/05/2003	79245973	Computer_Science	21CTT1
+4	21125111	Nguyen	Hoa	Female	12/01/2003	79206288	Computer_Science	21CTT1
+5	21125027	Hoang	Viet	Male	20/11/2003	79225127	Computer_Science	21CTT1
+6	21125013	Vo	Khang	Male	23/08/2003	79215894	Computer_Science	21CTT2
+7	21125034	Nguyen	Binh	Male	28/02/2003	79284914	Computer_Science	21CTT2
+8	21125080	Quan	Long	Male	09/04/2003	79260555	Computer_Science	21CTT2
+9	21125071	Ho	Long	Male	30/04/2003	79299601	Computer_Science	21CTT2
+10	21125060	Nguyen	Quang	Male	03/02/2003	79273442	Computer_Science	21CTT2
+11	21127044	Mai	Hien	Female	11/09/2003	79299234	Information_Technology	21CLC
+12	21127054	Huynh	Huu	Male	06/09/2003	79239427	Information_Technology	21CLC
+13	21127518	Nguyen	Khoi	Male	15/01/2003	79206603	Information_Technology	21CLC
+14	21127414	Nguyen	Sam	Male	26/09/2003	79239654	Information_Technology	21CLC
+15	21127151	Nguyen	Quang	Male	07/01/2003	79221043	Information_Technology	21CLC
+16	21127077	Huynh	Khoa	Male	05/01/2003	79245047	Information_Technology	21CLC
+17	21127068	Ngo	Khang	Male	25/11/2003	79252963	Information_Technology	21CLC
