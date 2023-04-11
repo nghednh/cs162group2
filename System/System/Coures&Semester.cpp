@@ -276,6 +276,12 @@ void updateCourseInfo(Course* course){
             }
             case 6:
             {
+                cout << "New day and session (Day + num-th session): ";
+                cin >> course->date >> course->session;
+                break;
+            }
+            case 7:
+            {
                 string tmp;
                 cout << "The class's name you want to change its session: ";
                 cin >> tmp;
