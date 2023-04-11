@@ -131,6 +131,20 @@ void displayAll(SchoolYear* yearHead)
     }
 }
 
+void saveChange(const path& file_path, Class*& classCur)
+{
+    ofstream out;
+    out.open(file_path);
+    if (!out.is_open()) {
+        cout << "Cannot open file" << endl;
+        return;
+    }
+    
+    // demo
+
+    out.close();
+}
+
 int main() {
     SchoolYear* yearHead = NULL;
     yearHead = new SchoolYear;
@@ -140,13 +154,16 @@ int main() {
 //    displayAll(yearHead);
 
 //    findStudentByID("19127027", yearHead)->password = "19127027";
-    auto result = findFileByName("Student Information", "19CLC2");
+    auto result = findFileByName("Student Information", "19CLC4");
     if (result) {
         cout << "Found file at: " << result->string() << std::endl;
     }
     else {
         cout << "File not found." << std::endl;
     }
+
+    saveChange(result->string(), yearHead->classHead);
+
     deleteAll(yearHead);
     return 0;
 }
