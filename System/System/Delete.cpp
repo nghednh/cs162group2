@@ -24,14 +24,6 @@ void deleteCourse(Course*& coursee) {
 		cur = coursee;
 	}
 }
-void deleteSemester(Semester*& semes) {
-	Semester* cur = semes;
-	while (cur) {
-		semes = semes->semesterNext;
-		delete cur;
-		cur = semes;
-	}
-}
 void deleteStudent(Student*& stu) {
 	Student*& cur = stu;
 	while (cur) {
