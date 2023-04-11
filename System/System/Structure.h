@@ -89,6 +89,7 @@ struct Semester {
 	Date start;
 	Date end;
 	bool state = 0; //if 1 - accessible
+	int num;
 
 	//node
 	Course* courseHead = NULL;
