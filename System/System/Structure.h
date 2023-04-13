@@ -72,8 +72,8 @@ struct Course {
 	string className; //ex: 22TT, 22TT1
 	string teacherName;
 	int numCredit;
-	int maxStudent = 50; //default 50
-	int cntStudent;
+	int maxStudent; //default 50
+	int cntStudent = 0;
 	string date;
 	int session;
 	Day day[6]; //Mon - ... - Sat
