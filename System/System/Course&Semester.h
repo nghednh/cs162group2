@@ -25,4 +25,8 @@ float final_GPA(Semester sm, Student* s);
 
 //Chuyen doi ngay trong tuan duoi dang so hoac chu
 int numPresentAsDay(string day);
-string stringPresentAsDay(int n)
+string stringPresentAsDay(int n);
+
+//string_type -> float_type
+float convertFloat(string s);
+void addAndSortByID(StuInCourse*& stuHead, StuInCourse* curStu);

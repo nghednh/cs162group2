@@ -311,6 +311,17 @@ void updateCourseInfo(Course* course){
         }
     }
 }
+//sch
+void viewSchedule(Semester sm, Student *s){
+    Course* cur = sm.courseHead;
+    while(cur){
+        if(checkStuInCourse(cur, s))
+
+        cur = cur->courseNext;
+    }
+}
+
+//additional function
 float convertFloat(string s){
     float a = 0;
     if(s == "10")
@@ -323,4 +334,20 @@ float convertFloat(string s){
         tmp *= 10;
     }
     return a;
+}
+
+void addAndSortByID(StuInCourse*& stuHead, StuInCourse* curStu){
+    float a = convertFloat(curStu->stuInClass->StuID);
+    StuInCourse* cur = stuHead;
+    while(cur){
+        float b = convertFloat(cur->stuInClass->StuID);
+        if(a > b){ 
+            curStu->stuNext = cur->stuNext->stuNext;
+            cur->stuNext = curStu;
+            return;
+        }
+        cur = cur->stuNext;
+    }
+    curStu->stuNext = stuHead;
+    stuHead = curStu;
 }
