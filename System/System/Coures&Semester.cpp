@@ -232,7 +232,6 @@ void viewCourseInfo(Course* course){
     cout << course->numCredit << endl;
     cout << "Maximum students for this course: ";
     cout << course->maxStudent << endl;
-
 }
 void updateCourseInfo(Course* course){
     viewOptions();
@@ -312,4 +311,44 @@ void updateCourseInfo(Course* course){
             }
         }
     }
+}
+//sch
+void viewSchedule(Semester sm, Student *s){
+    Course* cur = sm.courseHead;
+    while(cur){
+        if(checkStuInCourse(cur, s))
+
+        cur = cur->courseNext;
+    }
+}
+
+//additional function
+float convertFloat(string s){
+    float a = 0;
+    if(s == "10")
+        return 10;
+    a += (s[0]-48); //first number
+    int k = s.size();
+    int tmp = 10;
+    for(int i = 2; i < k; i++){//s[1] == ','
+        a += (float)(s[i]-48)/tmp;
+        tmp *= 10;
+    }
+    return a;
+}
+
+void addAndSortByID(StuInCourse*& stuHead, StuInCourse* curStu){
+    float a = convertFloat(curStu->stuInClass->StuID);
+    StuInCourse* cur = stuHead;
+    while(cur){
+        float b = convertFloat(cur->stuInClass->StuID);
+        if(a > b){ 
+            curStu->stuNext = cur->stuNext->stuNext;
+            cur->stuNext = curStu;
+            return;
+        }
+        cur = cur->stuNext;
+    }
+    curStu->stuNext = stuHead;
+    stuHead = curStu;
 }
