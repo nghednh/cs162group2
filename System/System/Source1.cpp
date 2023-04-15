@@ -1,4 +1,5 @@
 #include "Structure.h"
+#include"Course&Semester.h"
 
 //Supplementary function
 void trimS(string& s) { //to trim a string
@@ -95,14 +96,14 @@ void Staff::updateRes(Course* course) {
 }
 
 //23: View the scoreboard of a class, including final marks of all courses in the semester, GPA in this semester, and the overall GPA.
-StuInCourse* checkStuInCourse(Course* c, Student* stu) {
+/*StuInCourse* checkStuInCourse(Course* c, Student* stu) {
 	StuInCourse* curStu = c->stuHead;
 	while (curStu) {
 		if (curStu->stuInClass->StuID == stu->StuID) return curStu;
 		curStu = curStu->stuNext;
 	}
 	return NULL;
-}
+}*/
 
 void Staff::viewScoreClass(SchoolYear* sy, int numSm, Class* cl) {
 	Student* tmpS = cl->stuHead;
@@ -370,4 +371,25 @@ void Staff::createAllClassesFromCSV(SchoolYear*& sy, InfoStu*& info) {
 	}
 	info = tmpIn4;
 	fin.close();
+}
+
+int main() {
+	SchoolYear* sy = new SchoolYear();
+	sy->name = "2022-2023";
+	Staff* staff = new Staff();
+	InfoStu* info = new InfoStu();
+
+	staff->createAllClassesFromCSV(sy, info);
+
+	Class* cl = sy->classHead;
+	while (cl) {
+		Student* stu = cl->stuHead;
+		while(stu)
+		{
+			cout << stu->firstName << endl;
+			stu = stu->stuNext;
+		}
+		cl = cl->classNext;
+	}
+
 }

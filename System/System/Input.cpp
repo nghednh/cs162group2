@@ -145,7 +145,7 @@ void saveChange(const path& file_path, Class*& classCur)
     out.close();
 }
 
-int main() {
+void tryMain() {
     SchoolYear* yearHead = NULL;
     yearHead = new SchoolYear;
     SchoolYear* yearCur = yearHead;
@@ -165,7 +165,7 @@ int main() {
     saveChange(result->string(), yearHead->classHead);
 
     deleteAll(yearHead);
-    return 0;
+    return;
 }
 
 /*

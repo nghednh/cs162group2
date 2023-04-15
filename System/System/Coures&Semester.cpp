@@ -3,6 +3,7 @@
 #include <iostream>
 #include "Structure.h"
 
+
 using namespace std;
 
 void inputADate(Date d){
