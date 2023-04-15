@@ -2,6 +2,7 @@
 #include <filesystem>
 #include <fstream>
 #include <string>
+#include <sstream>
 #include <optional>
 #include "Structure.h"
 #include "View.h"
