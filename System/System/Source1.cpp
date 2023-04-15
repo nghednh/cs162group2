@@ -1,5 +1,5 @@
 #include "Structure.h"
-#include"Course&Semester.h"
+#include "Course&Semester.h"
 
 //Supplementary function
 void trimS(string& s) { //to trim a string
@@ -103,8 +103,8 @@ void Staff::updateRes(Course* course) {
 		curStu = curStu->stuNext;
 	}
 	return NULL;
-}*/
-
+}
+*/
 void Staff::viewScoreClass(SchoolYear* sy, int numSm, Class* cl) {
 	Student* tmpS = cl->stuHead;
 	float GPAsm = 0;

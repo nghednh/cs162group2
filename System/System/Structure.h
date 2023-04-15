@@ -149,4 +149,4 @@ struct Staff {
 	void addStuToClass(Class*& cl, Student*& stu);
 	void createAllClassesFromCSV(SchoolYear*& sy, InfoStu*& info);
 };
-StuInCourse* checkStuInCourse(Course* c, Student* stu);
+//StuInCourse* checkStuInCourse(Course* c, Student* stu);

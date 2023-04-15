@@ -30,3 +30,4 @@ string stringPresentAsDay(int n);
 //string_type -> float_type
 float convertFloat(string s);
 void addAndSortByID(StuInCourse*& stuHead, StuInCourse* curStu);
+StuInCourse* checkStuInCourse(Course* c, Student* stu);
