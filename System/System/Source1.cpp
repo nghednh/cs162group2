@@ -614,7 +614,7 @@ int main() {
 
 	//staff function
 	staff->createAllCourse(sy);
-	info->selectCourse();
+	//info->selectCourse();
 
 	//delete 
 	while (sy) {
