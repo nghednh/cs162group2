@@ -223,9 +223,11 @@ void viewOptions(){
     cout << "0. Stop updating and save" << endl;
 } 
 void viewCourseInfo(Course* course){
-    cout << course->name << ' ' << course->ID << " by " << course->teacherName;
+    cout << course->name << ' ' << course->ID << " by " << course->teacherName << endl;
     Class* cur = course->classHead;
-    cout << "Current classes attend to this course: " << endl;
+    cout << "Current classes attend to this course: ";
+    if(cur == NULL)
+        cout << "None" << endl;
     while(cur){
         if(cur->classNext == NULL){
             cout << cur->name;
