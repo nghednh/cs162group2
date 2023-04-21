@@ -1,5 +1,4 @@
 #include "Structure.h"
-#include <conio.h>
 
 //Supplementary function
 void trimS(string& s) { //to trim a string
