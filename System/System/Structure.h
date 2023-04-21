@@ -102,7 +102,6 @@ struct SchoolYear {
 
 	//node
 	Class* classHead = NULL;
-	Course* courseHead = NULL; 
 	SchoolYear* yearNext = NULL;
 
 	//array
