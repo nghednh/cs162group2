@@ -48,7 +48,7 @@ void inputACourse(Course* a){
     cin >> a->name;
     cin >> a->teacherName;
     cin >> a->numCredit;
-    cin >> a->date;
+    cin >> a->day;
     cin >> a->session;
     a->courseNext = NULL;
 }
