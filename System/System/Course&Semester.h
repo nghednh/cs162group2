@@ -6,7 +6,7 @@ SchoolYear* findSchoolYear(SchoolYear* sHead, int a);
 void addSemesterToSy(SchoolYear* sHead, Semester s, int year);
 bool addAStudentInCourse(Course* a, Student* newStu);
 void inputACourse(Course* a);
-void addCourse(Semester s, Course* a);
+void addCourse(Semester& s, Course* a);
 bool removeAStudentFromCourse(Course* a, int ID);
 
 //Cap nhat lop tham gia vao khoa hoc (which day, which session)

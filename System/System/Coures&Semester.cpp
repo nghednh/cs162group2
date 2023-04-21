@@ -48,7 +48,7 @@ void inputACourse(Course* a){
     cin >> a->name;
     cin >> a->teacherName;
     cin >> a->numCredit;
-    cin >> a->date;
+    cin >> a->day;
     cin >> a->session;
     a->courseNext = NULL;
 }
@@ -129,7 +129,7 @@ void classAttendToCourse(Course* a, Class* c){
     a->day[d].s[ses].isEmpty = false;
 }
 
-void addCourse(Semester s, Course* a){
+void addCourse(Semester& s, Course* a){
     inputACourse(a);
     Course* courseCur = s.courseHead;
     if(courseCur == nullptr){
@@ -282,7 +282,7 @@ void updateCourseInfo(Course* course){
             case 6:
             {
                 cout << "New day and session (Day + num-th session): ";
-                cin >> course->date >> course->session;
+                cin >> course->day >> course->session;
                 break;
             }
             case 7:
