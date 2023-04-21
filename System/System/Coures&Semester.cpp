@@ -125,8 +125,8 @@ void classAttendToCourse(Course* a, Class* c){
     
     //Mark this session has been taken
     c->courseSes[d][ses] = true;
-    a->day[d].s[ses].cur_class = c;
-    a->day[d].s[ses].isEmpty = false;
+    a->dayB[d].s[ses].cur_class = c;
+    a->dayB[d].s[ses].isEmpty = false;
 }
 
 void addCourse(Semester s, Course* a){
@@ -282,7 +282,7 @@ void updateCourseInfo(Course* course){
             case 6:
             {
                 cout << "New day and session (Day + num-th session): ";
-                cin >> course->date >> course->session;
+                cin >> course->day >> course->session;
                 break;
             }
             case 7:
