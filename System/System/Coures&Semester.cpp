@@ -45,12 +45,13 @@ bool Staff::addAStudentInCourse(Course* a, Student* newStu){
 }
 void inputACourse(Course* a){
     cin >> a->ID;
-    cin >> a->name;
-    cin >> a->teacherName;
+    cin.ignore();
+    getline(cin , a->name);
+    getline(cin, a->teacherName);
     cin >> a->numCredit;
     cin >> a->day;
     cin >> a->session;
-    a->courseNext = NULL;
+    cin >> a->maxStudent;
 }
 
 int numPresentAsDay(string day){
@@ -125,8 +126,8 @@ void classAttendToCourse(Course* a, Class* c){
     
     //Mark this session has been taken
     c->courseSes[d][ses] = true;
-    a->day[d].s[ses].cur_class = c;
-    a->day[d].s[ses].isEmpty = false;
+    a->dayB[d].s[ses].cur_class = c;
+    a->dayB[d].s[ses].isEmpty = false;
 }
 
 void addCourse(Semester& s, Course* a){
@@ -222,9 +223,11 @@ void viewOptions(){
     cout << "0. Stop updating and save" << endl;
 } 
 void viewCourseInfo(Course* course){
-    cout << course->name << ' ' << course->ID << " by " << course->teacherName;
+    cout << course->name << ' ' << course->ID << " by " << course->teacherName << endl;
     Class* cur = course->classHead;
-    cout << "Current classes attend to this course: " << endl;
+    cout << "Current classes attend to this course: ";
+    if(cur == NULL)
+        cout << "None" << endl;
     while(cur){
         if(cur->classNext == NULL){
             cout << cur->name;
