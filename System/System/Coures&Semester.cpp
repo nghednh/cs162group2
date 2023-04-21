@@ -132,6 +132,10 @@ void classAttendToCourse(Course* a, Class* c){
 void addCourse(Semester s, Course* a){
     inputACourse(a);
     Course* courseCur = s.courseHead;
+    if(courseCur == nullptr){
+        courseCur = a;
+        return;
+    }
     while(courseCur->courseNext){
         courseCur = courseCur->courseNext;
     }
