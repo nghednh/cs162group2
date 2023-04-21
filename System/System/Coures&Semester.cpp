@@ -256,13 +256,13 @@ void updateCourseInfo(Course* course){
             case 2:
             {
                 cout << "New course's name: ";
-                cin >> course->name;
+                getline(cin, course->name);
                 break;
             }
             case 3:
             {
                 cout << "New teacher's name: ";
-                cin >> course->teacherName;
+                getline(cin, course->teacherName);
                 break;
             }
             case 4:
