@@ -50,6 +50,7 @@ void inputACourse(Course* a){
     cin >> a->numCredit;
     cin >> a->date;
     cin >> a->session;
+    a->courseNext = NULL;
 }
 
 int numPresentAsDay(string day){
@@ -338,11 +339,11 @@ float convertFloat(string s){
 }
 
 void addAndSortByID(StuInCourse*& stuHead, StuInCourse* curStu){
-    float a = convertFloat(curStu->stuInClass->StuID);
+    //float a = convertFloat(curStu->stuInClass->StuID);
     StuInCourse* cur = stuHead;
     while(cur){
-        float b = convertFloat(cur->stuInClass->StuID);
-        if(a > b){ 
+        //float b = convertFloat(cur->stuInClass->StuID);
+        if(curStu->stuInClass->StuID > cur->stuInClass->StuID){ 
             curStu->stuNext = cur->stuNext->stuNext;
             cur->stuNext = curStu;
             return;
