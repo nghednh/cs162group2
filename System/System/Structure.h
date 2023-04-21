@@ -75,9 +75,9 @@ struct Course {
 	int numCredit;
 	int maxStudent; //default 50
 	int cntStudent = 0;
-	string date;
+	string day;
 	int session;
-	Day day[6]; //Mon - ... - Sat
+	Day dayB[6]; //Mon - ... - Sat
 
 	//node
 	Class* classHead = NULL; //????
