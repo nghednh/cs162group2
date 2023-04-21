@@ -60,6 +60,7 @@ struct Session{
 	Class* cur_class = NULL;
 	bool isEmpty = true;
 };
+
 struct Day{
 	string name; //Mon - ... - Sat
 	Session s[4];
