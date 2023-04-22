@@ -31,3 +31,5 @@ string stringPresentAsDay(int n);
 float convertFloat(string s);
 void addAndSortByID(StuInCourse*& stuHead, StuInCourse* curStu);
 StuInCourse* checkStuInCourse(Course* c, Student* stu);
+//view schedule
+void viewSchedule(Semester s, Student* stu);

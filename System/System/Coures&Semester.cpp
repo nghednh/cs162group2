@@ -357,3 +357,27 @@ void addAndSortByID(StuInCourse*& stuHead, StuInCourse* curStu){
     curStu->stuNext = stuHead;
     stuHead = curStu;
 }
+//view schedule
+void viewSchedule(Semester s, Student* stu){
+    string nameSes[4][7];
+    Course* tmp = s.courseHead;
+    while(tmp){
+        if(checkStuInCourse(tmp, stu)){
+            int a = numPresentAsDay(tmp->day);
+            nameSes[a][tmp->session - 1] = tmp->ID;
+        }
+        tmp = tmp->courseNext;
+    }
+
+    cout << "                                               SCHEDULE                            " << endl;
+    cout << "                MON        TUE        WED        THU        FRI        SAT        SUN " <<  endl;
+    for(int i = 0; i < 4; i++){
+        if(i == 2)
+            cout << "                                               -BREAK-                     " << endl;
+        cout << "Session " << i+1 << " : ";
+        for(int j = 0; j < 7; j++)
+            cout << string((11-nameSes[i][j].length())/2, ' ') << nameSes[i][j] << string(11-((11-nameSes[i][j].length())/2)-nameSes[i][j].length(), ' ');
+        cout << endl;
+    }
+    cout << endl;
+}
