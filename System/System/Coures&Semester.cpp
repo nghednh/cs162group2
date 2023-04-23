@@ -3,8 +3,9 @@
 #include <iostream>
 #include "Structure.h"
 
-
 using namespace std;
+
+
 
 void inputADate(Date d){
     cin >> d.day >> d.month >> d.year;
@@ -369,15 +370,21 @@ void viewSchedule(Semester s, Student* stu){
         tmp = tmp->courseNext;
     }
 
-    cout << "                                               SCHEDULE                            " << endl;
-    cout << "                MON        TUE        WED        THU        FRI        SAT        SUN " <<  endl;
+    cout << "                                           SCHEDULE" << endl;
+    cout << "------------------------------------------------------------------------------------" << endl;
+    cout << " SES/DAY  |     MON    |    TUE    |    WED    |    THU    |    FRI    |    SAT    |" <<  endl;
+    cout << "------------------------------------------------------------------------------------" << endl;
+    cout << "                                            -BREAK-                     " << endl;
     for(int i = 0; i < 4; i++){
-        if(i == 2)
-            cout << "                                               -BREAK-                     " << endl;
+        if(i == 2){
+            cout << "                                            -BREAK-                     " << endl;
+            cout << "------------------------------------------------------------------------------------" << endl;
+        }
         cout << "Session " << i+1 << " : ";
-        for(int j = 0; j < 7; j++)
-            cout << string((11-nameSes[i][j].length())/2, ' ') << nameSes[i][j] << string(11-((11-nameSes[i][j].length())/2)-nameSes[i][j].length(), ' ');
+        for(int j = 0; j < 6; j++)
+            cout << string((11-nameSes[i][j].length())/2, ' ') << nameSes[i][j] << string(11-((11-nameSes[i][j].length())/2)-nameSes[i][j].length(), ' ') << '|';
         cout << endl;
+        cout << "------------------------------------------------------------------------------------" << endl;
     }
     cout << endl;
 }
