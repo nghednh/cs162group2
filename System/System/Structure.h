@@ -2,6 +2,10 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <filesystem>
+#include <string>
+#include <sstream>
+#include <optional>
 
 using namespace std;
 
@@ -10,6 +14,8 @@ struct Date {
 	string month;
 	string year;
 };
+
+struct StuInCourse;
 
 struct Student {
 	//detail
@@ -29,6 +35,7 @@ struct Student {
 
 	//node
 	Student* stuNext = NULL; //next of linkedlist
+	StuInCourse* pStuCourseHead = NULL;
 };
 
 struct StuInCourse {
@@ -38,10 +45,12 @@ struct StuInCourse {
 	float midM;
 	float otherM;
 	float GPA;
+	string courseID;
 
 	//node 
 	Student* stuInClass = NULL; //point to the node Student in a Class 
 	StuInCourse* stuNext = NULL; //next of linkedlist
+	StuInCourse* pStuCourseNext = NULL; // that student in another Course
 };
 
 struct Class {
@@ -101,7 +110,7 @@ struct SchoolYear {
 
 	//node
 	Class* classHead = NULL;
-	Course* courseHead = NULL; 
+//	Course* courseHead = NULL; 
 	SchoolYear* yearNext = NULL;
 
 	//array

@@ -1,0 +1,7 @@
+No	Student ID	First Name	Last Name	Gender	Date of birth	Social ID	Curriculum	Class									
+16	20127043	Nguyen	Khoa	Male	26/06/2002	79267521	Software_Engineering	20VP											
+17	20126041	Nguyen	Man	Male	19/01/2002	79272816	Software_Engineering	20VP											
+18	20126054	Cao	Quang	Male	13/01/2002	79258901	Software_Engineering	20VP											
+19	20126023	Duong	Phuc	Male	10/02/2002	79297467	Software_Engineering	20VP											
+20	20126029	Tran	Triet	Male	27/09/2002	79274382	Software_Engineering	20VP											
+21	20126058	Pham	Thu	Female	20/09/2002	79256192	Software_Engineering	20VP
