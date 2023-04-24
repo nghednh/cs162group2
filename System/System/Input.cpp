@@ -76,92 +76,157 @@ Student* findStuInClass(string syTmp, string classTmp, string IDTmp, SchoolYear*
         if (classCur)
         {
             Student* stuCur = classCur->stuHead;
-            while (stuCur && stuCur->StuID != IDTmp)
+            while (stuCur && stuCur->StuID < IDTmp)
                 stuCur = stuCur->stuNext;
 
-            return stuCur;
+            if (stuCur && stuCur->StuID == IDTmp)
+                return stuCur;
         }
     }
     return nullptr;
 }
+
+void createCoursesFromList(SchoolYear* &sy, const path& file_path);
 
 void readListCourse(const path& file_path, SchoolYear*& yearCur, SchoolYear* &yearHead, int i)
 {
     Course* courseCur = yearCur->sm[i].courseHead;
 
     for (const auto& entry : directory_iterator(file_path)) {
-        ifstream in;
-        in.open(entry.path());
-
-        if (courseCur != NULL)
-        {
-            courseCur->courseNext = new Course;
-            courseCur = courseCur->courseNext;
-        }
-        else
-        {
-            yearCur->sm[i].courseHead = new Course;
-            courseCur = yearCur->sm[i].courseHead;
-        }
         string tmp = entry.path().filename().stem().string();
-        string className = "", ID = "";
-        int i;
 
-        for (i = 0; i < tmp.size() && tmp[i] != '_'; i++)
-            ID += tmp[i];
-        while (tmp[i] != '_') i++;
-        for (i += 1; i < tmp.size(); i++)
-            className += tmp[i];
-
-        getline(in, courseCur->name, '\n');
-        getline(in, courseCur->teacherName, '\n');
-
-        courseCur->ID = ID;
-        courseCur->className = className;
-        StuInCourse* stuCur = courseCur->stuHead;
-
-        string header, line;              // xoa dong 1
-        getline(in, header);
-
-        while (!in.eof())
+        if (tmp == "dshp")
         {
-            if (stuCur != NULL) {
-                stuCur->stuNext = new StuInCourse;
-                stuCur = stuCur->stuNext;
-            }
-            else {
-                courseCur->stuHead = new StuInCourse;
-                stuCur = courseCur->stuHead;
-            }
+            createCoursesFromList(yearCur, entry.path());
+        }
+        else if (tmp.size() > 5 && tmp.substr(tmp.size() - 5, 5) != "_mark" && tmp.substr(tmp.size() - 5, 5) != "_dssv")
+        {
+            ifstream in;
+            in.open(entry.path());
 
-            string syTmp, classTmp, IDTmp;
-            getline(in, syTmp, '\t');
-            getline(in, classTmp, '\t');
-            getline(in, IDTmp, '\n');
-
-            stuCur->courseID = ID;
-            stuCur->stuNext = nullptr;
-
-            Student* stuInClass = findStuInClass(syTmp, classTmp, IDTmp, yearHead);
-
-            stuCur->stuInClass = stuInClass;
-            
-            StuInCourse* pStuCourseCur = stuInClass->pStuCourseHead;
-            // reverselinked
-            if (pStuCourseCur == nullptr)
+            if (courseCur != NULL)
             {
-                stuInClass->pStuCourseHead = stuCur;
+                courseCur->courseNext = new Course;
+                courseCur = courseCur->courseNext;
             }
             else
             {
-                while (pStuCourseCur->pStuCourseNext != nullptr)
-                    pStuCourseCur = pStuCourseCur->pStuCourseNext;
-                pStuCourseCur->pStuCourseNext = stuCur;
+                yearCur->sm[i].courseHead = new Course;
+                courseCur = yearCur->sm[i].courseHead;
             }
-            stuCur->pStuCourseNext = nullptr;
+            string className = "", ID = "";
+            int i;
+            
+            for (i = 0; i < tmp.size() && tmp[i] != '_'; i++)
+                ID += tmp[i];
+            for (i += 1; i < tmp.size() && tmp[i] != '_'; i++)
+                className += tmp[i];
+
+            getline(in, courseCur->name, '\n');
+            getline(in, courseCur->teacherName, '\n');
+
+            courseCur->ID = ID;
+            courseCur->className = className;
+            StuInCourse* stuCur = courseCur->stuHead;
+
+            string header, line;              // xoa dong 1
+            getline(in, header);
+
+            while (!in.eof())
+            {
+                if (stuCur != NULL) {
+                    stuCur->stuNext = new StuInCourse;
+                    stuCur = stuCur->stuNext;
+                }
+                else {
+                    courseCur->stuHead = new StuInCourse;
+                    stuCur = courseCur->stuHead;
+                }
+
+                string syTmp, classTmp, IDTmp;
+                getline(in, syTmp, '\t');
+                getline(in, classTmp, '\t');
+                getline(in, IDTmp, '\n');
+
+                stuCur->courseID = ID;
+                stuCur->stuNext = nullptr;
+
+                Student* stuInClass = findStuInClass(syTmp, classTmp, IDTmp, yearHead);
+                stuCur->stuInClass = stuInClass;
+
+                StuInCourse* pStuCourseCur = stuInClass->pStuCourseHead;
+
+                // reverselinked
+                if (pStuCourseCur == nullptr)
+                {
+                    stuInClass->pStuCourseHead = stuCur;
+                }
+                else
+                {
+                    while (pStuCourseCur->pStuCourseNext != nullptr)
+                        pStuCourseCur = pStuCourseCur->pStuCourseNext;
+                    pStuCourseCur->pStuCourseNext = stuCur;
+                }
+                stuCur->pStuCourseNext = nullptr;
+            }
+            in.close();
         }
-        in.close();
     }
+}
+
+
+void createCoursesFromList(SchoolYear* &sy, const path& file_path) {
+   
+    ifstream fin(file_path);
+     string s;
+    getline(fin, s, ' ');
+    string hk = s.substr(2, 1);
+
+    getline(fin, s, '\n');
+
+    getline(fin, s, '\n');  // header
+
+    Course* tmp = sy->sm[stoi(hk) - 1].courseHead;
+
+    while (!fin.eof()) {
+
+        if (tmp == NULL)
+        {
+            sy->sm[stoi(hk) - 1].courseHead = new Course;
+            tmp = sy->sm[stoi(hk) - 1].courseHead;
+        }
+        else
+        {
+            tmp->courseNext = new Course;
+            tmp = tmp->courseNext;
+        }
+
+        getline(fin, tmp->ID, '\t');
+        getline(fin, tmp->name, '\t');
+        getline(fin, s, '\t');
+        tmp->numCredit = stoi(s);
+        getline(fin, tmp->teacherName, '\t');
+        getline(fin, tmp->day, '\t');
+        getline(fin, s, '\t');
+        tmp->session = stoi(s);
+        getline(fin, s, '\t');
+        tmp->maxStudent = stoi(s);
+        getline(fin, tmp->className, '\n');
+
+        tmp->courseNext = NULL;
+        
+        // tao file
+        path create_file = "Information/" + sy->name + "/Semester " + hk + '/' + tmp->ID + '_' + tmp->className + ".txt";
+        ofstream fout(create_file);
+
+        fout << tmp->name << endl;
+        fout << tmp->teacherName << endl;
+        fout << "SchoolYear Class   ID";
+        fout.close();
+    }
+    fin.close();
+    // xoa file dkhp
+    remove(file_path);   
 }
 
 void readInformation(const path& path, SchoolYear*& yearCur, SchoolYear*& yearHead) 
@@ -235,6 +300,35 @@ void deleteAll(SchoolYear*& yearHead)
     }
 }
 
+void sortStuInCourse(Course* &courseCur)
+{
+    bool sorted = false;
+    StuInCourse* empty = new StuInCourse;
+    empty->stuNext = courseCur->stuHead;
+
+    while (!sorted) 
+    {
+        sorted = true;
+
+        StuInCourse* cur = courseCur->stuHead;
+        StuInCourse* prev = empty;
+        while (cur && cur->stuNext)
+        {
+            if (cur->stuInClass->StuID > cur->stuInClass->StuID)
+            {
+                StuInCourse* tmp = cur->stuNext;
+                cur->stuNext = cur->stuNext->stuNext;
+                tmp->stuNext = cur;
+                prev->stuNext = tmp;
+
+                sorted = false;
+            }
+            else cur = cur->stuNext;
+        }
+    }
+    courseCur->stuHead = empty->stuNext;
+}
+
 optional<path> findFileByName(const path& dir_path, const std::string& file_name) {
     for (const auto& entry : directory_iterator(dir_path)) {
         if (entry.is_directory()) {
@@ -286,19 +380,29 @@ int main() {
     SchoolYear* yearCur = yearHead;
     readInformation("Information", yearCur, yearHead);
 
-    Course* courseHead = yearHead->sm[0].courseHead;
-//    while(courseHead)
-//    {
-//        viewListStudentsInCourse(yearHead->sm[0].courseHead);
-//        courseHead = courseHead->courseNext;
-//    }
+    Course* courseHead = yearHead->yearNext->yearNext->yearNext->sm[1].courseHead;
 
-    cout << "course of 22125001" << endl;
+    /*
+    while(courseHead)
+    {
+        cout << endl << courseHead->name << endl;
+        viewListStudentsInCourse(courseHead);
+        courseHead = courseHead->courseNext;
+    }
+
+    cout << endl << endl << "course of 19125029" << endl;
     StuInCourse* pCur = findStuInClass("2019-2020", "19CTT", "19125029", yearHead)->pStuCourseHead;
     while (pCur)
     {
         cout << pCur->courseID << endl;
         pCur = pCur->pStuCourseNext;
+    }
+    */
+    
+    while (courseHead)
+    {
+        cout << courseHead->name << endl;
+        courseHead = courseHead->courseNext;
     }
 
     deleteAll(yearHead);
@@ -328,4 +432,9 @@ getline(file, header) và getline(ss, username, ',') : Hàm này đọc một d�
 read_files(path) : Hàm này nhận vào đường dẫn của một thư mục và đọc tất cả các tệp tin và thư mục trong đó bằng cách đệ quy gọi chính nó với đường dẫn của các thư mục con.
 
 path root_path("Data") : Hàm này tạo một đối tượng path từ đường dẫn "Data".
+*/
+
+
+/*
+
 */

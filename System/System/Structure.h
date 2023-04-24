@@ -27,7 +27,7 @@ struct Student {
 	Date dateOfBirth;
 	string socialID;
 	string className;
-	string password = dateOfBirth.day + dateOfBirth.month + dateOfBirth.year; //mac dinh
+	string password = "123"; //mac dinh
 	string curriculum;
 
 	int accumCredits = 0;
@@ -69,6 +69,7 @@ struct Session{
 	Class* cur_class = NULL;
 	bool isEmpty = true;
 };
+
 struct Day{
 	string name; //Mon - ... - Sat
 	Session s[4];
@@ -83,12 +84,11 @@ struct Course {
 	int numCredit;
 	int maxStudent; //default 50
 	int cntStudent = 0;
-	string date;
 	int session;
-	Day day[6]; //Mon - ... - Sat
+	string day;
+	Day dayB[6]; //Mon - ... - Sat
 
 	//node
-	Class* classHead = NULL; //????
 	StuInCourse* stuHead = NULL;
 	Course* courseNext = NULL;
 };
@@ -122,15 +122,18 @@ struct InfoStu {
 	Student* stuInClass = NULL;
 	Class* infoClass = NULL;
 	InfoStu* InfoStuNext = NULL;
+	SchoolYear* sy = NULL; //*
 
 	//Main functions
 	void viewScoreBoard(SchoolYear* sy, int numSm); //24
 
 	//Supplementary functions
 	void viewCourses(Semester s); // View all the courses that the student participates in.
-	bool checkCourseName(Course* course, string s);
-	void importStuToCourseCSV(SchoolYear* sy, string courseName, Student* stu);
-	bool selectCourse(SchoolYear* sy, Student* stu, int numSm);
+	bool checkCourseName(Course*& course, string s);
+	void importStuToCourseCSV(string courseName);
+	bool addAndSortByID(Course*& c, Student*& stu);
+	void printListCourse(Course* c, int cre, int numCourse);
+	void selectCourse();
 };
 
 struct Staff {
@@ -138,7 +141,7 @@ struct Staff {
 	string ID; //username == ID
 	string name;
 	string password =  "10diemLy"; //mac dinh
-	Staff* staffNext;
+	Staff* staffNext = NULL;
 
 	//Main functions
 	void exportCourseToCSV(Course* course); //19
@@ -156,9 +159,9 @@ struct Staff {
 
 	Class* findClass(SchoolYear*& sy, string nameClass);
 	void addStuToClass(Class*& cl, Student*& stu);
-	void createAllClassesFromCSV(SchoolYear*& sy, InfoStu*& info);
+	void createAllClassesFromCSV(SchoolYear*& sy, string syname, InfoStu*& info);
+	void createAllCourse(SchoolYear* sy);
 };
-//StuInCourse* checkStuInCourse(Course* c, Student* stu);
 
 void inputADate(Date d);
 void createSemester(Semester s);
