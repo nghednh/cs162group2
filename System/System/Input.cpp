@@ -8,71 +8,190 @@
 #include "View.h"
 
 namespace fs = std::filesystem;
-using namespace std;
 using namespace fs;
 
-void inputClassFromFile(const path& file_path, Class* &classCur) {
-    ifstream in;
-    in.open(file_path);
-    if (!in.is_open()) { 
-        cout << "Cannot open file" << endl;
-        return;
-    }
-    string header, line;              // xoa dong 1
-    getline(in, header);
-    
-    if(!in.eof())
-    {
-        classCur->stuHead = new Student;
-        Student* stuCur = classCur->stuHead;
-
-        while (getline(in, line)) {
-            if (stuCur->StuID != "")
-            {
-                stuCur->stuNext = new Student;
-                stuCur = stuCur->stuNext;
-            }
-            stringstream ss(line);
-            getline(ss, stuCur->StuID, ',');
-            getline(ss, stuCur->firstName, ',');
-            getline(ss, stuCur->lastName, ',');
-            getline(ss, stuCur->gender, ',');
-            getline(ss, stuCur->dateOfBirth.day, ',');
-            getline(ss, stuCur->dateOfBirth.month, ',');
-            getline(ss, stuCur->dateOfBirth.year, ',');
-            getline(ss, stuCur->socialID, ',');
-
-            // setpassword && class
-            stuCur->className = classCur->name;
-            stuCur->password = stuCur->dateOfBirth.day + stuCur->dateOfBirth.month + stuCur->dateOfBirth.year;
-        }
-    }
-    in.close();
-}
-
-void readStudentInfo(const path& path, SchoolYear* &yearCur) {
-
-    yearCur->classHead = new Class;
+void readListClass(const path& file_path, SchoolYear* &yearCur) 
+{
     Class* classCur = yearCur->classHead;
 
-    for (const auto& entry : directory_iterator(path)) {
-        if (entry.is_directory()) {                             // if is folder
-            if (yearCur->name != "")
+    for (const auto& entry : directory_iterator(file_path)) {
+        ifstream in;
+        in.open(entry.path());
+        
+        if (classCur != NULL)
+        {
+            classCur->classNext = new Class;
+            classCur = classCur->classNext;
+        }
+        else
+        {
+            yearCur->classHead = new Class;
+            classCur = yearCur->classHead;
+        }
+        string tmp = entry.path().filename().stem().string();
+        classCur->name = tmp;
+        Student* stuCur = classCur->stuHead;
+
+        string header, line;              // xoa dong 1
+        getline(in, header);
+
+        while (!in.eof())
+        {
+            if (stuCur != NULL) {
+                stuCur->stuNext = new Student;
+                stuCur = stuCur->stuNext;
+            } 
+            else {
+                classCur->stuHead = new Student;
+                stuCur = classCur->stuHead;
+            }      
+            getline(in, stuCur->No, '\t');
+            getline(in, stuCur->StuID, '\t');
+            getline(in, stuCur->firstName, '\t');
+            getline(in, stuCur->lastName, '\t');
+            getline(in, stuCur->gender, '\t');
+            getline(in, stuCur->dateOfBirth.day, '/');
+            getline(in, stuCur->dateOfBirth.month, '/');
+            getline(in, stuCur->dateOfBirth.year, '\t');
+            getline(in, stuCur->socialID, '\t');
+            getline(in, stuCur->curriculum, '\t');
+            getline(in, stuCur->className, '\n');
+        }
+        in.close();
+    }  
+}
+
+Student* findStuInClass(string syTmp, string classTmp, string IDTmp, SchoolYear* &yearHead)
+{
+    SchoolYear* yearCur = yearHead;
+    while (yearCur && yearCur->name != syTmp)
+        yearCur = yearCur->yearNext;
+
+    if (yearCur)
+    {
+        Class* classCur = yearCur->classHead;
+        while (classCur && classCur->name != classTmp)
+            classCur = classCur->classNext;
+
+        if (classCur)
+        {
+            Student* stuCur = classCur->stuHead;
+            while (stuCur && stuCur->StuID != IDTmp)
+                stuCur = stuCur->stuNext;
+
+            return stuCur;
+        }
+    }
+    return nullptr;
+}
+
+void readListCourse(const path& file_path, SchoolYear*& yearCur, SchoolYear* &yearHead, int i)
+{
+    Course* courseCur = yearCur->sm[i].courseHead;
+
+    for (const auto& entry : directory_iterator(file_path)) {
+        ifstream in;
+        in.open(entry.path());
+
+        if (courseCur != NULL)
+        {
+            courseCur->courseNext = new Course;
+            courseCur = courseCur->courseNext;
+        }
+        else
+        {
+            yearCur->sm[i].courseHead = new Course;
+            courseCur = yearCur->sm[i].courseHead;
+        }
+        string tmp = entry.path().filename().stem().string();
+        string className = "", ID = "";
+        int i;
+
+        for (i = 0; i < tmp.size() && tmp[i] != '_'; i++)
+            ID += tmp[i];
+        while (tmp[i] != '_') i++;
+        for (i += 1; i < tmp.size(); i++)
+            className += tmp[i];
+
+        getline(in, courseCur->name, '\n');
+        getline(in, courseCur->teacherName, '\n');
+
+        courseCur->ID = ID;
+        courseCur->className = className;
+        StuInCourse* stuCur = courseCur->stuHead;
+
+        string header, line;              // xoa dong 1
+        getline(in, header);
+
+        while (!in.eof())
+        {
+            if (stuCur != NULL) {
+                stuCur->stuNext = new StuInCourse;
+                stuCur = stuCur->stuNext;
+            }
+            else {
+                courseCur->stuHead = new StuInCourse;
+                stuCur = courseCur->stuHead;
+            }
+
+            string syTmp, classTmp, IDTmp;
+            getline(in, syTmp, '\t');
+            getline(in, classTmp, '\t');
+            getline(in, IDTmp, '\n');
+
+            stuCur->courseID = ID;
+            stuCur->stuNext = nullptr;
+
+            Student* stuInClass = findStuInClass(syTmp, classTmp, IDTmp, yearHead);
+
+            stuCur->stuInClass = stuInClass;
+            
+            StuInCourse* pStuCourseCur = stuInClass->pStuCourseHead;
+            // reverselinked
+            if (pStuCourseCur == nullptr)
             {
+                stuInClass->pStuCourseHead = stuCur;
+            }
+            else
+            {
+                while (pStuCourseCur->pStuCourseNext != nullptr)
+                    pStuCourseCur = pStuCourseCur->pStuCourseNext;
+                pStuCourseCur->pStuCourseNext = stuCur;
+            }
+            stuCur->pStuCourseNext = nullptr;
+        }
+        in.close();
+    }
+}
+
+void readInformation(const path& path, SchoolYear*& yearCur, SchoolYear*& yearHead) 
+{
+    for (const auto& entry : directory_iterator(path)) {
+        string tmp = entry.path().filename().stem().string();
+        string isSmt = tmp;
+
+        if (tmp == "Class") {        
+            readListClass(entry.path(), yearCur);
+        }
+        else if (isSmt.size() == 10 && isSmt.substr(0, 8) == "Semester") { 
+            for (int i = 0; i < 3; i++)
+                if (tmp == "Semester " + to_string(i + 1))
+                {
+                    readListCourse(entry.path(), yearCur, yearHead, i);
+                    break;
+                }
+        }
+        else {                           
+            if (yearHead == nullptr) {
+                yearHead = new SchoolYear;
+                yearCur = yearHead;
+            }
+            else {
                 yearCur->yearNext = new SchoolYear;
                 yearCur = yearCur->yearNext;
             }
-            yearCur->name = entry.path().filename().string();
-            readStudentInfo(entry.path(), yearCur);  // recursion
-        }
-        else {
-            if (classCur->name != "")
-            {
-                classCur->classNext = new Class;
-                classCur = classCur->classNext;
-            }
-            classCur->name = entry.path().filename().stem().string();     // filename (-.txt)
-            inputClassFromFile(entry.path(), classCur);
+            yearCur->name = tmp;
+            readInformation(entry.path(), yearCur, yearHead);  
         }
     }
 }
@@ -93,6 +212,22 @@ void deleteAll(SchoolYear*& yearHead)
                 delete stuTmp;
             }
             delete classTmp;
+        }
+        for (int i = 0; i < 3; i++)
+        {
+            while (yearHead->sm[i].courseHead)
+            {
+                Course* courseTmp = yearHead->sm[i].courseHead;
+                yearHead->sm[i].courseHead = yearHead->sm[i].courseHead->courseNext;
+
+                while (courseTmp->stuHead)
+                {
+                    StuInCourse* stuTmp = courseTmp->stuHead;
+                    courseTmp->stuHead = courseTmp->stuHead->stuNext;
+                    delete stuTmp;
+                }
+                delete courseTmp;
+            }
         }
         SchoolYear* yearTmp = yearHead;
         yearHead = yearHead->yearNext;
@@ -146,15 +281,33 @@ void saveChange(const path& file_path, Class*& classCur)
     out.close();
 }
 
-void tryMain() {
+int main() {
     SchoolYear* yearHead = NULL;
-    yearHead = new SchoolYear;
     SchoolYear* yearCur = yearHead;
-    readStudentInfo("Student Information", yearCur);
+    readInformation("Information", yearCur, yearHead);
+
+    Course* courseHead = yearHead->sm[0].courseHead;
+//    while(courseHead)
+//    {
+//        viewListStudentsInCourse(yearHead->sm[0].courseHead);
+//        courseHead = courseHead->courseNext;
+//    }
+
+    cout << "course of 22125001" << endl;
+    StuInCourse* pCur = findStuInClass("2019-2020", "19CTT", "19125029", yearHead)->pStuCourseHead;
+    while (pCur)
+    {
+        cout << pCur->courseID << endl;
+        pCur = pCur->pStuCourseNext;
+    }
+
+    deleteAll(yearHead);
+    return 0;
+}
 
 //    displayAll(yearHead);
 
-//    findStudentByID("19127027", yearHead)->password = "19127027";
+/*    findStudentByID("19127027", yearHead)->password = "19127027";
     auto result = findFileByName("Student Information", "19CLC4");
     if (result) {
         cout << "Found file at: " << result->string() << std::endl;
@@ -162,12 +315,8 @@ void tryMain() {
     else {
         cout << "File not found." << std::endl;
     }
-
-    saveChange(result->string(), yearHead->classHead);
-
-    deleteAll(yearHead);
-    return;
-}
+*/
+//saveChange(result->string(), yearHead->classHead);
 
 /*
  directory_iterator(path) : Hàm này nhận vào đường dẫn của một thư mục và trả về một iterator đại diện cho tất cả các tệp tin và thư mục trong thư mục đó.

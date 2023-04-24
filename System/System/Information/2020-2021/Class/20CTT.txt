@@ -1,0 +1,6 @@
+No	Student ID	First Name	Last Name	Gender	Date of birth	Social ID	Curriculum	Class											
+1	20125006	Hoang	Anh	Male	07/09/2002	79242416	Computer_Science	20CTT											
+2	20125032	Chu	Phuc	Female	13/08/2002	79257861	Computer_Science	20CTT											
+3	20125033	Diep	Nghiem	Male	09/03/2002	79221517	Computer_Science	20CTT											
+4	20125039	Nguyen	Minh	Male	24/08/2002	79227928	Computer_Science	20CTT											
+5	20125046	Dang	Triet	Male	20/04/2002	79299620	Computer_Science	20CTT

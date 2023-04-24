@@ -26,11 +26,26 @@ void viewListCourses(Course* courseHead)
 	}
 }
 
+void viewStudentProfile(Student* stuCur);
+
+void viewStudentProfile(Student* stuCur)
+{
+	cout << "ID: " << stuCur->StuID << endl;
+	cout << "First name: " << stuCur->firstName << endl;
+	cout << "Last name: " << stuCur->lastName << endl;
+	cout << "Gender: " << stuCur->gender << endl;
+	cout << "Date of birth: " << stuCur->dateOfBirth.day << "/" << stuCur->dateOfBirth.month << "/" << stuCur->dateOfBirth.year << endl;
+	cout << "Social ID: " << stuCur->socialID << endl;
+	cout << "Curriculum: " << stuCur->curriculum << endl;
+	//	cout << "Class name: " << stuCur->className << endl;
+}
+
 void viewListStudentsInCourse(Course* courseCur)	// lop sinh hoat
 {
 	Student* stuCur = courseCur->stuHead->stuInClass;
 	while (stuCur)
 	{
+//		viewStudentProfile(stuCur);
 		cout << stuCur->lastName << " " << stuCur->firstName << endl;
 		stuCur = stuCur->stuNext;
 	}
@@ -42,6 +57,7 @@ void viewListOfStudentInClass(Class* classCur)
 	Student* stuCur = classCur->stuHead;
 	while (stuCur)
 	{
+//		viewStudentProfile(stuCur);
 		cout << stuCur->lastName << " " << stuCur->firstName << endl;
 		stuCur = stuCur->stuNext;
 	}
@@ -90,15 +106,4 @@ bool checkPassword(Student* stuCur, string pass)
 void changePassword(Student* stuCur, string newpass)
 {
 	stuCur->password = newpass;
-}
-
-void viewStudentProfile(Student* stuCur)
-{
-	cout << "ID: " << stuCur->StuID << endl;
-	cout << "First name: " << stuCur->firstName << endl;
-	cout << "Last name: " << stuCur->lastName << endl;
-	cout << "Gender: " << stuCur->gender << endl;
-	cout << "Date of birth: " << stuCur->dateOfBirth.day << "/" << stuCur->dateOfBirth.month << "/" << stuCur->dateOfBirth.year << endl;
-	cout << "Social ID: " << stuCur->socialID << endl;
-//	cout << "Class name: " << stuCur->className << endl;
 }

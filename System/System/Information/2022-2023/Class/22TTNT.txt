@@ -1,0 +1,7 @@
+No	Student ID	First Malee	Last Malee	Gender	Date of birth	Social ID	Curriculum	Class
+1	22125002	Pham	Anh	Female	05/11/2004	79204033	Artificial_Intelligence	22TTNT
+2	22125004	Tran	Anh	Female	08/06/2004	79204020	Artificial_Intelligence	22TTNT
+3	22125009	Ngo	Bao	Male	04/12/2004	79204028	Artificial_Intelligence	22TTNT
+4	22125010	Phan	Bao	Male	01/06/2004	79204022	Artificial_Intelligence	22TTNT
+5	22125014	Tran	Dang	Male	21/04/2004	79204075	Artificial_Intelligence	22TTNT
+6	22125016	Nguyen	Dinh	Male	28/06/2004	79204068	Artificial_Intelligence	22TTNT

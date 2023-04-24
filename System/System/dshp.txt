@@ -1,8 +1,34 @@
 HK2 2022-2023						
+22						
 ID	Name	Credits	Lecturer	Day	Session	Max
-CS162	Introduction to Computer Science  II	4	Dinh Ba Tien	S3	1	50
+CS162	Introduction to Computer Science  I	4	Dinh Ba Tien	S3	1	50
 MTH121	Calculus II	4	Nguyen Huu Anh	S3	2	55
 PH212	Physics II	4	Nguyen Huu Nha	S5	3	60
 BAA00021	Physical Education	2	Le Thi Thu Hang	S4	1	60
 BAA00004	Introduction to Laws	3	Hoang Thanh Tu	S4	3	120
-BAA00102	Marxist-Leninist Pholosophy	3	Nguyen Quang Dinh	S7	3	120
+BAA00102	Marxist-Leninist Philosophy	3	Nguyen Quang Dinh	S7	3	120
+						
+21						
+ID	Name	Credits	Lecturer	Day	Session	Max
+WR227	Introduction to Computer Science  II	4	Dinh Ba Tien	S3	1	50
+STAT451	Applied Statistics	4	Nguyen Huu Anh	S3	2	55
+CS251	Logical Structures	4	Nguyen Huu Nha	S5	3	60
+ECE341	Computer Hardware	4	Le Thi Thu Hang	S4	1	60
+BAA00104	History of Vietnam Communist Party 	2	Hoang Thanh Tu	S4	3	120
+BAA00022	Physical Education II	2	Nguyen Quang Dinh	S7	3	120
+						
+20						
+ID	Name	Credits	Lecturer	Day	Session	Max
+CS333	Introduction to Operating Systems	4	Dinh Ba Tien	S3	1	50
+CS320	Programming Languages	4	Nguyen Huu Anh	S3	2	55
+CS350	Algorithms and Complexity	4	Nguyen Huu Nha	S5	3	60
+CS411	Computer Graphics	4	Le Thi Thu Hang	S4	1	60
+CS422	Software Analysis and Design	4	Hoang Thanh Tu	S4	3	120
+CS494	Internetworking Protocols	4	Nguyen Quang Dinh	S7	3	120
+						
+19						
+ID	Name	Credits	Lecturer	Day	Session	Max
+CS407	Technology-based Innovation	4	Dinh Ba Tien	S3	1	50
+CS419	Information Retrieve	4	Nguyen Huu Anh	S3	2	55
+CS430	Human-Computer Interaction	4	Nguyen Huu Nha	S5	3	60
+CS469	Capstone I	4	Le Thi Thu Hang	S4	1	60

@@ -30,7 +30,11 @@
     <ClCompile Include="Input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Delete.cpp">
+=======
+    <ClCompile Include="Load Information From File.cpp">
+>>>>>>> 600bd9d9af422df35a417c4b02ac6c9c7c10c6c8
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
