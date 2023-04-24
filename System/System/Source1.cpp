@@ -185,6 +185,18 @@ bool InfoStu::checkCourseName(Course*& course, string s) { //check if the course
 	return 0;
 }
 
+bool InfoStu::checkIfExist(Course*& c) {
+	ifstream fin(c->ID + "_dsdkhp.txt");
+	if (!fin) return 0;
+
+	string s;
+	while (!fin.eof()) {
+		fin >> s;
+		if (s == stuInClass->StuID) return 1;
+	}
+	return 0;
+}
+
 void InfoStu::importStuToCourseCSV(string courseName) { //student register any course, his/her name will be exported to the CSV file
 	ofstream ft(courseName + "_dsdkhp.txt", ofstream::app); //danh sach dang ky hoc phan
 	ft << sy->name << " " << stuInClass->className << " " << stuInClass->StuID << endl;
@@ -222,19 +234,24 @@ void InfoStu::printListCourse(Course* c, int cre, int numCourse) {
 	cout << string(stuInClass->firstName.length() + stuInClass->lastName.length() + stuInClass->StuID.length() + 34, ' ');
 	cout << "Number of courses: " << numCourse << "/" << "6" << endl << endl;
 
-	cout << "ID" << string(9, ' ') << "Course" << string(30, ' ') << "Credits" << string(6, ' ') << "Lecturer" << string(8, ' ') << "Day    " << "Session    " << "Registered    " << "State" << endl;
+	cout << "ID" << string(9, ' ') << "Course" << string(30, ' ') << "Credits" << string(3, ' ') << "Class" << string(7, ' ') << "Lecturer" << string(8, ' ') << "Day    " << "Session    " << "Registered    " << "State" << endl << endl;
 	while (c->courseNext) {
-		cout << c->ID << string(11 - c->ID.length(), ' ') << c->name << string(36 - c->name.length(), ' ') << "   " << c->numCredit << "      " << c->teacherName << string(19 - c->teacherName.length(), ' ') << c->day << string(8, ' ');
-		cout << c->session << string(10, ' ') << c->cntStudent << "/" << c->maxStudent << " " << string(6, ' ');
-		StuInCourse* sic = c->stuHead;
-		while (sic != NULL) {
-			if (sic->stuInClass->StuID == stuInClass->StuID) {
-				cout << "Da chon";
-				break;
+		if (c->className.substr(0, 2) > stuInClass->className.substr(0, 2) || c->className == stuInClass->className || (c->className.length() == 4 && c->className == stuInClass->className.substr(0, 4))) {
+			cout << c->ID << string(11 - c->ID.length(), ' ') << c->name << string(36 - c->name.length(), ' ') << "   " << c->numCredit << "      ";
+			cout << c->className << string(9 - c->className.length(), ' ') << c->teacherName << string(19 - c->teacherName.length(), ' ') << c->day << string(8, ' ');
+			cout << c->session << string(10, ' ') << c->cntStudent << "/" << c->maxStudent << " " << string(6, ' ');
+
+			StuInCourse* sic = c->stuHead;
+			if (checkIfExist(c)) cout << "Da chon";
+			else while (sic != NULL) {
+				if (sic->stuInClass->StuID == stuInClass->StuID) {
+					cout << "Da chon";
+					break;
+				}
+				sic = sic->stuNext;
 			}
-			sic = sic->stuNext;
+			cout << endl << endl;
 		}
-		cout << endl;
 		c = c->courseNext;
 	}
 }
@@ -272,7 +289,7 @@ void InfoStu::selectCourse() {
 		if (checkCourseName(tmpC, s)) {
 			if (tmpC->maxStudent == tmpC->cntStudent) cout << "No more slot!" << endl;
 			else {
-				if (addAndSortByID(tmpC, stuInClass)) {
+				if (!checkIfExist(tmpC) && addAndSortByID(tmpC, stuInClass)) {
 					cre += tmpC->numCredit;
 					numCourse++;
 					tmpC->cntStudent++;
@@ -290,6 +307,19 @@ void InfoStu::selectCourse() {
 }
 
 //From DSHP -> create all Course nodes
+Course* samecoursebutnotsameclass(Course* c) {
+	Course* tmp = new Course();
+	tmp->className = c->className.substr(0, 2) + "TT2";
+	tmp->ID = c->ID;
+	tmp->name = c->name;
+	tmp->numCredit = c->numCredit;
+	tmp->teacherName = c->teacherName;
+	tmp->session = c->session;
+	tmp->day = c->day;
+	tmp->maxStudent = c->maxStudent;
+	return tmp;
+}
+
 void Staff::createAllCourse(SchoolYear* sy) {
 	ifstream fin("dshp.txt");
 	if (!fin) {
@@ -298,25 +328,31 @@ void Staff::createAllCourse(SchoolYear* sy) {
 	}
 
 	string s;
+	string clname;
 	fin >> s;
 	string hk = s.substr(2, 1);
 
 	fin >> s;
 	while (sy->name != s) sy = sy->yearNext;
-
-	for (int i = 0; i < 7; i++) {
-		fin >> s;
+	if (sy == NULL) {
+		cout << "School-year not found";
+		return;
 	}
 
 	Course*& course = sy->sm[stoi(hk) - 1].courseHead;
-	if (course == NULL) course = new Course();
-	Course* tmp = course;
-	int cnt = 0;
 
 	while (!fin.eof()) {
+		Course* tmp = new Course();
+
 		//ID
-		fin >> tmp->ID;
-		if (tmp->ID.length() < 2) return;
+		fin >> s;
+		if (s[0] < '3') {
+			clname = s;
+			for (int i = 0; i < 7; i++) fin >> s;
+			fin >> tmp->ID;
+		}
+		else tmp->ID = s;
+		if (tmp->ID.length() < 3) return;
 
 		//Name
 		fin >> tmp->name;
@@ -349,10 +385,22 @@ void Staff::createAllCourse(SchoolYear* sy) {
 		fin >> s;
 		tmp->maxStudent = stoi(s);
 
-		tmp->courseNext = new Course();
-		tmp = tmp->courseNext;
+		//className
+		tmp->className = clname;
+
+		if (tmp->numCredit != 4 || clname == "19") {
+			tmp->className = clname + "TT";
+			tmp->courseNext = course;
+			course = tmp;
+		}
+		else {
+			Course* tmp2 = samecoursebutnotsameclass(tmp);
+			tmp->className += "TT1";
+			tmp->courseNext = tmp2;
+			tmp2->courseNext = course;
+			course = tmp;
+		}
 	}
-	tmp = NULL;
 	fin.close();
 }
 
@@ -614,9 +662,15 @@ int main() {
 
 	//staff function
 	staff->createAllCourse(sy);
-	//info->selectCourse();
+	info->selectCourse();
 
 	//delete 
+	Course* tmpcr = sy->sm[1].courseHead;
+	while (tmpcr) {
+		cout << tmpcr->ID << " " << tmpcr->className << endl;
+		tmpcr = tmpcr->courseNext;
+		//if (tmpcr->ID == "CS469") break;
+	}
 	while (sy) {
 		SchoolYear* tmps = sy;
 		Class* tmpc = sy->classHead;
@@ -628,7 +682,7 @@ int main() {
 		delete tmps;
 	}
 	while (info) {
-		//cout << info->stuInClass->lastName << endl;
+		//out << info->stuInClass->lastName << endl;
 		InfoStu* tmpi = info;
 		info = info->InfoStuNext;
 		delete tmpi;
