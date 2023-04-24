@@ -89,7 +89,6 @@ struct Course {
 	Day dayB[6]; //Mon - ... - Sat
 
 	//node
-	Class* classHead = NULL; //????
 	StuInCourse* stuHead = NULL;
 	Course* courseNext = NULL;
 };
@@ -165,7 +164,6 @@ struct Staff {
 	void createAllClassesFromCSV(SchoolYear*& sy, string syname, InfoStu*& info);
 	void createAllCourse(SchoolYear* sy);
 };
-//StuInCourse* checkStuInCourse(Course* c, Student* stu);
 
 void inputADate(Date d);
 void createSemester(Semester s);

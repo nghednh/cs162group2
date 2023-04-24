@@ -3,9 +3,8 @@
 #include <iostream>
 #include "Structure.h"
 
+
 using namespace std;
-
-
 
 void inputADate(Date d){
     cin >> d.day >> d.month >> d.year;
@@ -49,9 +48,8 @@ void inputACourse(Course* a){
     cin >> a->name;
     cin >> a->teacherName;
     cin >> a->numCredit;
-    cin >> a->day;
+    cin >> a->date;
     cin >> a->session;
-    a->courseNext = NULL;
 }
 
 int numPresentAsDay(string day){
@@ -126,17 +124,13 @@ void classAttendToCourse(Course* a, Class* c){
     
     //Mark this session has been taken
     c->courseSes[d][ses] = true;
-    a->dayB[d].s[ses].cur_class = c;
-    a->dayB[d].s[ses].isEmpty = false;
+    a->day[d].s[ses].cur_class = c;
+    a->day[d].s[ses].isEmpty = false;
 }
 
 void addCourse(Semester s, Course* a){
     inputACourse(a);
     Course* courseCur = s.courseHead;
-    if(courseCur == nullptr){
-        courseCur = a;
-        return;
-    }
     while(courseCur->courseNext){
         courseCur = courseCur->courseNext;
     }
@@ -254,13 +248,13 @@ void updateCourseInfo(Course* course){
             case 2:
             {
                 cout << "New course's name: ";
-                getline(cin, course->name);
+                cin >> course->name;
                 break;
             }
             case 3:
             {
                 cout << "New teacher's name: ";
-                getline(cin, course->teacherName);
+                cin >> course->teacherName;
                 break;
             }
             case 4:
@@ -283,7 +277,7 @@ void updateCourseInfo(Course* course){
             case 6:
             {
                 cout << "New day and session (Day + num-th session): ";
-                cin >> course->day >> course->session;
+                cin >> course->date >> course->session;
                 break;
             }
             case 7:
@@ -344,11 +338,11 @@ float convertFloat(string s){
 }
 
 void addAndSortByID(StuInCourse*& stuHead, StuInCourse* curStu){
-    //float a = convertFloat(curStu->stuInClass->StuID);
+    float a = convertFloat(curStu->stuInClass->StuID);
     StuInCourse* cur = stuHead;
     while(cur){
-        //float b = convertFloat(cur->stuInClass->StuID);
-        if(curStu->stuInClass->StuID > cur->stuInClass->StuID){ 
+        float b = convertFloat(cur->stuInClass->StuID);
+        if(a > b){ 
             curStu->stuNext = cur->stuNext->stuNext;
             cur->stuNext = curStu;
             return;
@@ -357,34 +351,4 @@ void addAndSortByID(StuInCourse*& stuHead, StuInCourse* curStu){
     }
     curStu->stuNext = stuHead;
     stuHead = curStu;
-}
-//view schedule
-void viewSchedule(Semester s, Student* stu){
-    string nameSes[4][7];
-    Course* tmp = s.courseHead;
-    while(tmp){
-        if(checkStuInCourse(tmp, stu)){
-            int a = numPresentAsDay(tmp->day);
-            nameSes[a][tmp->session - 1] = tmp->ID;
-        }
-        tmp = tmp->courseNext;
-    }
-
-    cout << "                                           SCHEDULE" << endl;
-    cout << "------------------------------------------------------------------------------------" << endl;
-    cout << " SES/DAY  |     MON    |    TUE    |    WED    |    THU    |    FRI    |    SAT    |" <<  endl;
-    cout << "------------------------------------------------------------------------------------" << endl;
-    cout << "                                            -BREAK-                     " << endl;
-    for(int i = 0; i < 4; i++){
-        if(i == 2){
-            cout << "                                            -BREAK-                     " << endl;
-            cout << "------------------------------------------------------------------------------------" << endl;
-        }
-        cout << "Session " << i+1 << " : ";
-        for(int j = 0; j < 6; j++)
-            cout << string((11-nameSes[i][j].length())/2, ' ') << nameSes[i][j] << string(11-((11-nameSes[i][j].length())/2)-nameSes[i][j].length(), ' ') << '|';
-        cout << endl;
-        cout << "------------------------------------------------------------------------------------" << endl;
-    }
-    cout << endl;
 }

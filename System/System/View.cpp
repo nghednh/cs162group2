@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <dirent.h>
 #include "Structure.h"
 
 void viewListClasses(SchoolYear* sYearHead)

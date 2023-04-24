@@ -30,11 +30,7 @@
     <ClCompile Include="Input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="Delete.cpp">
-=======
     <ClCompile Include="Load Information From File.cpp">
->>>>>>> 600bd9d9af422df35a417c4b02ac6c9c7c10c6c8
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -51,49 +47,5 @@
     <ClInclude Include="Beginning.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Delete.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="CM101_dsdkhp.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="CS161_dsdkhp.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="CS162_dsdkhp.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="CS162_dssv.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="CS162_mark.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="DSSV_Khoatuyen2019-2020.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="DSSV_Khoatuyen2020-2021.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="DSSV_Khoatuyen2021-2022.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="DSSV_Khoatuyen2022-2023.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="DSSV_Khoatuyen2022-2023[Full].txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="MTH251_dsdkhp.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="PH211_dsdkhp.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="Staff.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
   </ItemGroup>
 </Project>

@@ -136,7 +136,6 @@
   <ItemGroup>
     <ClCompile Include="Coures&amp;Semester.cpp" />
     <ClCompile Include="Beginning.cpp" />
-    <ClCompile Include="Delete.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Load Information From File.cpp" />
     <ClCompile Include="Source1.cpp" />
@@ -145,24 +144,8 @@
   <ItemGroup>
     <ClInclude Include="Course&amp;Semester.h" />
     <ClInclude Include="Beginning.h" />
-    <ClInclude Include="Delete.h" />
     <ClInclude Include="Structure.h" />
     <ClInclude Include="View.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="CM101_dsdkhp.txt" />
-    <Text Include="CS161_dsdkhp.txt" />
-    <Text Include="CS162_dsdkhp.txt" />
-    <Text Include="CS162_dssv.txt" />
-    <Text Include="CS162_mark.txt" />
-    <Text Include="DSSV_Khoatuyen2019-2020.txt" />
-    <Text Include="DSSV_Khoatuyen2020-2021.txt" />
-    <Text Include="DSSV_Khoatuyen2021-2022.txt" />
-    <Text Include="DSSV_Khoatuyen2022-2023.txt" />
-    <Text Include="DSSV_Khoatuyen2022-2023[Full].txt" />
-    <Text Include="MTH251_dsdkhp.txt" />
-    <Text Include="PH211_dsdkhp.txt" />
-    <Text Include="Staff.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
