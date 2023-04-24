@@ -643,6 +643,7 @@ void createAllStaffsFromCSV(Staff*& staff) {
 	fin.close();
 }
 
+/*
 int main() {
 	//create headnode of InfoStu, Staff, SchoolYear
 	InfoStu* info = NULL;
@@ -677,7 +678,7 @@ int main() {
 		/*while (tmpc) {
 			cout << tmpc->name << endl;
 			tmpc = tmpc->classNext;
-		}*/
+		}
 		sy = sy->yearNext;
 		delete tmps;
 	}
@@ -693,3 +694,4 @@ int main() {
 		delete (tmps);
 	}
 }
+*/
