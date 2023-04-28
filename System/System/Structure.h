@@ -129,11 +129,11 @@ struct InfoStu {
 
 	//Supplementary functions
 	void viewCourses(Semester s); // View all the courses that the student participates in.
-	bool checkCourseName(Course*& course, string s);
-	void importStuToCourseCSV(string courseName);
+	bool checkCourseName(Course* course, string s);
+	void importStuToCourseCSV(SchoolYear* sy, string courseName, Student* stu);
 	bool addAndSortByID(Course*& c, Student*& stu);
 	void printListCourse(Course* c, int cre, int numCourse);
-	void selectCourse();
+	bool selectCourse(SchoolYear* sy, Student* stu, int numSm);
 };
 
 struct Staff {
