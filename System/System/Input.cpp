@@ -5,6 +5,7 @@
 #include <sstream>
 #include <optional>
 #include "Structure.h"
+#include "View.h"
 
 namespace fs = std::filesystem;
 using namespace fs;
