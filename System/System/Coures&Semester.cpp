@@ -48,7 +48,7 @@ void inputACourse(Course* a){
     cin >> a->name;
     cin >> a->teacherName;
     cin >> a->numCredit;
-    cin >> a->date;
+    cin >> a->day;
     cin >> a->session;
 }
 
@@ -101,7 +101,7 @@ void viewAvailableSession(Class* c){
     cout << endl;
 }
 
-void classAttendToCourse(Course* a, Class* c){
+/*void classAttendToCourse(Course* a, Class* c){
     //clear screen
     cout << "\033[2J\033[1;1H";
 
@@ -124,11 +124,11 @@ void classAttendToCourse(Course* a, Class* c){
     
     //Mark this session has been taken
     c->courseSes[d][ses] = true;
-    a->day[d].s[ses].cur_class = c;
-    a->day[d].s[ses].isEmpty = false;
-}
+    a->dayB[d].s[ses].cur_class = c;
+    a->dayB[d].s[ses].isEmpty = false;
+}*/
 
-void addCourse(Semester s, Course* a){
+void addCourse(Semester &s, Course* a){
     inputACourse(a);
     Course* courseCur = s.courseHead;
     while(courseCur->courseNext){
@@ -217,8 +217,8 @@ void viewOptions(){
     cout << "0. Stop updating and save" << endl;
 } 
 void viewCourseInfo(Course* course){
-    cout << course->name << ' ' << course->ID << " by " << course->teacherName;
-    Class* cur = course->classHead;
+    cout << course->name << ' ' << course->className << " - " << course->ID << " by " << course->teacherName << endl;
+    /*Class* cur = course->classHead;
     cout << "Current classes attend to this course: " << endl;
     while(cur){
         if(cur->classNext == NULL){
@@ -227,7 +227,7 @@ void viewCourseInfo(Course* course){
         }
         cout << cur->name << " - ";
         cur = cur->classNext;
-    }
+    }*/
     cout << "Number of credits for this course: ";
     cout << course->numCredit << endl;
     cout << "Maximum students for this course: ";
@@ -277,10 +277,10 @@ void updateCourseInfo(Course* course){
             case 6:
             {
                 cout << "New day and session (Day + num-th session): ";
-                cin >> course->date >> course->session;
+                cin >> course->day >> course->session;
                 break;
             }
-            case 7:
+            /*case 7:
             {
                 string tmp;
                 cout << "The class's name you want to change its session: ";
@@ -308,18 +308,39 @@ void updateCourseInfo(Course* course){
                 cin >> new_day >> new_ses;
                 cur->courseSes[numPresentAsDay(new_day)][new_ses] = true;
                 break;
-            }
+            }*/
         }
     }
 }
 //sch
 void viewSchedule(Semester sm, Student *s){
+    string nameSes[4][7];
+	for(int i = 0; i < 4; i++)
+		for(int j = 0; j < 7; j++)
+			nameSes[i][j] = "           ";
     Course* cur = sm.courseHead;
     while(cur){
-        if(checkStuInCourse(cur, s))
-
+        if(checkStuInCourse(cur, s)){
+            nameSes[cur->session][numPresentAsDay(cur->day)] = cur->ID;
+        }
         cur = cur->courseNext;
     }
+	cout << "                                   < SCHEDULE >" << endl;
+    cout << "------------------------------------------------------------------------------------" << endl;
+    cout << " SES/DAY  |     MON    |    TUE    |    WED    |    THU    |    FRI    |    SAT    |" <<  endl;
+    cout << "------------------------------------------------------------------------------------" << endl;
+    for(int i = 0; i < 4; i++){
+        if(i == 2){
+            cout << "                                      -BREAK-                     " << endl;
+            cout << "------------------------------------------------------------------------------------" << endl;
+        }
+        cout << "Session " << i+1 << " : ";
+        for(int j = 0; j < 6; j++)
+            cout << string(11-((11-nameSes[i][j].length())/2)-nameSes[i][j].length(), ' ') << nameSes[i][j] << string((11-nameSes[i][j].length())/2, ' ') << '|';
+        cout << endl;
+        cout << "------------------------------------------------------------------------------------" << endl;
+    }
+    cout << endl;
 }
 
 //additional function
