@@ -45,8 +45,9 @@ bool Staff::addAStudentInCourse(Course* a, Student* newStu){
 }
 void inputACourse(Course* a){
     cin >> a->ID;
-    cin >> a->name;
-    cin >> a->teacherName;
+    cin.ignore();
+    getline(cin , a->name);
+    getline(cin, a->teacherName);
     cin >> a->numCredit;
     cin >> a->day;
     cin >> a->session;
@@ -248,13 +249,13 @@ void updateCourseInfo(Course* course){
             case 2:
             {
                 cout << "New course's name: ";
-                cin >> course->name;
+                getline(cin, course->name);
                 break;
             }
             case 3:
             {
                 cout << "New teacher's name: ";
-                cin >> course->teacherName;
+                getline(cin, course->teacherName);
                 break;
             }
             case 4:
