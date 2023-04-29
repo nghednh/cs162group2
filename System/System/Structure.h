@@ -65,12 +65,12 @@ struct Class {
 	Class* classNext = NULL;
 };
 
-struct Session{
+struct Session {
 	Class* cur_class = NULL;
 	bool isEmpty = true;
 };
 
-struct Day{
+struct Day {
 	string name; //Mon - ... - Sat
 	Session s[4];
 };
@@ -110,7 +110,7 @@ struct SchoolYear {
 
 	//node
 	Class* classHead = NULL;
-//	Course* courseHead = NULL; 
+	//	Course* courseHead = NULL; 
 	SchoolYear* yearNext = NULL;
 
 	//array
@@ -129,20 +129,18 @@ struct InfoStu {
 
 	//Supplementary functions
 	void viewCourses(Semester s); // View all the courses that the student participates in.
-
-	bool checkIfExist(Course*& c);
-	bool checkCourseName(Course*& course, string s);
-	void importStuToCourseCSV(string courseName);
+	bool checkCourseName(Course* course, string s);
+	void importStuToCourseCSV(SchoolYear* sy, string courseName, Student* stu);
 	bool addAndSortByID(Course*& c, Student*& stu);
 	void printListCourse(Course* c, int cre, int numCourse);
-	void selectCourse();
+	bool selectCourse(SchoolYear* sy, Student* stu, int numSm);
 };
 
 struct Staff {
 	//elements
 	string ID; //username == ID
 	string name;
-	string password =  "10diemLy"; //mac dinh
+	string password = "10diemLy"; //mac dinh
 	Staff* staffNext = NULL;
 
 	//Main functions
