@@ -1,11 +1,10 @@
-﻿#include <iostream>
+#include <iostream>
 #include <filesystem>
 #include <fstream>
 #include <string>
 #include <sstream>
 #include <optional>
 #include "Structure.h"
-
 
 namespace fs = std::filesystem;
 using namespace fs;
@@ -561,7 +560,6 @@ int main() {
 
     Course* courseHead = yearHead->yearNext->yearNext->yearNext->sm[1].courseHead;
 
-
     while(courseHead)
     {
         cout << endl << courseHead->name << endl;
@@ -732,7 +730,6 @@ int main()
     SchoolYear* yearHead = NULL;
     SchoolYear* yearCur = yearHead;
     readInformation("Information", yearCur, yearHead);      // yearCur de chay, yearHead de tim va danh dau
-
     deleteAll(yearHead);
     return 0;
 }
