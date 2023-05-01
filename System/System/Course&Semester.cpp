@@ -6,9 +6,11 @@
 
 using namespace std;
 
+//Input a date (day-month-year)
 void inputADate(Date& d){
     cin >> d.day >> d.month >> d.year;
 }
+//Create a semester
 void createSemester(Semester& s){
     cin >> s.num;
     inputADate(s.start);
@@ -43,6 +45,7 @@ bool Staff::addAStudentInCourse(Course* a, Student* newStu){
     a->cntStudent += 1;
     return true;
 }
+//Input data of a course
 void inputACourse(Course* a){
     cin >> a->ID;
     cin.ignore();
@@ -52,7 +55,7 @@ void inputACourse(Course* a){
     cin >> a->day;
     cin >> a->session;
 }
-
+//Convert a string-type day into its certain number
 int numPresentAsDay(string day){
     if(day == "MON")
         return 0;
@@ -67,7 +70,7 @@ int numPresentAsDay(string day){
     if(day == "SAT")
         return 5;
 }
-
+//Convert a int-type day into its certain string
 string stringPresentAsDay(int n){
     if(n == 0)
         return "MON";
@@ -82,7 +85,7 @@ string stringPresentAsDay(int n){
     if(n == 5)
         return "SAT";
 }
-//
+//View all available sessions of a class in a week
 void viewAvailableSession(Class* c){
     cout << "     MON   TUE   WED   THU   FRI   SAT   " << endl;
     for(int j = 0; j < 4; j++){
@@ -101,7 +104,7 @@ void viewAvailableSession(Class* c){
     cout << "T: Taken session";
     cout << endl;
 }
-
+//Choose a session of a class that a course will take 
 /*void classAttendToCourse(Course* a, Class* c){
     //clear screen
     cout << "\033[2J\033[1;1H";
@@ -128,7 +131,7 @@ void viewAvailableSession(Class* c){
     a->dayB[d].s[ses].cur_class = c;
     a->dayB[d].s[ses].isEmpty = false;
 }*/
-
+//Add a course to a semester
 void addCourse(Semester &s, Course* a){
     inputACourse(a);
     Course* courseCur = s.courseHead;
@@ -139,6 +142,7 @@ void addCourse(Semester &s, Course* a){
     courseCur = a;
     courseCur->courseNext = nullptr;
 }
+//Remove a student from a course
 bool Staff::removeAStudentFromCourse(Course* a, string ID){
     Student* cur = a->stuHead->stuInClass;
     while(cur->stuNext){
@@ -153,7 +157,7 @@ bool Staff::removeAStudentFromCourse(Course* a, string ID){
     }
     return false; //Neu k co ID do thi bao hc sinh k tham gia khoa hoc.
 }
-
+//Delete a course out of a semester
 bool Staff::deleteACourse(Course*& courseHead, string courseID){
     Course* cur = courseHead;
     while(cur->courseNext){
@@ -171,7 +175,7 @@ bool Staff::deleteACourse(Course*& courseHead, string courseID){
     return true;
 }
 
-//Student upgrade 14
+//Student upgrade 14: check if a student is following a course or not
 StuInCourse* checkStuInCourse(Course* c, Student* stu){
     StuInCourse* curStu = c->stuHead;
     while(curStu){
@@ -181,7 +185,7 @@ StuInCourse* checkStuInCourse(Course* c, Student* stu){
     }
     return NULL;
 }
-//s
+//View all the courses in a semester
 void InfoStu::viewCourses(Semester s){
     Course* cur = s.courseHead;
     while(cur){
@@ -193,6 +197,7 @@ void InfoStu::viewCourses(Semester s){
         cur = cur->courseNext;
     }
 }
+//find the final GPA of a student
 float final_GPA(Semester sm, Student* s){
     float gpa = 0;
     Course* cur = sm.courseHead;
@@ -205,6 +210,8 @@ float final_GPA(Semester sm, Student* s){
     gpa = (gpa*4)/10;
     return gpa;
 }
+
+//Update course's information
 void viewOptions(){
     cout << "UPDATE COURSE'S INFORMATION." <<  endl;
     cout << endl; 
@@ -313,7 +320,7 @@ void updateCourseInfo(Course* course){
         }
     }
 }
-//sch
+//Print out the schedule of a student
 void viewSchedule(Semester sm, Student *s){
     string nameSes[4][7];
 	for(int i = 0; i < 4; i++)
@@ -345,6 +352,7 @@ void viewSchedule(Semester sm, Student *s){
 }
 
 //additional function
+//Convert a string into float type
 float convertFloat(string s){
     float a = 0;
     if(s == "10")
@@ -359,6 +367,7 @@ float convertFloat(string s){
     return a;
 }
 
+//Add students in a sorting way
 void addAndSortByID(StuInCourse*& stuHead, StuInCourse* curStu){
     float a = convertFloat(curStu->stuInClass->StuID);
     StuInCourse* cur = stuHead;
