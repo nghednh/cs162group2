@@ -1,5 +1,4 @@
 #include "Structure.h"
-#include "Course&Semester.h"
 
 //Supplementary function
 void trimS(string& s) { //to trim a string
@@ -42,6 +41,7 @@ void Staff::importScoreboard(Course* course) {
 
 //21: View the scoreboard of a course
 void Staff::viewScoreboard(Course* course) {
+	cout << endl << string(85, '-') << endl;
 	StuInCourse* s = course->stuHead;
 	cout << "Course: " << course->name << endl;
 	cout << "Credit: " << course->numCredit << endl;
@@ -96,7 +96,7 @@ void Staff::updateRes(Course* course) {
 }
 
 //23: View the scoreboard of a class, including final marks of all courses in the semester, GPA in this semester, and the overall GPA.
-/*StuInCourse* checkStuInCourse(Course* c, Student* stu) {
+StuInCourse* checkStuInCourse(Course* c, Student* stu) {
 	StuInCourse* curStu = c->stuHead;
 	while (curStu) {
 		if (curStu->stuInClass->StuID == stu->StuID) return curStu;
@@ -104,7 +104,7 @@ void Staff::updateRes(Course* course) {
 	}
 	return NULL;
 }
-*/
+
 void Staff::viewScoreClass(SchoolYear* sy, int numSm, Class* cl) {
 	Student* tmpS = cl->stuHead;
 	float GPAsm = 0;
@@ -120,7 +120,6 @@ void Staff::viewScoreClass(SchoolYear* sy, int numSm, Class* cl) {
 		cout << "Accumulated GPA: " << tmpS->accumScore / tmpS->accumCredits << "/4.0" << endl << endl;
 
 		Course* tmpC = sy->sm[numSm - 1].courseHead;
-		if (tmpC == NULL) cout << "vl" << endl;
 		while (tmpC) {
 			StuInCourse* tmpSIC = checkStuInCourse(tmpC, tmpS);
 			if (tmpSIC != NULL) {
@@ -138,29 +137,39 @@ void Staff::viewScoreClass(SchoolYear* sy, int numSm, Class* cl) {
 }
 
 //24: View his/her scoreboard
-//function hoi muon xem diem o dau
 void InfoStu::viewScoreBoard(SchoolYear* sy, int numSm) {
-	cout << string(50, '*') << "THONG TIN TOM TAT" << string(50, '*') << endl << endl;
-	cout << string(20, ' ') << "Thong tin chung" << string(20, ' ') << endl;
-	cout << " Ma SV" << string(30, ' ') << stuInClass->StuID << endl;
-	cout << " Ho ten SV" << string(26, ' ') << stuInClass->firstName << ' ' << stuInClass->lastName << endl;
-	cout << " Tong TC tich luy" << string(19, ' ') << stuInClass->accumCredits << endl;
-	cout << " Diem TB tich luy" << string(19, ' ') << stuInClass->accumScore / stuInClass->accumScore << endl;
-	cout << " Du dieu kien tot nghiep" << string(12, ' ') << "NA" << endl;
+	cout << string(50, '-') << "THONG TIN TOM TAT" << string(50, '-') << endl << endl;
+	cout << string(18, ' ') << "Thong tin chung" << string(45, ' ') << "Nhom hoc phan" << endl;
 
-	cout << string(45, '*') << "KET QUA CHI TIET TUNG HOC PHAN" << string(45, '*') << endl << endl;
-	cout << "     Hoc Ky     " << "  Ma MH  " << string(15, ' ') << "Ten MH" << string(15, ' ') << " So TC " << "  Lop  " << " GK " << " Khac " << " CK " << " 10 " << endl;
+	cout << " Ma SV" << string(30, ' ') << stuInClass->StuID;
+	cout << string(28 - stuInClass->StuID.length(), ' ') << "BBCS" << string(28, ' ') << "58" << endl;
+
+	cout << " Ho ten SV" << string(26, ' ') << stuInClass->firstName << ' ' << stuInClass->lastName;
+	cout << string(28 - (stuInClass->firstName + ' ' + stuInClass->lastName).length(), ' ') << "BBNCS" << string(27, ' ') << "26" << endl;
+
+	cout << " Tong TC tich luy" << string(19, ' ') << stuInClass->accumCredits;
+	cout << string(28 - to_string(stuInClass->accumCredits).length(), ' ') << "Math-Physics" << string(20, ' ') << "28" << endl;
+
+	cout << " Diem TB tich luy" << string(19, ' ') << stuInClass->accumScore / stuInClass->accumCredits;
+	cout << string(28 - to_string(stuInClass->accumScore).length(), ' ') << "TCCS" << string(28, ' ') << "36" << endl;
+
+	cout << " Du dieu kien tot nghiep" << string(12, ' ') << "NA";
+	cout << string(26, ' ') << "TN" << string(30, ' ') << "10" << endl << endl;
+
+	cout << string(45, '-') << "KET QUA CHI TIET TUNG HOC PHAN" << string(45, '-') << endl << endl;
+
+	cout << "    Hoc Ky    |" << "   Ma MH   |" << string(17, ' ') << "Ten MH" << string(15, ' ') << "| So TC |" << "  Lop  |" << " GK |" << " Khac |" << " CK |" << " 10 |" << "  ABC  " << endl;
+
 	Course* course = sy->sm[numSm - 1].courseHead;
-	if (course == NULL) cout << "True";
 	while (course) {
 		StuInCourse* tmp = course->stuHead;
 		while (tmp && tmp->stuInClass != stuInClass) {
 			tmp = tmp->stuNext;
 		}
 		if (tmp != NULL) {
-			cout << "  HK" << numSm << " " << sy->name << "  ";
-			cout << course->ID << string(4, ' ') << course->name << string(36 - course->name.length(), ' ');
-			cout << "   " << course->numCredit << "   " << " " << stuInClass->className << " " << tmp->midM << "    " << tmp->otherM << "    " << tmp->finalM << "   " << tmp->totalM << endl;
+			cout << " HK" << numSm << " " << sy->name << "|";
+			cout << "   " << course->ID << string(8 - course->ID.length(), ' ') << "| " << course->name << string(37 - course->name.length(), ' ') << "|   ";
+			cout << course->numCredit << "   | " << stuInClass->className << string(6 - stuInClass->className.length(), ' ') << "| " << tmp->midM << "| " << tmp->otherM << "    " << tmp->finalM << "   " << tmp->totalM << endl;
 		}
 		course = course->courseNext;
 	}
@@ -168,45 +177,276 @@ void InfoStu::viewScoreBoard(SchoolYear* sy, int numSm) {
 }
 
 //Student can select Courses that are available for the semester
-bool InfoStu::checkCourseName(Course* course, string s) { //check if the course ID entered is appropriate or not
+bool InfoStu::checkCourseName(Course*& course, string s) { //check if the course ID entered is appropriate or not
 	while (course != NULL) {
 		if (s == course->ID) return 1;
 		course = course->courseNext;
-
 	}
 	return 0;
 }
 
-void InfoStu::importStuToCourseCSV(SchoolYear* sy, string courseName, Student* stu) { //student register any course, his/her name will be exported to the CSV file
-	ofstream ft(courseName + "_dsdkhp.txt", ofstream::app); //danh sach dang ky hoc phan
-	ft << sy->name << " " << stu->className << " " << stu->StuID << endl;
+bool InfoStu::checkIfExist(Course*& c) {
+	ifstream fin(c->ID + "_dsdkhp.txt");
+	if (!fin) return 0;
+
+	string s;
+	while (!fin.eof()) {
+		fin >> s;
+		if (s == stuInClass->StuID) return 1;
+	}
+	return 0;
 }
 
-bool InfoStu::selectCourse(SchoolYear* sy, Student* stu, int numSm) {
-	if (numSm < 1 || numSm >3 || sy->sm[numSm - 1].state == 0) return 0;
+void InfoStu::importStuToCourseCSV(string courseName) { //student register any course, his/her name will be exported to the CSV file
+	ofstream ft(courseName + "_dsdkhp.txt", ofstream::app); //danh sach dang ky hoc phan
+	ft << sy->name << " " << stuInClass->className << " " << stuInClass->StuID << endl;
+}
+
+int countCntNum(Course*& c) {
+	ifstream fin(c->ID + "_dsdkhp.txt");
+	if (!fin) return 0;
+
+	string s;
+	int cnt = 0;
+	while (!fin.eof()) {
+		fin >> s;
+		fin >> s;
+		fin >> s;
+		cnt++;
+	}
+	return cnt - 1;
+}
+
+void addpStuCourseHead(StuInCourse*& head, StuInCourse*& sic) {
+	sic->pStuCourseNext = head;
+	head = sic;
+}
+
+void InfoStu::countCredit(Course* c, int& cre, int& numCourse) {
+	while (c) {
+		if (checkIfExist(c)) {
+			numCourse++;
+			cre += c->numCredit;
+		}
+		c = c->courseNext;
+	}
+}
+
+bool InfoStu::addAndSortByID(Course*& c) {
+	if (c->stuHead == NULL) {
+		c->stuHead = new StuInCourse();
+		c->stuHead->stuInClass = stuInClass;
+		c->stuHead->infoCourse = c;
+		addpStuCourseHead(stuInClass->pStuCourseHead, c->stuHead);
+		return 1;
+	}
+
+	StuInCourse* sic = c->stuHead;
+	StuInCourse* tmp = new StuInCourse();
+	tmp->stuInClass = stuInClass;
+	tmp->infoCourse = c;
+
+	if (!sic->stuNext && sic->stuInClass->StuID > stuInClass->StuID) {
+		tmp->stuNext = sic;
+		sic = tmp;
+		addpStuCourseHead(stuInClass->pStuCourseHead, tmp);
+		return 1;
+	}
+
+	while (sic->stuNext) {
+		if (sic->stuNext->stuInClass->StuID == stuInClass->StuID) return 0;
+		if (sic->stuNext->stuInClass->StuID > stuInClass->StuID) {
+			tmp->stuNext = sic->stuNext;
+			sic->stuNext = tmp;
+			addpStuCourseHead(stuInClass->pStuCourseHead, tmp);
+			return 1;
+		}
+		sic = sic->stuNext;
+	}
+	if (sic->stuInClass->StuID != stuInClass->StuID) {
+		sic->stuNext = tmp;
+		addpStuCourseHead(stuInClass->pStuCourseHead, tmp);
+		return 1;
+	}
+	return 0;
+}
+
+void InfoStu::printListCourse(Course* c, int cre, int numCourse) {
+	cout << stuInClass->firstName << " " << stuInClass->lastName << " - " << stuInClass->StuID << string(30, ' ');
+	cout << "Number of credits: " << cre << "/" << "24" << endl;
+	cout << string(stuInClass->firstName.length() + stuInClass->lastName.length() + stuInClass->StuID.length() + 34, ' ');
+	cout << "Number of courses: " << numCourse << "/" << "6" << endl << endl;
+
+	cout << "ID" << string(9, ' ') << "Course" << string(30, ' ') << "Credits" << string(3, ' ') << "Class" << string(7, ' ') << "Lecturer" << string(8, ' ') << "Day    " << "Session    " << "Registered    " << "State" << endl << endl;
+	while (c->courseNext) {
+		if (c->className.substr(0, 2) > stuInClass->className.substr(0, 2) || c->className == stuInClass->className || (c->className.length() == 4 && c->className == stuInClass->className.substr(0, 4))) {
+			c->cntStudent = countCntNum(c);
+			cout << c->ID << string(11 - c->ID.length(), ' ') << c->name << string(36 - c->name.length(), ' ') << "   " << c->numCredit << "      ";
+			cout << c->className << string(9 - c->className.length(), ' ') << c->teacherName << string(19 - c->teacherName.length(), ' ') << c->day << string(8, ' ');
+			cout << c->session << string(10, ' ') << c->cntStudent << "/" << c->maxStudent << " " << string(9 - to_string(c->cntStudent).length() - to_string(c->maxStudent).length(), ' ');
+
+			StuInCourse* sic = c->stuHead;
+			if (checkIfExist(c)) cout << "Da chon";
+			else while (sic != NULL) {
+				if (sic->stuInClass->StuID == stuInClass->StuID) {
+					cout << "Da chon";
+					break;
+				}
+				sic = sic->stuNext;
+			}
+			cout << endl << endl;
+		}
+		c = c->courseNext;
+	}
+}
+
+void InfoStu::selectCourse() {
+	ifstream fin("dshp.txt");
+	if (!fin) {
+		cout << "Not time for registering course!" << endl;
+		return;
+	}
 
 	//Print out all courses for the student to choose
-	Course* tmp = sy->sm[numSm - 1].courseHead;
-	cout << "These are all courses available for Semester " << numSm << " " << sy->name << ": " << endl;
+	string s;
+	fin >> s;
+	cout << s << " "; //HK2
+	string t = s;
+	fin >> s;
+	cout << s << endl; //2022-2023
 
-	while (tmp) {
-		cout << "Name: " << tmp->name << endl << "ID: " << endl << tmp->ID << endl << "Credits: " << tmp->numCredit << endl << "Teacher: " << tmp->teacherName << endl;
-		tmp = tmp->courseNext;
+	SchoolYear* tmpsy = sy;
+	while (tmpsy->name != s) {
+		tmpsy = tmpsy->yearNext;
 	}
 
-	//Student chooses courses
-	int cnt = 0; //max courses chosen are 4
-	cout << endl << "Please select course(s)!" << endl;
-	while (cnt < 5) {
-		string s;
+	Course* c = tmpsy->sm[stoi(s.substr(2, 1)) - 1].courseHead;
+	Course* tmpC = c;
+
+	int cre = 0;
+	int numCourse = 0;
+	countCredit(c, cre, numCourse);
+	printListCourse(c, cre, numCourse);
+	while (cre < 16 && numCourse < 4) {
+		cout << "Register: ";
 		cin >> s;
-		if (checkCourseName(sy->sm[numSm - 1].courseHead, s)) {
-			importStuToCourseCSV(sy, s, stu); // student id will be export to CSV file
-			cnt++;
+		if (s == "0") return;
+		if (checkCourseName(tmpC, s)) {
+			if (tmpC->maxStudent == tmpC->cntStudent) cout << "No more slot!" << endl;
+			else {
+				if (!checkIfExist(tmpC) && addAndSortByID(tmpC)) {
+					cre += tmpC->numCredit;
+					numCourse++;
+					tmpC->cntStudent++;
+					importStuToCourseCSV(s);
+					system("cls");
+					printListCourse(c, cre, numCourse);
+				}
+				else cout << "Hoc phan " << tmpC->ID << " da duoc dang ky! " << endl;
+			}
 		}
-		else cout << "Incorrect ID" << endl;
+		else cout << "Invalid ID!" << endl;
+		tmpC = c;
 	}
-	return 1;
+	fin.close();
+}
+
+//From DSHP -> create all Course nodes
+Course* samecoursebutnotsameclass(Course* c) {
+	Course* tmp = new Course();
+	tmp->className = c->className.substr(0, 2) + "TT2";
+	tmp->ID = c->ID;
+	tmp->name = c->name;
+	tmp->numCredit = c->numCredit;
+	tmp->teacherName = c->teacherName;
+	tmp->session = c->session;
+	tmp->day = c->day;
+	tmp->maxStudent = c->maxStudent;
+	return tmp;
+}
+
+void Staff::createAllCourse(SchoolYear* sy) {
+	ifstream fin("dshp.txt");
+	if (!fin) {
+		cout << "Cannot open file" << endl;
+		return;
+	}
+
+	string s;
+	string clname;
+	fin >> s;
+	string hk = s.substr(2, 1);
+
+	fin >> s;
+	while (sy->name != s) sy = sy->yearNext;
+	if (sy == NULL) {
+		cout << "School-year not found";
+		return;
+	}
+
+	Course*& course = sy->sm[stoi(hk) - 1].courseHead;
+
+	while (!fin.eof()) {
+		Course* tmp = new Course();
+
+		//ID
+		fin >> s;
+		if (s[0] < '3') {
+			clname = s;
+			for (int i = 0; i < 7; i++) fin >> s;
+			fin >> tmp->ID;
+		}
+		else tmp->ID = s;
+		if (tmp->ID.length() < 3) return;
+
+		//Name
+		fin >> tmp->name;
+		fin >> s;
+		while (s[0] > '9') {
+			tmp->name += ' ' + s;
+			fin >> s;
+		}
+
+		//Credits
+		tmp->numCredit = stoi(s);
+
+		//Teacher name
+		fin >> tmp->teacherName;
+		fin >> s;
+		while (s[0] > '9') {
+			if (s[0] == 'S' && s[1] < '9') break;
+			tmp->teacherName += ' ' + s;
+			fin >> s;
+		}
+
+		//session
+		tmp->day = s;
+
+		//day
+		fin >> s;
+		tmp->session = stoi(s);
+
+		//max
+		fin >> s;
+		tmp->maxStudent = stoi(s);
+
+		//className
+		tmp->className = clname;
+
+		if (tmp->numCredit != 4 || clname == "19") {
+			tmp->className = clname + "TT";
+			tmp->courseNext = course;
+			course = tmp;
+		}
+		else {
+			Course* tmp2 = samecoursebutnotsameclass(tmp);
+			tmp->className += "TT1";
+			tmp->courseNext = tmp2;
+			tmp2->courseNext = course;
+			course = tmp;
+		}
+	}
+	fin.close();
 }
 
 //From DSDKHP -> Add Student to a Course
@@ -258,40 +498,64 @@ void Staff::createCourseFromCSV(SchoolYear* sy, int numSm) {
 }
 
 //Dang nhap
-void username(Staff* staff, InfoStu* info, Staff* user1, InfoStu* user2) {
+void username(Staff* staff, InfoStu* info, Staff*& user1, InfoStu*& user2, int b) {
 	string s1;
 	string s2;
+	Staff* tmps = staff;
+	InfoStu* tmpi = info;
 
-	cout << "Username: ";
+	cout << " ___________________________________________________________________________________ " << endl;
+	cout << "|" << string(83, ' ') << "|" << endl;
+	cout << "|  <-  -> || courses.ctda.hcmus.edu.vn/login/index.php				    |" << endl;
+	cout << "|___________________________________________________________________________________|" << endl;
+	cout << "|" << string(83, ' ') << "|" << endl;
+	cout << "|						              You are not logged in.|" << endl;
+	cout << "|    										    |	" << endl;
+	cout << "|				    fit@hcmus					    |	" << endl;
+	cout << "|            _______________________________________________________                |" << endl;
+	cout << "|										    |" << endl;
+	if (b == 1) cout << "|			   Wrong username or password!		        	    |" << endl;
+	cout << "|		 | User name: ";
 	cin >> s1;
-	cout << "Password: ";
+	cout << "|		 | Password : ";
 	cin >> s2;
 
 	//ID Student starts with number, ID Staff starts with char
 	//ID Student
 	if ('0' <= s1[0] && s1[0] <= '9') {
-		while (info->stuInClass->StuID != s1) {
+		if (info == NULL) {
+			system("cls");
+			cout << "Not time for student!" << endl;
+			return;
+		}
+		while (info && info->stuInClass->StuID != s1) {
+			cout << info->stuInClass->StuID << endl;
 			info = info->InfoStuNext;
 		}
 		if (info == NULL || s2 != info->stuInClass->password) {
-			cout << "Wrong username or password. Please enter again!";
-			username(staff, info, user1, user2);
+			system("cls");
+
+			username(tmps, tmpi, user1, user2, 1);
 			return;
 		}
-		else user2 = info;
+		system("cls");
+		user2 = info;
+		cout << "Student: " << user2->stuInClass->firstName << " " << user2->stuInClass->lastName << " - " << user2->stuInClass->StuID << endl << endl;
 		return;
 	}
 
 	//ID Staff
-	while (staff->ID != s1) {
+	while (staff && staff->ID != s1) {
 		staff = staff->staffNext;
 	}
 	if (staff == NULL || s2 != staff->password) {
-		cout << "Wrong username or password. Please enter again!";
-		username(staff, info, user1, user2);
+		system("cls");
+		username(tmps, tmpi, user1, user2, 1);
 		return;
 	}
-	else user1 = staff;
+	system("cls");
+	user1 = staff;
+	cout << "Staff: " << user1->name << " - " << user1->ID << endl;
 	return;
 }
 
@@ -326,15 +590,33 @@ void Staff::addStuToClass(Class*& cl, Student*& stu) {
 	tmp->stuNext = stu;
 }
 
-void Staff::createAllClassesFromCSV(SchoolYear*& sy, InfoStu*& info) {
-	ifstream fin("DSSV_Khoatuyen" + sy->name + ".txt");
+void Staff::createAllClassesFromCSV(SchoolYear*& sy, string syname, InfoStu*& info) {
+	ifstream fin("DSSV_Khoatuyen" + syname + ".txt");
 	if (!fin) {
-		cout << "Cannot open file named: " << "DSSV_Khoatuyen" + sy->name + ".txt";
+		cout << "Cannot open file named: " << "DSSV_Khoatuyen" + syname + ".txt";
 		return;
 	}
 
-	if (info == NULL) info = new InfoStu();
-	InfoStu* tmpIn4 = info;
+	//check and create new SchoolYear
+	SchoolYear* tmpSy = NULL;
+
+	if (sy == NULL) {
+		sy = new SchoolYear();
+		sy->name = syname;
+		tmpSy = sy;
+	}
+
+	else if (sy != NULL) {
+		tmpSy = sy;
+		while (tmpSy->yearNext && tmpSy->name != syname) {
+			tmpSy = tmpSy->yearNext;
+		}
+		if (tmpSy->name != syname) {
+			tmpSy->yearNext = new SchoolYear();
+			tmpSy = tmpSy->yearNext;
+			tmpSy->name = syname;
+		}
+	}
 
 	//to ignore the title line
 	int cnt = 0;
@@ -359,37 +641,96 @@ void Staff::createAllClassesFromCSV(SchoolYear*& sy, InfoStu*& info) {
 		fin >> tmp->socialID;
 		fin >> tmp->curriculum;
 		fin >> tmp->className;
-		Class* tmpCl = findClass(sy, tmp->className);
+		Class* tmpCl = findClass(tmpSy, tmp->className);
 		addStuToClass(tmpCl, tmp);
 
-		info->stuInClass = tmp;
-		info->InfoStuNext = new InfoStu();
-		info->infoClass = tmpCl;
-		info = info->InfoStuNext;
-		cout << cnt << endl;
-		cnt++;
+		if (tmp->className.length() < 3) break;
+		InfoStu* tmpi4 = new InfoStu();
+		tmpi4->stuInClass = tmp;
+		tmpi4->infoClass = tmpCl;
+		tmpi4->sy = sy;
+		tmpi4->InfoStuNext = info;
+		info = tmpi4;
 	}
-	info = tmpIn4;
 	fin.close();
 }
 
-int main() {
-	SchoolYear* sy = new SchoolYear();
-	sy->name = "2022-2023";
-	Staff* staff = new Staff();
-	InfoStu* info = new InfoStu();
+//From CSV of Staff -> Create Staff
+void createAllStaffsFromCSV(Staff*& staff) {
+	fstream fin("Staff.txt");
 
-	staff->createAllClassesFromCSV(sy, info);
-
-	Class* cl = sy->classHead;
-	while (cl) {
-		Student* stu = cl->stuHead;
-		while(stu)
-		{
-			cout << stu->firstName << endl;
-			stu = stu->stuNext;
-		}
-		cl = cl->classNext;
+	if (!fin) {
+		cout << "Cannot open file named " << "Staff.txt" << endl;
+		return;
 	}
 
+	if (staff == NULL) staff = new Staff();
+	Staff* tmp = staff;
+
+	//ignore the title
+	string s;
+	for (int i = 0; i < 2; i++) {
+		fin >> s;
+	}
+
+	while (!fin.eof()) {
+		fin >> tmp->ID;
+		fin >> tmp->name;
+		fin >> s;
+		tmp->name = tmp->name + ' ' + s;
+		tmp->staffNext = new Staff();
+		tmp = tmp->staffNext;
+	}
+	tmp = NULL;
+	fin.close();
 }
+
+//MAIN
+/*
+int main() {
+	//create headnode of InfoStu, Staff, SchoolYear
+	InfoStu* info = NULL;
+	Staff* staff = NULL;
+	SchoolYear* sy = NULL;
+
+	//create all Staff, Class, Student from CSV
+	createAllStaffsFromCSV(staff);
+	staff->createAllClassesFromCSV(sy, "2022-2023", info);
+	staff->createAllClassesFromCSV(sy, "2021-2022", info);
+	staff->createAllClassesFromCSV(sy, "2019-2020", info);
+
+	//username 
+	Staff* user1 = NULL;
+	InfoStu* user2 = NULL;
+	username(staff, info, user1, user2, 0);
+
+	//staff function
+	staff->createAllCourse(sy);
+	user2->selectCourse();
+
+	//delete 
+	Course* tmpcr = sy->sm[1].courseHead;
+	while (tmpcr) {
+		//cout << tmpcr->ID << " " << tmpcr->className << endl;
+		tmpcr = tmpcr->courseNext;
+		//if (tmpcr->ID == "CS469") break;
+	}
+	while (sy) {
+		SchoolYear* tmps = sy;
+		Class* tmpc = sy->classHead;
+		sy = sy->yearNext;
+		delete tmps;
+	}
+	while (info) {
+		//cout << info->stuInClass->lastName << endl;
+		InfoStu* tmpi = info;
+		info = info->InfoStuNext;
+		delete tmpi;
+	}
+	while (staff) {
+		Staff* tmps = staff;
+		staff = staff->staffNext;
+		delete (tmps);
+	}
+}
+*/

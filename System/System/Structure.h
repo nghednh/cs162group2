@@ -6,7 +6,7 @@
 #include <string>
 #include <sstream>
 #include <optional>
-
+#include "Structure.h"
 using namespace std;
 
 struct Date {
@@ -15,7 +15,13 @@ struct Date {
 	string year;
 };
 
+struct Class;
+struct SchoolYear;
 struct StuInCourse;
+
+struct Account {
+	string password;
+};
 
 struct Student {
 	//detail
@@ -28,12 +34,14 @@ struct Student {
 	string socialID;
 	string className;
 	string password = "123"; //mac dinh
+	Account StuAccount = { password };
 	string curriculum;
 
 	int accumCredits = 0;
 	float accumScore = 0;
 
 	//node
+	Class* inClass = NULL;
 	Student* stuNext = NULL; //next of linkedlist
 	StuInCourse* pStuCourseHead = NULL;
 };
@@ -46,6 +54,7 @@ struct StuInCourse {
 	float otherM;
 	float GPA;
 	string courseID;
+	Course* infoCourse = NULL;
 
 	//node 
 	Student* stuInClass = NULL; //point to the node Student in a Class 
@@ -63,6 +72,7 @@ struct Class {
 	//node
 	Student* stuHead = NULL;
 	Class* classNext = NULL;
+	SchoolYear* inSY = NULL;
 };
 
 struct Session {
@@ -74,6 +84,8 @@ struct Day {
 	string name; //Mon - ... - Sat
 	Session s[4];
 };
+
+struct Semester;
 
 struct Course {
 	//detail
@@ -91,17 +103,20 @@ struct Course {
 	//node
 	StuInCourse* stuHead = NULL;
 	Course* courseNext = NULL;
+	Semester* inSM = NULL;
 };
 
 struct Semester {
 	//detail
 	Date start;
 	Date end;
+	string syName;
 	bool state = 0; //if 1 - accessible
 	int num;
 
 	//node
 	Course* courseHead = NULL;
+	SchoolYear* inSY = NULL;
 };
 
 struct SchoolYear {
@@ -129,11 +144,13 @@ struct InfoStu {
 
 	//Supplementary functions
 	void viewCourses(Semester s); // View all the courses that the student participates in.
-	bool checkCourseName(Course* course, string s);
-	void importStuToCourseCSV(SchoolYear* sy, string courseName, Student* stu);
-	bool addAndSortByID(Course*& c, Student*& stu);
+	bool checkCourseName(Course*& course, string s);
+	bool checkIfExist(Course*& c);
+	void importStuToCourseCSV(string courseName);
+	void countCredit(Course* c, int& cre, int& numCourse);
+	bool addAndSortByID(Course*& c);
 	void printListCourse(Course* c, int cre, int numCourse);
-	bool selectCourse(SchoolYear* sy, Student* stu, int numSm);
+	void selectCourse();
 };
 
 struct Staff {
@@ -141,6 +158,7 @@ struct Staff {
 	string ID; //username == ID
 	string name;
 	string password = "10diemLy"; //mac dinh
+	Account StaffAccount = { password };
 	Staff* staffNext = NULL;
 
 	//Main functions
