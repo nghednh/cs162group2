@@ -54,6 +54,7 @@ struct StuInCourse {
 	float otherM;
 	float GPA;
 	string courseID;
+	Course* infoCourse = NULL;
 
 	//node 
 	Student* stuInClass = NULL; //point to the node Student in a Class 
@@ -143,11 +144,13 @@ struct InfoStu {
 
 	//Supplementary functions
 	void viewCourses(Semester s); // View all the courses that the student participates in.
-	bool checkCourseName(Course* course, string s);
-	void importStuToCourseCSV(SchoolYear* sy, string courseName, Student* stu);
-	bool addAndSortByID(Course*& c, Student*& stu);
+	bool checkCourseName(Course*& course, string s);
+	bool checkIfExist(Course*& c);
+	void importStuToCourseCSV(string courseName);
+	void countCredit(Course* c, int& cre, int& numCourse);
+	bool addAndSortByID(Course*& c);
 	void printListCourse(Course* c, int cre, int numCourse);
-	bool selectCourse(SchoolYear* sy, Student* stu, int numSm);
+	void selectCourse();
 };
 
 struct Staff {
