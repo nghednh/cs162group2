@@ -163,8 +163,8 @@ struct Staff {
 	void createAllCourse(SchoolYear* sy);
 };
 
-void inputADate(Date d);
-void createSemester(Semester s);
+void inputADate(Date& d);
+void createSemester(Semester& s);
 SchoolYear* findSchoolYear(SchoolYear* sHead, int a);
 void addSemesterToSy(SchoolYear* sHead, Semester s, int year);
 bool addAStudentInCourse(Course* a, Student* newStu);

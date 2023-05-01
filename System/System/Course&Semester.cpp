@@ -6,10 +6,10 @@
 
 using namespace std;
 
-void inputADate(Date d){
+void inputADate(Date& d){
     cin >> d.day >> d.month >> d.year;
 }
-void createSemester(Semester s){
+void createSemester(Semester& s){
     cin >> s.num;
     inputADate(s.start);
     inputADate(s.end);
