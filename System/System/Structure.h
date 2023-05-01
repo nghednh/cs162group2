@@ -15,6 +15,8 @@ struct Date {
 	string year;
 };
 
+struct Class;
+struct SchoolYear;
 struct StuInCourse;
 
 struct Account {
@@ -39,6 +41,7 @@ struct Student {
 	float accumScore = 0;
 
 	//node
+	Class* inClass = NULL;
 	Student* stuNext = NULL; //next of linkedlist
 	StuInCourse* pStuCourseHead = NULL;
 };
@@ -68,6 +71,7 @@ struct Class {
 	//node
 	Student* stuHead = NULL;
 	Class* classNext = NULL;
+	SchoolYear* inSY = NULL;
 };
 
 struct Session {
@@ -79,6 +83,8 @@ struct Day {
 	string name; //Mon - ... - Sat
 	Session s[4];
 };
+
+struct Semester;
 
 struct Course {
 	//detail
@@ -96,17 +102,20 @@ struct Course {
 	//node
 	StuInCourse* stuHead = NULL;
 	Course* courseNext = NULL;
+	Semester* inSM = NULL;
 };
 
 struct Semester {
 	//detail
 	Date start;
 	Date end;
+	string syName;
 	bool state = 0; //if 1 - accessible
 	int num;
 
 	//node
 	Course* courseHead = NULL;
+	SchoolYear* inSY = NULL;
 };
 
 struct SchoolYear {

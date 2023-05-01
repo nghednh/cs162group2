@@ -1,6 +1,0 @@
-No	Student ID	First Name	Last Name	Gender	Date of birth	Social ID	Curriculum	Class
-1	19127040	Tran	Lam	Female	03/12/2001	79274472	Information_Technology	19CLC
-2	19127400	La	Hieu	Female	21/01/2001	79205144	Information_Technology	19CLC
-3	19127067	Hoang	Thanh	Male	15/12/2001	79241768	Information_Technology	19CLC
-4	19127242	Do	Phuc	Male	29/10/2001	79224181	Information_Technology	19CLC
-5	19127651	Tran	Tuc	Male	16/11/2001	79252092	Information_Technology	19CLC
