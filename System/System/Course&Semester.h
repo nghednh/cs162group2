@@ -1,36 +1,47 @@
 #include "Structure.h"
 
-void inputADate(Date d);
-void createSemester(Semester s);
-SchoolYear* findSchoolYear(SchoolYear* sHead, int a);
+//Input a date (day-month-year)
+void inputADate(Date& d);
+//Create a semester
+void createSemester(Semester& s);
+//Find a school year by its name
+SchoolYear* findSchoolYear(SchoolYear* sHead, string a);
+//Add a semester to school year
 void addSemesterToSy(SchoolYear* sHead, Semester s, int year);
+//Add - by hand - a student to a course
 bool addAStudentInCourse(Course* a, Student* newStu);
+//Input information for a course
 void inputACourse(Course* a);
+//Add a course to a semester
 void addCourse(Semester& s, Course* a);
+//Remove a student from a course by ID
 bool removeAStudentFromCourse(Course* a, int ID);
 
-//Cap nhat lop tham gia vao khoa hoc (which day, which session)
+// (which day, which session)
 void classAttendToCourse(Course* a, Class* c);
 
-//Thay doi thong tin cua khoa hoc
+//Update course's infomation
 void viewOptions();
 void viewCourseInfo(Course* course);
 void updateCourseInfo(Course* course);
 
-//Ham phu - Additional functions
-//In ra nhung tiet trong va nhung tiet da co lop
+//Additional functions
+//Print out the schedule of a class
 void viewAvailableSession(Class* c);
-//Tinh GPA cuoi ki
+//Calculate the final GPA
 float final_GPA(Semester sm, Student* s);
 
-//Chuyen doi ngay trong tuan duoi dang so hoac chu
+//Convert a day into integer number
 int numPresentAsDay(string day);
+//Convert a number into a certain day
 string stringPresentAsDay(int n);
 
 //string_type -> float_type
 float convertFloat(string s);
+//Add students in a sorting way
 void addAndSortByID(StuInCourse*& stuHead, StuInCourse* curStu);
 
+//Check whether a student is following a course or not
 StuInCourse* checkStuInCourse(Course* c, Student* stu);
 
 //view schedule of a student
