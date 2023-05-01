@@ -46,6 +46,8 @@ struct Student {
 	StuInCourse* pStuCourseHead = NULL;
 };
 
+struct Course;
+
 struct StuInCourse {
 	//detail 
 	float totalM;
