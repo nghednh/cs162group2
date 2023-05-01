@@ -32,7 +32,7 @@ void inputYear(SchoolYear*& year) {
             cur->classHead = tem;
         }
     }
-}
+} // hàm này nh?p s? nãm r?i nh?p vào t?ng nãm + các l?p trong nãm
 void inputCourse(Course*& course) {
     Course* cur = course;
     int n;
@@ -53,7 +53,7 @@ void inputCourse(Course*& course) {
         cin.get();
         getline(cin, cur->teacherName);
     }
-}
+} // hàm này nh?p s? course r?i nh?p vào các course
 void addCourseToSemester(Course* coursee, Semester* semesterr) {
     if (semesterr->courseHead == NULL) {
         semesterr->courseHead = coursee;
@@ -63,7 +63,7 @@ void addCourseToSemester(Course* coursee, Semester* semesterr) {
         cur->courseNext = semesterr->courseHead;
         semesterr->courseHead = cur;
     }
-}
+} // hàm này thêm course vào 1 semester
 void addClassToSchoolYear(Class* classs, SchoolYear* schoolyearr) {
     if (!schoolyearr->classHead) {
         schoolyearr->classHead = classs;
@@ -73,4 +73,4 @@ void addClassToSchoolYear(Class* classs, SchoolYear* schoolyearr) {
         cur->classNext = schoolyearr->classHead;
         schoolyearr->classHead = cur;
     }
-}
+} // hàm này thêm class vào 1 year

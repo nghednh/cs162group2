@@ -24,13 +24,13 @@
     <ClCompile Include="Beginning.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Delete.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Course&amp;Semester.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

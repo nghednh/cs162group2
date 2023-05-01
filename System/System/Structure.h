@@ -6,7 +6,7 @@
 #include <string>
 #include <sstream>
 #include <optional>
-
+#include "Structure.h"
 using namespace std;
 
 struct Date {
@@ -16,6 +16,10 @@ struct Date {
 };
 
 struct StuInCourse;
+
+struct Account {
+	string password;
+};
 
 struct Student {
 	//detail
@@ -28,6 +32,7 @@ struct Student {
 	string socialID;
 	string className;
 	string password = "123"; //mac dinh
+	Account StuAccount = { password };
 	string curriculum;
 
 	int accumCredits = 0;
@@ -141,6 +146,7 @@ struct Staff {
 	string ID; //username == ID
 	string name;
 	string password = "10diemLy"; //mac dinh
+	Account StaffAccount = { password };
 	Staff* staffNext = NULL;
 
 	//Main functions
