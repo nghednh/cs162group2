@@ -132,9 +132,13 @@ void viewAvailableSession(Class* c){
     a->dayB[d].s[ses].isEmpty = false;
 }*/
 //Add a course to a semester
-void addCourse(Semester &s, Course* a){
+void addCourse(Semester& s, Course* a){
     inputACourse(a);
     Course* courseCur = s.courseHead;
+    if(courseCur == nullptr){
+        courseCur = a;
+        return;
+    }
     while(courseCur->courseNext){
         courseCur = courseCur->courseNext;
     }
