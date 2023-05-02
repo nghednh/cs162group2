@@ -452,3 +452,13 @@ void addAndSortByID(StuInCourse*& stuHead, StuInCourse* curStu){
     curStu->stuNext = stuHead;
     stuHead = curStu;
 }
+//Find and return a course by ID
+Course* findCourseByID(Semester sm, string inputID){
+    Course* cur = sm.courseHead;
+    while(cur){
+        if(checkID(cur->ID, inputID) == true)
+            return cur;
+        cur  = cur->courseNext;
+    }
+    return NULL;
+}

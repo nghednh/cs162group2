@@ -214,3 +214,7 @@ string stringPresentAsDay(int n);
 float convertFloat(string s);
 void addAndSortByID(StuInCourse*& stuHead, StuInCourse* curStu);
 StuInCourse* checkStuInCourse(Course* c, Student* stu);
+//compare the input ID with a course's ID
+bool checkID(string courseID, string ID);
+//Find and return a course by ID
+Course* findCourseByID(Semester sm, string inputID);

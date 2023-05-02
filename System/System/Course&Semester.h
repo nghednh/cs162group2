@@ -46,5 +46,3 @@ StuInCourse* checkStuInCourse(Course* c, Student* stu);
 
 //view schedule of a student
 void viewSchedule(Semester sm, Student* stu); 
-//compare the input ID with a course's ID
-bool checkID(string courseID, string ID);
