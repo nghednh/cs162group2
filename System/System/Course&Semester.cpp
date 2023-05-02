@@ -54,6 +54,7 @@ void inputACourse(Course* a){
     cin >> a->numCredit;
     cin >> a->day;
     cin >> a->session;
+    cin >> a->maxStudent;
 }
 //Convert a string-type day into its certain number
 int numPresentAsDay(string day){
@@ -134,11 +135,11 @@ void viewAvailableSession(Class* c){
 //Add a course to a semester
 void addCourse(Semester& s, Course* a){
     inputACourse(a);
-    Course* courseCur = s.courseHead;
-    if(courseCur == nullptr){
-        courseCur = a;
+    if(s.courseHead == nullptr){
+        s.courseHead = a;
         return;
     }
+    Course* courseCur = s.courseHead;
     while(courseCur->courseNext){
         courseCur = courseCur->courseNext;
     }
@@ -161,24 +162,40 @@ bool Staff::removeAStudentFromCourse(Course* a, string ID){
     }
     return false; //Neu k co ID do thi bao hc sinh k tham gia khoa hoc.
 }
-//Delete a course out of a semester
+//check whether the input ID is the same as the course's ID
+bool checkID(string courseID, string tmpID){
+    if(courseID.length() != tmpID.length())
+        return false;
+    for(int i = 0; i < courseID.length(); i++)
+        if(courseID[i] != tmpID[i])
+            return false;
+    return true;
+}
+//Delete a course out of a semester by ID
 bool Staff::deleteACourse(Course*& courseHead, string courseID){
     Course* cur = courseHead;
+    if(cur == NULL)
+        return false;
+    if(checkID(courseHead->ID, courseID) == true){
+        Course* tmp = courseHead;
+        courseHead = courseHead->courseNext;
+        delete tmp;
+        return true;
+    }
     while(cur->courseNext){
-        if(cur->courseNext->ID == courseID)
+        if(checkID(cur->courseNext->ID, courseID) == true)
             break;
         cur = cur->courseNext;
     }
     if(cur->courseNext == NULL)
         return false;
     else{
-        Course* tmp = cur;
+        Course* tmp = cur->courseNext;
         cur->courseNext = cur->courseNext->courseNext;
         delete tmp;
+        return true;
     }
-    return true;
 }
-
 //Student upgrade 14: check if a student is following a course or not
 StuInCourse* checkStuInCourse(Course* c, Student* stu){
     StuInCourse* curStu = c->stuHead;
@@ -229,7 +246,7 @@ void viewOptions(){
     cout << "0. Stop updating and save" << endl;
 } 
 void viewCourseInfo(Course* course){
-    cout << course->name << ' ' << course->className << " - " << course->ID << " by " << course->teacherName << endl;
+    cout << course->name << " - " << course->ID << " by " << course->teacherName << endl;
     /*Class* cur = course->classHead;
     cout << "Current classes attend to this course: " << endl;
     while(cur){
@@ -240,10 +257,33 @@ void viewCourseInfo(Course* course){
         cout << cur->name << " - ";
         cur = cur->classNext;
     }*/
-    cout << "Number of credits for this course: ";
+    cout << "Number of credits: ";
     cout << course->numCredit << endl;
-    cout << "Maximum students for this course: ";
+    cout << "Maximum students: ";
     cout << course->maxStudent << endl;
+    cout << "Time of occurence: " << course->day << ' ';
+    switch(course->session){
+        case 1:
+        {
+            cout << "7h30 - 9h30" << endl;
+            break;
+        }
+        case 2:
+        {
+            cout << "9h30 - 11h30" << endl;
+            break;
+        }
+        case 3:
+        {
+            cout << "13h30 - 15h30" << endl;
+            break;
+        }
+        case 4:
+        {
+            cout << "15h30 - 17h30" << endl;
+            break;
+        }
+    }
 }
 void updateCourseInfo(Course* course){
     viewOptions();
