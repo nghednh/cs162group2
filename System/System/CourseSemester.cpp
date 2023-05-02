@@ -174,11 +174,18 @@ void addCourse(Semester& s, Course* a){
 }
 //Remove a student from a course
 bool Staff::removeAStudentFromCourse(Course* a, string ID){
-    Student* cur = a->stuHead->stuInClass;
+    if(a->stuHead == NULL) 
+        return false;
+    StuInCourse* cur = a->stuHead;
     while(cur->stuNext){
-        if(cur->stuNext->StuID == ID){
-            Student* tmp = cur->stuNext;
+        if(checkID(cur->stuNext->stuInClass->StuID, ID) == true){
+            StuInCourse* tmp = cur->stuNext;
             cur->stuNext = cur->stuNext->stuNext;
+            StuInCourse* tmpStu = cur->stuInClass->pStuCourseHead;
+            while(tmpStu->stuNext != tmp){
+                tmpStu = tmpStu->stuNext;
+            }
+            tmpStu->stuNext = tmpStu->stuNext->stuNext;
             delete tmp;
             a->cntStudent -= 1;
             return true; //Thong bao xoa thanh cong.
