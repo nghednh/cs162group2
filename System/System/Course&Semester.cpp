@@ -398,7 +398,7 @@ void viewSchedule(Semester sm, Student *s){
     Course* cur = sm.courseHead;
     while(cur){
         if(checkStuInCourse(cur, s)){
-            nameSes[cur->session][numPresentAsDay(cur->day)] = cur->ID;
+            nameSes[cur->session-1][numPresentAsDay(cur->day)] = cur->ID;
         }
         cur = cur->courseNext;
     }
