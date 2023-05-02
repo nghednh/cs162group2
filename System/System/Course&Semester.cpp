@@ -32,17 +32,42 @@ void addSemesterToSy(SchoolYear* sHead, Semester s, string nameSy){
     tmp->sm[s.num-1] = s;
 }
 
-//Them 1 hc sinh vao course
+//Add a new student into a course by hand
 bool Staff::addAStudentInCourse(Course* a, Student* newStu){
     if(a->cntStudent == a->maxStudent)
         return false;
-    Student* cur = a->stuHead->stuInClass;
+    if(a->stuHead == NULL){
+        a->cntStudent += 1;
+        a->stuHead = new StuInCourse;
+        a->stuHead->stuInClass = newStu;
+        if(newStu->pStuCourseHead == NULL)
+            newStu->pStuCourseHead = a->stuHead;
+        else{
+            StuInCourse* tmp = newStu->pStuCourseHead;
+            while(tmp){
+                tmp = tmp->pStuCourseNext;
+            }
+            tmp = a->stuHead;
+            tmp->pStuCourseNext = NULL;
+        }
+        return true;
+    }
+    StuInCourse* cur = a->stuHead;
     while(cur)
         cur = cur->stuNext;
-    cur->stuNext = newStu;
-    cur = cur->stuNext;
-    cur = nullptr;
+    cur->stuInClass = newStu;
+    cur->stuNext = NULL;
     a->cntStudent += 1;
+    if(newStu->pStuCourseHead == NULL)
+        newStu->pStuCourseHead = cur;
+    else{
+        StuInCourse* tmp = newStu->pStuCourseHead;
+        while(tmp){
+            tmp = tmp->pStuCourseNext;
+        }
+        tmp = cur;
+        tmp->pStuCourseNext = NULL;
+    }
     return true;
 }
 //Input data of a course
