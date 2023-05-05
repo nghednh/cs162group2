@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include "login&menu.h"
 
 using namespace std;
 bool checkStudentpassword(string username, string password) {
@@ -79,5 +80,61 @@ void login(int firstlog = 1) {
             system("cls");
             login(0);
         }
+    }
+}
+void menuStaff(string username) {
+    system("cls");
+    int choose;
+    UIlite();
+    cout << "| User: " << username << endl;
+    cout << "| 0. To log out.                                                                    |\n";
+    cout << "| 1. To view the current account.                                                   |" << '\n';
+    cout << "| 2. To change the password.                                                        |" << '\n';
+    cout << "| 3. To view student.                                                               |" << '\n';
+    cout << "| 4. To add school year.                                                            |" << '\n';
+    cout << "| 5. To add semester.                                                               |" << '\n';
+    cout << "| 6. To update course information.                                                  |" << '\n';
+    cout << "| 7. To delete course by ID.                                                        |" << '\n';
+    cout << "| 8. To input course into CSV files.                                                |" << '\n';
+    cout << "| 9. To get info of the scoreboard from CSV files.                                  |" << '\n';
+    cout << "| 10. To view scoreboard.                                                           |" << '\n';
+    cout << "| 11. To update scoreboard info.                                                    |" << '\n';
+    cout << "| 12. To view list of classes.                                                      |" << '\n';
+    cout << "| 13. To view list of courses.                                                      |" << '\n';
+    cout << "| 14. To import first year students from CSV files.                                 |" << '\n';
+    cout << "| Your choice: ";
+    cin >> choose;
+    switch (choose)
+    {
+    case 0: {
+    }
+    case 1: {
+    }
+    case 2: {
+    }
+    case 3: {
+    }
+    case 4: {
+    }
+    case 5: {
+    }
+    case 6: {
+    }
+    case 7: {
+    }
+    case 8: {
+    }
+    case 9: {
+    }
+    case 10: {
+    }
+    case 11: {
+    }
+    case 12: {
+    }
+    case 13: {
+    }
+    case 14: {
+    }
     }
 }
