@@ -6,7 +6,7 @@
 #include <string>
 #include <sstream>
 #include <optional>
-#include "Structure.h"
+
 using namespace std;
 
 struct Date {
