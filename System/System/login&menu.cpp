@@ -8,3 +8,20 @@ bool checkStudentpassword(string username, string password) {
 bool checkStaffpassword(string username, string password) {
     return  true;
 }
+void UI() {
+    cout << " ___________________________________________________________________________________ " << endl;
+    cout << "|" << string(83, ' ') << "|" << endl;
+    cout << "|  <-  -> || courses.ctda.hcmus.edu.vn                                              |" << endl;
+    cout << "|___________________________________________________________________________________|" << endl;
+    cout << "|" << string(83, ' ') << "|" << endl;
+    cout << "|    										    |	" << endl;
+    cout << "|				    fit@hcmus					    |	" << endl;
+    cout << "|            _______________________________________________________                |" << endl;
+    cout << "|										    |" << endl;
+}
+void UIlite() {
+    cout << " ___________________________________________________________________________________ " << endl;
+    cout << "|" << string(83, ' ') << "|" << endl;
+    cout << "|  <-  -> || courses.ctda.hcmus.edu.vn                                              |" << endl;
+    cout << "|___________________________________________________________________________________|" << endl;
+}
