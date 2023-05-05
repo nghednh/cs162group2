@@ -1,5 +1,4 @@
 #include "Structure.h"
-#include "Delete.h"
 void deleteClass(Class*& classs) {
 	Class *cur = classs;
 	while (cur) {
