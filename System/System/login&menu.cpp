@@ -138,3 +138,51 @@ void menuStaff(string username) {
     }
     }
 }
+void menuStudent(string username) {
+    system("cls");
+    UIlite();
+    cout << "| User: " << username << '\n';
+    cout << "| 0. To log out.                                                                    |" << '\n';
+    cout << "| 1. To view the current account.                                                   |" << '\n';
+    cout << "| 2. To change the password.                                                        |" << '\n';
+    cout << "| 3. To enroll in a course.                                                         |" << '\n';
+    cout << "| 4. To remove enrolled course.                                                     |" << '\n';
+    cout << "| 5. To view enrolled courses.                                                      |" << '\n';
+    cout << "| 6. To view scoreboard.                                                            |" << '\n';
+    int choose;
+    cout << "| Your choice: ";
+    cin >> choose;
+    switch (choose)
+    {
+    case 0: {
+    }
+    case 1: {
+    }
+    case 2: {
+    }
+    case 3: {
+    }
+    case 4: {
+    }
+    case 5: {
+    }
+    case 6: {
+    }
+    case 7: {
+    }
+    case 8: {
+    }
+    case 9: {
+    }
+    case 10: {
+    }
+    case 11: {
+    }
+    case 12: {
+    }
+    case 13: {
+    }
+    case 14: {
+    }
+    }
+}
