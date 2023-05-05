@@ -3,10 +3,10 @@
 #include "login&menu.h"
 
 using namespace std;
-bool checkStudentpassword(string username, string password) {
+bool checkStudentPassword(string username, string password) {
     return true;
 } /*=> cho cai ham cua ba vo, tai tui k chay duoc nen de vay*/
-bool checkStaffpassword(string username, string password) {
+bool checkStaffPassword(string username, string password) {
     return  true;
 }
 void UI() {
@@ -63,7 +63,7 @@ void login(int firstlog = 1) {
     cout << "| Enter your password: ";
     cin >> password;
     if (role == 1) {
-        if (checkStaffpassword(username, password)) {
+        if (checkStaffPassword(username, password)) {
             menuStaff(username);
         }
         else {
@@ -72,7 +72,7 @@ void login(int firstlog = 1) {
         }
     }
     else if (role == 2) {
-        if (checkStudentpassword(username, password)) {
+        if (checkStudentPassword(username, password)) {
             menuStudent(username);
         }
         else {
@@ -185,4 +185,7 @@ void menuStudent(string username) {
     case 14: {
     }
     }
+}
+int main() {
+    login();
 }
