@@ -77,6 +77,7 @@ struct Class {
 	SchoolYear* inSY = NULL;
 };
 
+/*
 struct Session {
 	Class* cur_class = NULL;
 	bool isEmpty = true;
@@ -86,6 +87,7 @@ struct Day {
 	string name; //Mon - ... - Sat
 	Session s[4];
 };
+*/
 
 struct Semester;
 
@@ -100,7 +102,7 @@ struct Course {
 	int cntStudent = 0;
 	int session;
 	string day;
-	Day dayB[6]; //Mon - ... - Sat
+	//Day dayB[6]; //Mon - ... - Sat
 
 	//node
 	StuInCourse* stuHead = NULL;
