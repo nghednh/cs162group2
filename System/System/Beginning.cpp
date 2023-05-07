@@ -78,3 +78,38 @@ int biggerDate(Date left, Date right) {
     else if (lef == rig) return 0;
     else return -1;
 }
+void inpClasses(Class*& classList) {
+    Class* cur = classList = nullptr;
+    int n;
+    cout << "Number of classes: ";
+    cin >> n;
+    cout << "Class ID: \n";
+    while (n--) {
+        if (!classList) {
+            classList = new Class;
+            cur = classList;
+        }
+        else {
+            cur->classNext = new Class;
+            cur = cur->classNext;
+        }
+        cin >> cur->name;
+    }
+}
+void addSchoolYear(SchoolYear*& year) {
+    string tmp;
+    cout << "Enter school year: ";
+    cin >> tmp;
+    SchoolYear* curyear = new SchoolYear;
+    curyear->name = tmp;
+    inpClasses(curyear->classHead);
+    if (!year) {
+        year = curyear;
+    }
+    else {
+        curyear->yearNext = year;
+        year = curyear;
+    }
+}
+
+
