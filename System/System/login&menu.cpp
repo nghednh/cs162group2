@@ -190,6 +190,17 @@ void menuStudent(string username) {
     }
     }
 }
+void inputInt(int *i) {
+    cout << "Input: ";
+    cin >> *i;
+    if (cin.fail()) {
+        cout << "Invalid input. Please input again!";
+        cin.clear();
+        cin.ignore(100, '\n');
+        inputInt(i);
+    }
+}
+
 int main() {
     login();
 }
