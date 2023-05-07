@@ -28,7 +28,7 @@ void UIlite() {
 }
 void login(int firstlog = 1) {
     system("cls");
-    int role;
+    string rol;
     UI();
     if (!firstlog) {
         cout << "| Wrong password or username or role                                                |\n";
@@ -44,7 +44,8 @@ void login(int firstlog = 1) {
         cout << "| 3. Exit                                                                           |\n";
     }
     cout << "| Choose: ";
-    cin >> role;
+    cin >> rol;
+    int role = stoi(rol);
     if (role != 3 && role != 2 && role != 1) {
         login(0);
     }
@@ -84,7 +85,7 @@ void login(int firstlog = 1) {
 }
 void menuStaff(string username) {
     system("cls");
-    int choose;
+    string chose;
     UIlite();
     cout << "| User: " << username << endl;
     cout << "| 0. To log out.                                                                    |\n";
@@ -103,7 +104,9 @@ void menuStaff(string username) {
     cout << "| 13. To view list of courses.                                                      |" << '\n';
     cout << "| 14. To import first year students from CSV files.                                 |" << '\n';
     cout << "| Your choice: ";
-    cin >> choose;
+    cin >> chose;
+    int choose = stoi(chose);
+
     switch (choose)
     {
     case 0: {
@@ -149,9 +152,10 @@ void menuStudent(string username) {
     cout << "| 4. To remove enrolled course.                                                     |" << '\n';
     cout << "| 5. To view enrolled courses.                                                      |" << '\n';
     cout << "| 6. To view scoreboard.                                                            |" << '\n';
-    int choose;
+    string chose;
     cout << "| Your choice: ";
-    cin >> choose;
+    cin >> chose;
+    int choose = stoi(chose);
     switch (choose)
     {
     case 0: {
