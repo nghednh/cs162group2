@@ -71,3 +71,10 @@ void addClassToSchoolYear(Class* classs, SchoolYear* schoolyearr) {
         schoolyearr->classHead = cur;
     }
 }
+int biggerDate(Date left, Date right) {
+    int lef = stoi(left.year) * 10000 + stoi(left.month) * 100 + stoi(left.day);
+    int rig = stoi(right.year) * 10000 + stoi(right.month) * 100 + stoi(left.day);
+    if (lef > rig) return 1;
+    else if (lef == rig) return 0;
+    else return -1;
+}
