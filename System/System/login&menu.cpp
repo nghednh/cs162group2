@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "login&menu.h"
+#include <regex>
 
 using namespace std;
 bool checkStudentPassword(string username, string password) {
@@ -190,6 +191,26 @@ void menuStudent(string username) {
     }
     }
 }
+void inputInt(int *i) {
+    cout << "Input: ";
+    cin >> *i;
+    if (cin.fail()) {
+        cout << "Invalid input. Please input again!";
+        cin.clear();
+        cin.ignore(100, '\n');
+        inputInt(i);
+    }
+}
+void checkYearForm(string* str) {
+    cout << "Input: ";
+    cin >> *str;
+    regex pattern("\\d{4}-\\d{4}");
+    if (regex_match(str, pattern)) {
+
+    }
+}
+
+
 int main() {
     login();
 }

@@ -78,16 +78,16 @@ int biggerDate(Date left, Date right) {
     else if (lef == rig) return 0;
     else return -1;
 }
-void inpClasses(Class*& classList) {
-    Class* cur = classList = nullptr;
+void inpClasses(Class*& classHead) {
+    Class* cur = classHead = nullptr;
     int n;
     cout << "Number of classes: ";
     cin >> n;
     cout << "Class ID: \n";
     while (n--) {
-        if (!classList) {
-            classList = new Class;
-            cur = classList;
+        if (!classHead) {
+            classHead = new Class;
+            cur = classHead;
         }
         else {
             cur->classNext = new Class;
