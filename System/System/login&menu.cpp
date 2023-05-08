@@ -111,6 +111,7 @@ void menuStaff(string username) {
     switch (choose)
     {
     case 0: {
+        login();
     }
     case 1: {
     }
@@ -160,6 +161,7 @@ void menuStudent(string username) {
     switch (choose)
     {
     case 0: {
+        login();
     }
     case 1: {
     }
@@ -200,6 +202,35 @@ void inputInt(int *i) {
         cin.ignore(100, '\n');
         inputInt(i);
     }
+}
+void inpScoreboard(StuInCourse*& studentM) {
+    StuInCourse* cur = nullptr;
+    int n;
+    cin >> n;
+    while (n--) {
+        if (!studentM) {
+            studentM = new StuInCourse;
+            cur = studentM;
+        }
+        else {
+            cur->stuNext = new StuInCourse;
+            cur = cur->stuNext;
+        }
+        cin.get();
+        getline(cin, cur->courseID);
+        cin >> cur->courseID >> cur->midM >> cur->finalM >> cur->totalM >> cur->otherM;
+    }
+}
+
+bool checkIfStudentExist(Student *studentHead, string ID) {
+    Student* cur = studentHead;
+    while (cur != nullptr) {
+        if (cur->StuID == ID) {
+            return true;
+        }
+        cur = cur->stuNext;
+    }
+    return false;
 }
 
 
