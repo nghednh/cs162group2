@@ -201,14 +201,7 @@ void inputInt(int *i) {
         inputInt(i);
     }
 }
-void checkYearForm(string* str) {
-    cout << "Input: ";
-    cin >> *str;
-    regex pattern("\\d{4}-\\d{4}");
-    if (regex_match(str, pattern)) {
 
-    }
-}
 
 
 int main() {
