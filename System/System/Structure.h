@@ -15,10 +15,6 @@ struct Date {
 	string year;
 };
 
-struct Class;
-struct SchoolYear;
-struct StuInCourse;
-
 struct Student {
 	//detail
 	string No;
@@ -40,8 +36,6 @@ struct Student {
 	Student* stuNext = NULL; //next of linkedlist
 	StuInCourse* pStuCourseHead = NULL;
 };
-
-struct Course;
 
 struct StuInCourse {
 	//detail 
@@ -81,8 +75,6 @@ struct Day {
 	string name; //Mon - ... - Sat
 	Session s[4];
 };
-
-struct Semester;
 
 struct Course {
 	//detail
