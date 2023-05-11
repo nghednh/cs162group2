@@ -1,5 +1,5 @@
 #include "Structure.h"
-
+/*
 //Input a date (day-month-year)
 void inputADate(Date& d);
 //Create a semester
@@ -20,6 +20,7 @@ bool removeAStudentFromCourse(Course* a, int ID);
 // (which day, which session)
 void classAttendToCourse(Course* a, Class* c);
 
+bool checkInfoCourse(Semester sm, string cID, string cName, string cCre, string cLec, string cDay, string cSes, string cMax, string cClass);
 //Update course's infomation
 void viewOptions();
 void viewCourseInfo(Course* course);
@@ -46,3 +47,4 @@ StuInCourse* checkStuInCourse(Course* c, Student* stu);
 
 //view schedule of a student
 void viewSchedule(Semester sm, Student* stu); 
+*/

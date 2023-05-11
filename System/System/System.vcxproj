@@ -136,17 +136,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Beginning.cpp" />
-    <ClCompile Include="Course&amp;Semester.cpp" />
+    <ClCompile Include="CourseSemester.cpp" />
     <ClCompile Include="Delete.cpp" />
+    <ClCompile Include="Demo Menu.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="login&amp;menu.cpp" />
+    <ClCompile Include="password.cpp" />
     <ClCompile Include="Source1.cpp" />
     <ClCompile Include="View.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Course&amp;Semester.h" />
     <ClInclude Include="Beginning.h" />
+    <ClInclude Include="CourseSemester.h" />
     <ClInclude Include="Delete.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="login&amp;menu.h" />
     <ClInclude Include="Structure.h" />
     <ClInclude Include="View.h" />

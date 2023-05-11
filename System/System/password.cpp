@@ -1,3 +1,4 @@
+/*
 #include <iostream>
 #include "Structure.h"
 void ChangePassword(Account*& account) {
@@ -29,3 +30,4 @@ void ChangePassword(Account*& account) {
 		}
 	}
 }
+*/

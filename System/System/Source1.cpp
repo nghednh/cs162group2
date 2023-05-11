@@ -7,26 +7,24 @@ void trimS(string& s) { //to trim a string
 
 //19: Export a list of students in a course to a CSV file 
 void Staff::exportCourseToCSV(Course* course) {
-	ofstream ft(course->ID + "_dssv.txt");
-	if (!ft) {
-		cout << "Cannot open file named: " << course->ID + "_dssv.txt";
-		return;
-	}
+	ofstream ft("Export/" + course->ID + "_" + course->className+ "_dssv.txt");
+	if (!ft) return;
 
 	ft << "Course: " << course->name << endl;
 	ft << "Credits: " << course->numCredit << endl;
 	ft << "Lecturer: " << course->teacherName << endl << endl;
-	ft << "No	Student ID	First name	Last name	Gender	Date of Birth	Social ID" << endl;
+	ft << "No	Student ID	First name	Last name	Gender	Date of Birth	Social ID";
 
 	StuInCourse* tmp = course->stuHead;
 	while (tmp) {
-		ft << tmp->stuInClass->No << "	" << tmp->stuInClass->StuID << "	" << tmp->stuInClass->firstName << "	" << tmp->stuInClass->lastName << "	" << tmp->stuInClass->gender << "	";
-		ft << tmp->stuInClass->dateOfBirth.day << " " << tmp->stuInClass->dateOfBirth.month << " " << tmp->stuInClass->dateOfBirth.year << "	" << tmp->stuInClass->socialID << endl;
+		ft << endl << tmp->stuInClass->No << "	" << tmp->stuInClass->StuID << "	" << tmp->stuInClass->firstName << "	" << tmp->stuInClass->lastName << "	" << tmp->stuInClass->gender << "	";
+		ft << tmp->stuInClass->dateOfBirth.day << " " << tmp->stuInClass->dateOfBirth.month << " " << tmp->stuInClass->dateOfBirth.year << "	" << tmp->stuInClass->socialID;
 		tmp = tmp->stuNext;
 	}
 }
 
 //20: Import the scoreboard of a course - create CSV file for teachers
+// bo ham nay
 void Staff::importScoreboard(Course* course) {
 	ofstream ft(course->ID + "_mark.txt");
 
@@ -699,7 +697,7 @@ int main() {
 	staff->createAllClassesFromCSV(sy, "2021-2022", info);
 	staff->createAllClassesFromCSV(sy, "2019-2020", info);
 
-	//username 
+	//username
 	Staff* user1 = NULL;
 	InfoStu* user2 = NULL;
 	username(staff, info, user1, user2, 0);
@@ -708,7 +706,7 @@ int main() {
 	staff->createAllCourse(sy);
 	user2->selectCourse();
 
-	//delete 
+	//delete
 	Course* tmpcr = sy->sm[1].courseHead;
 	while (tmpcr) {
 		//cout << tmpcr->ID << " " << tmpcr->className << endl;
