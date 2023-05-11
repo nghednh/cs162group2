@@ -1,6 +1,0 @@
-No	Student ID	First Name	Last Name	Gender	Date of birth	Social ID	Curriculum	Class
-1	19125029	Nguyen	Nhi	Female	20/02/2001	79281385	Computer_Science	19CTT
-2	19125031	Phan	Phat	Male	27/01/2001	79231199	Computer_Science	19CTT
-3	19125039	Dinh	Dinh	Male	22/11/2001	79225201	Computer_Science	19CTT
-4	19125043	Vu	Hoang	Male	06/02/2001	79218200	Computer_Science	19CTT
-5	19125046	Lam 	Van	Male	16/07/2001	79291406	Computer_Science	19CTT

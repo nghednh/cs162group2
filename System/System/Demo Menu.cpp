@@ -119,7 +119,7 @@ void menuStaff(string username, SchoolYear*& yearHead) {
     cout << "| 1.   Add school year.                                                            |" << '\n';
     cout << "| 2.   Create Class by keyboard                                                     |" << '\n';
     cout << "| 3.   Create Class by file                                                         |" << '\n';
-    cout << "| 4. To view student.                                                               |" << '\n';
+    cout << "| 4.   Add student to class                                                               |" << '\n';
     cout << "| 5. To add semester.                                                               |" << '\n';
     cout << "| 6. To update course information.                                                  |" << '\n';
     cout << "| 7. To delete course by ID.                                                        |" << '\n';
@@ -184,7 +184,18 @@ void menuStaff(string username, SchoolYear*& yearHead) {
             }
             else cout << "Canceled" << endl;
         }
-        if (chose == "0") {
+        else if (chose == "4") {
+            string StuID, FirstName, LastName, Gender, dateofbirth, socialID, curriculum, cla;
+            cout << "Input Student's Class: ";
+            getline(cin, cla, '\n');
+            if (findClassInSchoolYear(yearNow, cla) == nullptr)
+                cout << "Not fould " << cla << " in schoolyear " << yearNow->name << endl;
+
+            if (echo("Class " + s) == true)
+            {
+                if (createClass(yearNow, s)) cout << "Succeed." << endl;
+            }
+            else cout << "Canceled" << endl;
         }
         if (chose == "0") {
         }

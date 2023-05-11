@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{6ee73ac1-0f79-4585-a0e7-9188e4fa739f}</ProjectGuid>
-    <RootNamespace>System</RootNamespace>
+    <ProjectGuid>{af289496-e769-4340-abeb-016387855ab0}</ProjectGuid>
+    <RootNamespace>Menu</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -70,17 +70,12 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ExcludePath>C:\Users\Administrator\Downloads\dirent-master\dirent-master\include;$(ExcludePath)</ExcludePath>
-    <IncludePath>C:\Users\Administrator\Downloads\dirent-master\dirent-master\include;$(IncludePath)</IncludePath>
-  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -109,8 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Administrator\Downloads\dirent-master\dirent-master\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -125,7 +119,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -135,23 +129,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Beginning.cpp" />
-    <ClCompile Include="CourseSemester.cpp" />
-    <ClCompile Include="Delete.cpp" />
-    <ClCompile Include="Demo Menu.cpp" />
-    <ClCompile Include="Input.cpp" />
-    <ClCompile Include="password.cpp" />
-    <ClCompile Include="Source1.cpp" />
-    <ClCompile Include="View.cpp" />
+    <ClCompile Include="..\System\CourseSemester.cpp" />
+    <ClCompile Include="..\System\Demo Menu.cpp" />
+    <ClCompile Include="..\System\Input.cpp" />
+    <ClCompile Include="..\System\Source1.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Beginning.h" />
-    <ClInclude Include="CourseSemester.h" />
-    <ClInclude Include="Delete.h" />
-    <ClInclude Include="Input.h" />
-    <ClInclude Include="login&amp;menu.h" />
-    <ClInclude Include="Structure.h" />
-    <ClInclude Include="View.h" />
+    <ClInclude Include="..\System\CourseSemester.h" />
+    <ClInclude Include="..\System\Input.h" />
+    <ClInclude Include="..\System\login&amp;menu.h" />
+    <ClInclude Include="..\System\Structure.h" />
+    <ClInclude Include="..\System\View.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
