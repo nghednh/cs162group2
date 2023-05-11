@@ -98,6 +98,18 @@ void login(int firstlog = 1) {
         }
     }
 }
+
+bool checkInputSchoolYear(string s)
+{
+    if (s.size() != 9) return false;
+    if (s[4] != '-') return false;
+    for (int i = 0; i < 9; i++)
+        if (i != 4)
+            if (!(s[i] <= '9' && s[i] >= '0')) return false;
+    if (stoi(s.substr(5, 4))- stoi(s.substr(0, 4)) != 1) return false; 
+    return true;
+}
+
 void menuStaff(string username, SchoolYear*& yearHead) {
     system("cls");
     string chose;
@@ -128,32 +140,49 @@ void menuStaff(string username, SchoolYear*& yearHead) {
             deleteAll(yearHead);
             exit(0);
         }
-        if (chose == "1") {
-            cout << "Please input Schoolyear's Name: ";
+        else if (chose == "1") {
+            cout << "Please input Schoolyear's Name (Ex: 2022-2023): ";
             getline(cin, s, '\n');
-            if (echo("SChoolYear " + s) == true)
+            if (checkInputSchoolYear(s) == true)
             {
-                if (createSchoolyear(yearNow, s, yearHead, smNow))
+                if (echo("SChoolYear " + s) == true)
                 {
-                    findLastSYandSM(yearHead, yearNow, smNow);
-                    // chuyen qua year
-                    cout << "Succeed. You are now in Schoolyear " << yearNow->name << endl;
+                    if (createSchoolyear(yearNow, s, yearHead, smNow))
+                    {
+                        findLastSYandSM(yearHead, yearNow, smNow);
+                        // chuyen qua year
+                        cout << "Succeed. You are now in Schoolyear " << yearNow->name << endl;
+                    }
+                    else cout << "Not full all last semester or already have that schoolyear" << endl;
                 }
-                else cout << "Not full all last semester or already have that schoolyear" << endl;
+                else cout << "Canceled" << endl;
             }
-            else cout << "Canceled" << endl;
+            else cout << "Input wrong" << endl;
         }
-        if(chose == "2") {
-            cout << "Please input Class's Name: ";
+        else if(chose == "2") {
+            cout << "Please input Class's Name (Ex: 22CTT1): ";
             getline(cin, s, '\n');
+            
             if (echo("Class " + s) == true)
             {
                 if (createClass(yearNow, s)) cout << "Succeed." << endl;
-                else cout << "Already have this class." << endl;
             }
-            else cout << "Cancel" << endl;
+            else cout << "Canceled" << endl;
         }
-        if (chose == "0") {
+        else if (chose == "3")
+        {
+            cout << "Please pass your file in Import folder.";
+           
+            cout << "Enter your file name (Ex: ListClass): ";
+            getline(cin, s, '\n');
+            if (echo(s) == true)
+            {
+                cout << "Is checking..." << endl;
+                if (importListClass_dslh("Import/" + s + ".txt", yearNow) == true)
+                    cout << "Done" << endl;
+                else cout << "Can not open file or wrong schoolyear in file." << endl;
+            }
+            else cout << "Canceled" << endl;
         }
         if (chose == "0") {
         }

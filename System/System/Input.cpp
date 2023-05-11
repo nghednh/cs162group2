@@ -795,7 +795,11 @@ void findLastSYandSM(SchoolYear* yearHead, SchoolYear*& yearNow, int& semesterNo
 // cach su dung: findLastSYandSm -> goi ham
 bool createClass(SchoolYear* yearCur, string ClassName)        // yearHead == yearCur (find last year & semester)
 {
-    if (yearCur == nullptr || findClassInSchoolYear(yearCur, ClassName) != nullptr) return false;
+    if (yearCur == nullptr || findClassInSchoolYear(yearCur, ClassName) != nullptr)
+    {   
+        cout << "Already have class " << ClassName << endl;
+        return false;
+    }
 
     Class* classCur = yearCur->classHead;
     yearCur->classHead = new Class;
@@ -1415,7 +1419,6 @@ bool importListClass_dslh(const path& file_path, SchoolYear*& sy)
     Class* tmp = sy->classHead;
 
     while (!fin.eof()) {
-
         getline(fin, s, '\n');
         createClass(sy, s);
     }
