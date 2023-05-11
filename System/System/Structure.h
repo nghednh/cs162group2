@@ -77,6 +77,7 @@ struct Class {
 	SchoolYear* inSY = NULL;
 };
 
+/*
 struct Session {
 	Class* cur_class = NULL;
 	bool isEmpty = true;
@@ -100,10 +101,6 @@ struct Course {
 	Semester* inSM = NULL;
 };
 
-struct Semester {
-	//detail
-	Date start;
-	Date end;
 //	string syName;
 	bool state = 0; //if 1 - accessible
 	int num;
