@@ -9,18 +9,19 @@
 
 using namespace std;
 
+struct Date;
+struct Class;
+struct SchoolYear;
+struct StuInCourse;
+struct Student;
+struct Semester;
+struct Staff;
+
+
 struct Date {
 	string day;
 	string month;
 	string year;
-};
-
-struct Class;
-struct SchoolYear;
-struct StuInCourse;
-
-struct Account {
-	string password;
 };
 
 struct Student {
@@ -34,7 +35,6 @@ struct Student {
 	string socialID;
 	string className;
 	string password = "123"; //mac dinh
-	Account StuAccount = { password };
 	string curriculum;
 
 	int accumCredits = 0;
@@ -70,7 +70,7 @@ struct Class {
 	int requiredCredits; //22TT1-165 tin chi de tot nghiep
 	int numStu = 50;
 	bool courseSes[6][4] = {}; //courses' sessions during days of week: empty session 0 and taken session 1
-
+	
 	//node
 	Student* stuHead = NULL;
 	Class* classNext = NULL;
@@ -81,13 +81,6 @@ struct Session {
 	Class* cur_class = NULL;
 	bool isEmpty = true;
 };
-
-struct Day {
-	string name; //Mon - ... - Sat
-	Session s[4];
-};
-
-struct Semester;
 
 struct Course {
 	//detail
@@ -100,7 +93,6 @@ struct Course {
 	int cntStudent = 0;
 	int session;
 	string day;
-	Day dayB[6]; //Mon - ... - Sat
 
 	//node
 	StuInCourse* stuHead = NULL;
@@ -112,7 +104,7 @@ struct Semester {
 	//detail
 	Date start;
 	Date end;
-	string syName;
+//	string syName;
 	bool state = 0; //if 1 - accessible
 	int num;
 
@@ -160,7 +152,6 @@ struct Staff {
 	string ID; //username == ID
 	string name;
 	string password = "10diemLy"; //mac dinh
-	Account StaffAccount = { password };
 	Staff* staffNext = NULL;
 
 	//Main functions
