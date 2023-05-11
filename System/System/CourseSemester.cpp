@@ -27,13 +27,12 @@ SchoolYear* findSchoolYear(SchoolYear* sHead, string a){
     return cur;
 }
 //Xac dinh semester so may va thuoc nam nao
-void addSemesterToSy(SchoolYear* sHead, Semester s, string nameSy){
+void addSemesterToSy(SchoolYear*& sHead, Semester s, string nameSy){
     SchoolYear* tmp = findSchoolYear(sHead, nameSy);
     tmp->sm[s.num-1] = s;
 }
-
 //Add a new student into a course by hand
-bool Staff::addAStudentInCourse(Course* a, Student* newStu){
+bool Staff::addAStudentInCourse(Course*& a, Student* newStu){
     if(a->cntStudent == a->maxStudent)
         return false;
     if(a->stuHead == NULL){
@@ -50,6 +49,9 @@ bool Staff::addAStudentInCourse(Course* a, Student* newStu){
             tmp = a->stuHead;
             tmp->pStuCourseNext = NULL;
         }
+        InfoStu tmp;
+        tmp.stuInClass = newStu;
+        tmp.importStuToCourseCSV(a->ID);
         return true;
     }
     StuInCourse* cur = a->stuHead;
@@ -80,6 +82,7 @@ void inputACourse(Course* a){
     cin >> a->day;
     cin >> a->session;
     cin >> a->maxStudent;
+    cin >> a->className;
 }
 //Convert a string-type day into its certain number
 int numPresentAsDay(string day){
@@ -171,9 +174,46 @@ void addCourse(Semester& s, Course* a){
     courseCur->courseNext = a;
     courseCur = a;
     courseCur->courseNext = nullptr;
+    ofstream ft(".\\Files\\DSHP\\dshp.txt", ofstream::app);
+    ft << a->ID << ' ' << a->name << ' ' << a->numCredit << ' ' << a->teacherName << ' ' << a->day << ' ' << a->session << ' ' << a->maxStudent << ' ' << a->className << endl;
+
 }
 //Remove a student from a course
-bool Staff::removeAStudentFromCourse(Course* a, string ID){
+void removeStuFile(string courseclass, string courseid, string stuid) {
+	ifstream fin(".\\Files\\DSHP\\"+courseid+"_"+courseclass+".txt");
+	if (!fin) {
+		cout << "Error" << endl;
+		return;
+	}
+
+	string s;
+	string s1 = "";
+	ofstream ft(".\\Files\\DSHP\\tmp.txt");
+
+	while (!fin.eof()) {
+		for (int i = 0; i < 3; i++) {
+			fin >> s;
+			if (i == 0 && s.substr(4, 1) != "-") {
+				fin.close();
+				ft.close();
+
+				s = ".\\Files\\DSHP\\" + courseid + "_" + courseclass + "_dsdkhp.txt";
+				char* p = new char[s.length()+1];
+				p[s.length()] = '\0';
+				for (int i = 0; i < s.length(); i++) p[i] = s[i];
+				
+				remove(p);
+				rename(".\\Files\\DSHP\\tmp.txt", p);
+				delete[]p;
+				return;
+			}
+			s1 += s + " ";
+		}
+		if (s != stuid) ft << s1.substr(0, s1.length() - 1) << endl;
+		s1 = "";
+	}
+}
+bool Staff::removeAStudentFromCourse(Course*& a, string ID){
     if(a->stuHead == NULL) 
         return false;
     StuInCourse* cur = a->stuHead;
@@ -188,6 +228,7 @@ bool Staff::removeAStudentFromCourse(Course* a, string ID){
             tmpStu->stuNext = tmpStu->stuNext->stuNext;
             delete tmp;
             a->cntStudent -= 1;
+            removeStuFile(a->className, a->ID, ID);
             return true; //Thong bao xoa thanh cong.
         }
         cur = cur->stuNext;
@@ -364,6 +405,12 @@ void updateCourseInfo(Course* course){
                 cin >> course->day >> course->session;
                 break;
             }
+            case 7:
+            {
+                cout << "New class name: ";
+                cin >> course->className;
+                break;
+            }
             /*case 7:
             {
                 string tmp;
@@ -460,12 +507,48 @@ void addAndSortByID(StuInCourse*& stuHead, StuInCourse* curStu){
     stuHead = curStu;
 }
 //Find and return a course by ID
-Course* findCourseByID(Semester sm, string inputID){
+Course* findCourseByIDAndClass(Semester sm, string inputID, string nameClass){
     Course* cur = sm.courseHead;
     while(cur){
         if(checkID(cur->ID, inputID) == true)
-            return cur;
+            if(cur->className == nameClass)
+                return cur;
         cur  = cur->courseNext;
     }
     return NULL;
+}
+bool checkInfoCourse(Semester sm, string cID, string cName, string cCre, string cLec, string cDay, string cSes, string cMax, string cClass){
+    bool check = true;
+    for(int i = 0; i < cMax.length(); i++){
+        if(cMax[i] - 48 < 0 || cMax[i] - 48 > 9){
+            cout << "Found a non-num character in maximum number of student which is an integer!" << endl;
+            check = false;
+        }
+    }
+    for(int i = 0; i < cCre.length(); i++){
+        if(cMax[i] - 48 < 0 || cMax[i] - 48 > 9){
+            cout << "Found a non-num character in  number of credits which is an integer!" << endl;
+            check = false;
+        }
+    }
+    if(findCourseByIDAndClass(sm, cID, cClass) != NULL){
+        cout << "This course has been already created in this semester!" << endl;
+        check = false;
+    }
+    if(convertFloat(cMax) > 50){
+        cout << "The maximum student in a course is 50!" << endl;
+        check = false;
+    }
+    if(cSes != "S1" || cSes != "S2" || cSes != "S3" || cSes != "S4"){
+        cout << "There are only four sessions S1 -> S4!" << endl;
+        check = false;
+    }
+    if(cDay != "MON" || cDay != "TUE" || cDay != "WED" || cDay != "THU" || cDay != "FRI" || cDay != "SAT"){
+        cout << "Default day has been found!" << endl;
+        check = false;
+    }
+    if(check == false){
+        cout << "Oops! There are some mistakes in the course's data as decribed above! Please check again!" << endl;
+    }
+    return check;
 }

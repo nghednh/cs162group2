@@ -170,8 +170,8 @@ struct Staff {
 	void addStuFromDSDKHP(Course* course, Student* s);
 	void createCourseFromCSV(SchoolYear* sy, int numSm);
 	bool deleteACourse(Course*& courseHead, string courseID);
-	bool addAStudentInCourse(Course* a, Student* newStu);
-	bool removeAStudentFromCourse(Course* a, string ID);
+	bool addAStudentInCourse(Course*& a, Student* newStu);
+	bool removeAStudentFromCourse(Course*& a, string ID);
 
 	Class* findClass(SchoolYear*& sy, string nameClass);
 	void addStuToClass(Class*& cl, Student*& stu);
@@ -183,10 +183,8 @@ void inputADate(Date& d);
 void createSemester(Semester& s);
 SchoolYear* findSchoolYear(SchoolYear* sHead, int a);
 void addSemesterToSy(SchoolYear* sHead, Semester s, int year);
-bool addAStudentInCourse(Course* a, Student* newStu);
 void inputACourse(Course* a);
 void addCourse(Semester s, Course* a);
-bool removeAStudentFromCourse(Course* a, int ID);
 
 //Cap nhat lop tham gia vao khoa hoc (which day, which session)
 void classAttendToCourse(Course* a, Class* c);
@@ -214,3 +212,4 @@ StuInCourse* checkStuInCourse(Course* c, Student* stu);
 bool checkID(string courseID, string ID);
 //Find and return a course by ID
 Course* findCourseByID(Semester sm, string inputID);
+bool checkInfoCourse(Semester sm, string cID, string cName, string cCre, string cLec, string cDay, string cSes, string cMax, string cClass);
