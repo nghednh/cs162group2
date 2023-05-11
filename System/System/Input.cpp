@@ -742,10 +742,12 @@ bool createSemester(int i, SchoolYear* yearCur, Date start, Date end)
 
 // schoolyear must create o cuoi
 // cach su dung: goi ham
-bool createSchoolyear(SchoolYear* yearCur, string schoolYear, SchoolYear*& yearHead)      // file and link
+bool createSchoolyear(SchoolYear* yearCur, string schoolYear, SchoolYear*& yearHead, int smCur)      // file and link
 {
     if (findSchoolyear(yearHead, schoolYear) != nullptr)
         return false;
+    // chua tao du 2 semester cua hoc ki truoc
+    if (smCur != 2) return false;
 
     create_directory("Information/" + schoolYear);
     create_directory("Information/" + schoolYear + "/Class");
@@ -1464,7 +1466,7 @@ bool createCourse(Course* newCourse, int sm, SchoolYear* yearCur)
 bool addCourseToSemester(SchoolYear*& yearCur, int smCur)
 {
     Course* tmp = new Course;
-    string s;
+    string s, ID, Name, Cre, Lec, Day, Ses, Max, Class;
 
     getline(cin, tmp->ID, '\t');
     getline(cin, tmp->name, '\t');
@@ -1479,7 +1481,8 @@ bool addCourseToSemester(SchoolYear*& yearCur, int smCur)
     getline(cin, tmp->className, '\n');
 
         // check thong tin
-    createCourse(tmp, smCur, yearCur);
+//    if (checkInfoCourse(yearCur->sm[smCur], ID, Name, Cre, Lec, Day, Ses, Max, Class) == true)
+        createCourse(tmp, smCur, yearCur);
 
     return true;
 }
@@ -1680,6 +1683,18 @@ void beginStudentEnrollCourse(Semester* sm)
     }
 }
 */
+
+void viewStudentCourse(Student* stuHead, int sm, SchoolYear* yearCur)
+{
+    StuInCourse* stuCur = stuHead->pStuCourseHead;
+    while (stuCur)
+    {
+        if (stuCur->infoCourse->inSM->num == sm && stuCur->infoCourse->inSM->inSY == yearCur)
+            cout << stuCur->infoCourse->name << " < " << stuCur->infoCourse->ID << '_' << stuCur->infoCourse->className << " > " << endl;
+        stuCur = stuCur->pStuCourseNext;
+    }
+}
+
 // readStudentFromImportFile("Import", year hien tai)
 // coi nhu dong bo giua 2 file danh sach va file diem
 // co the dung de update file diem tu file
