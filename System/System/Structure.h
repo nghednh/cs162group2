@@ -82,7 +82,7 @@ struct Session {
 	Class* cur_class = NULL;
 	bool isEmpty = true;
 };
-
+*/
 struct Course {
 	//detail
 	string ID;
@@ -100,8 +100,11 @@ struct Course {
 	Course* courseNext = NULL;
 	Semester* inSM = NULL;
 };
-
-//	string syName;
+struct Semester {
+	//detail
+	Date start;
+	Date end;
+	string syName;
 	bool state = 0; //if 1 - accessible
 	int num;
 

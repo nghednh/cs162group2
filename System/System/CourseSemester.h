@@ -7,15 +7,15 @@ void createSemester(Semester& s);
 //Find a school year by its name
 SchoolYear* findSchoolYear(SchoolYear* sHead, string a);
 //Add a semester to school year
-void addSemesterToSy(SchoolYear* sHead, Semester s, int year);
+void addSemesterToSy(SchoolYear*& sHead, Semester& s, string nameSy);
 //Add - by hand - a student to a course
-bool addAStudentInCourse(Course* a, Student* newStu);
+bool addAStudentInCourse(Course*& a, Student* newStu);
 //Input information for a course
 void inputACourse(Course* a);
 //Add a course to a semester
 void addCourse(Semester& s, Course* a);
 //Remove a student from a course by ID
-bool removeAStudentFromCourse(Course* a, int ID);
+bool removeAStudentFromCourse(Course*& a, int ID);
 
 // (which day, which session)
 void classAttendToCourse(Course* a, Class* c);

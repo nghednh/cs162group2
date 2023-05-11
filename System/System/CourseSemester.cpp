@@ -13,7 +13,9 @@ void inputADate(Date& d){
 //Create a semester
 void createSemester(Semester& s){
     cin >> s.num;
+    cout << "Input start date of this semester: ";
     inputADate(s.start);
+    cout << "Input end date of this semester: ";
     inputADate(s.end);
 }
 //Tim nam hc theo so nam
@@ -27,9 +29,11 @@ SchoolYear* findSchoolYear(SchoolYear* sHead, string a){
     return cur;
 }
 //Xac dinh semester so may va thuoc nam nao
-void addSemesterToSy(SchoolYear*& sHead, Semester s, string nameSy){
+void addSemesterToSy(SchoolYear*& sHead, Semester& s, string nameSy){
     SchoolYear* tmp = findSchoolYear(sHead, nameSy);
     tmp->sm[s.num-1] = s;
+    s.inSY = tmp;
+    s.syName = tmp->name;
 }
 //Add a new student into a course by hand
 bool Staff::addAStudentInCourse(Course*& a, Student* newStu){
