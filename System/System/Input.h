@@ -14,6 +14,8 @@ void OfficialCourseToCSV(Course* courseCur);
 bool updateCourseInfo(Course* courseCur, Course* courseTmp);
 Course* findCourseByIDAndClass(string ID, string className, Semester sm);
 
+
+bool checkInfoStu(string ID, string first, string last, string gender, string dob, string socID, string className);
 // Input
 
 bool checkInfoCourse(Semester sm, string cID, string cName, string cCre, string cLec, string cDay, string cSes, string cMax, string cClass);
@@ -194,9 +196,16 @@ int main()
 
 Class* findClassInSchoolYearByClassName(SchoolYear* yearCur, string className);
 void addStu(Student*& stuCur, Student* stuNew);
+bool checkDate(string dob);
+Date createDate(string date);
+bool createSemester(int i, SchoolYear* yearCur, Date start, Date end);
+Semester createNextSemester(SchoolYear*& curSY);
 // add vo dau, khi nao co danh sach chinh thuc thi sort + chinh No -> quang file
 // pass vo (SY hien tai, newStu); add vo class ten newStu->className
 // add in ordered
+
+
+bool checkInfoStu(string ID, string first, string last, string gender, string dob, string socID, string className);
 bool addStudentToClass(SchoolYear* yearCur, Student* newStu);
 /*
 cout << "Enter Course's ID: ";
