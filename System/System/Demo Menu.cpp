@@ -1,7 +1,10 @@
-<<<<<<< HEAD
 #include <iostream>
 #include <string>
 #include "login&menu.h"
+#include "Input.h"
+
+SchoolYear* yearNow;
+int smNow;
 
 using namespace std;
 bool checkStudentPassword(string username, string password) {
@@ -26,6 +29,17 @@ void UIlite() {
     cout << "|" << string(83, ' ') << "|" << endl;
     cout << "|  <-  -> || courses.ctda.hcmus.edu.vn                                              |" << endl;
     cout << "|___________________________________________________________________________________|" << endl;
+}
+
+bool echo(string source)
+{
+    cout << "Are you sure want to add " << source << ". Please enter YES else enter NO: ";
+    string check;
+    do {
+        getline(cin, check, '\n');
+    } while (!(check == "YES" || check == "NO"));
+    if (check == "YES") return true;
+    else return false;
 }
 void login(int firstlog = 1) {
     system("cls");
@@ -66,7 +80,7 @@ void login(int firstlog = 1) {
     cin >> password;
     if (role == 1) {
         if (checkStaffPassword(username, password)) {
-            menuStaff(username);
+            menuStaff(username, yearNow);
         }
         else {
             system("cls");
@@ -84,16 +98,16 @@ void login(int firstlog = 1) {
         }
     }
 }
-void menuStaff(string username) {
+void menuStaff(string username, SchoolYear*& yearHead) {
     system("cls");
     string chose;
     UIlite();
     cout << "| User: " << username << endl;
-    cout << "| 0. To log out.                                                                    |\n";
-    cout << "| 1. To view the current account.                                                   |" << '\n';
-    cout << "| 2. To change the password.                                                        |" << '\n';
-    cout << "| 3. To view student.                                                               |" << '\n';
-    cout << "| 4. To add school year.                                                            |" << '\n';
+    cout << "| 0.   Log out.                                                                     |\n";
+    cout << "| 1.   Add school year.                                                            |" << '\n';
+    cout << "| 2.   Create Class by keyboard                                                     |" << '\n';
+    cout << "| 3.   Create Class by file                                                         |" << '\n';
+    cout << "| 4. To view student.                                                               |" << '\n';
     cout << "| 5. To add semester.                                                               |" << '\n';
     cout << "| 6. To update course information.                                                  |" << '\n';
     cout << "| 7. To delete course by ID.                                                        |" << '\n';
@@ -105,41 +119,67 @@ void menuStaff(string username) {
     cout << "| 13. To view list of courses.                                                      |" << '\n';
     cout << "| 14. To import first year students from CSV files.                                 |" << '\n';
     cout << "| Your choice: ";
-    cin >> chose;
-    int choose = stoi(chose);
+    getline(cin, chose, '\n');
 
-    switch (choose)
+    string s;
+    while (true)
     {
-    case 0: {
-    }
-    case 1: {
-    }
-    case 2: {
-    }
-    case 3: {
-    }
-    case 4: {
-    }
-    case 5: {
-    }
-    case 6: {
-    }
-    case 7: {
-    }
-    case 8: {
-    }
-    case 9: {
-    }
-    case 10: {
-    }
-    case 11: {
-    }
-    case 12: {
-    }
-    case 13: {
-    }
-    case 14: {
-    }
+        if (chose == "0") {
+            deleteAll(yearHead);
+            exit(0);
+        }
+        if (chose == "1") {
+            cout << "Please input Schoolyear's Name: ";
+            getline(cin, s, '\n');
+            if (echo("SChoolYear " + s) == true)
+            {
+                if (createSchoolyear(yearNow, s, yearHead, smNow))
+                {
+                    findLastSYandSM(yearHead, yearNow, smNow);
+                    // chuyen qua year
+                    cout << "Succeed. You are now in Schoolyear " << yearNow->name << endl;
+                }
+                else cout << "Not full all last semester or already have that schoolyear" << endl;
+            }
+            else cout << "Canceled" << endl;
+        }
+        if(chose == "2") {
+            cout << "Please input Class's Name: ";
+            getline(cin, s, '\n');
+            if (echo("Class " + s) == true)
+            {
+                if (createClass(yearNow, s)) cout << "Succeed." << endl;
+                else cout << "Already have this class." << endl;
+            }
+            else cout << "Cancel" << endl;
+        }
+        if (chose == "0") {
+        }
+        if (chose == "0") {
+        }
+        if (chose == "0") {
+        }
+        if (chose == "0") {
+        }
+        if (chose == "0") {
+        }
+        if (chose == "0") {
+        }
+        if (chose == "0") {
+        }
+        if (chose == "0") {
+        }
+        if (chose == "0") {
+        }
+        if (chose == "0") {
+        }
+        if (chose == "0") {
+        }
+        if (chose == "0")  {
+        }
+              // cin.ignore(1, '\n');
+               cout << "Enter you choose: ";
+               getline(cin, chose, '\n');
     }
 }
 void menuStudent(string username) {
@@ -160,6 +200,7 @@ void menuStudent(string username) {
     switch (choose)
     {
     case 0: {
+
     }
     case 1: {
     }
@@ -191,7 +232,7 @@ void menuStudent(string username) {
     }
     }
 }
-void inputInt(int *i) {
+void inputInt(int* i) {
     cout << "Input: ";
     cin >> *i;
     if (cin.fail()) {
@@ -203,7 +244,14 @@ void inputInt(int *i) {
 }
 
 int main() {
-    login();
+    SchoolYear* yearHead = NULL;
+    SchoolYear* yearCur = yearHead;
+    int semesterNow = -1;
+    readInformation("Information", yearCur, yearHead);      // yearCur de chay, yearHead de tim va danh dau
+    findLastSYandSM(yearHead, yearNow, smNow);
+
+    menuStaff("Nguyen Kim Khanh", yearHead);
+
+
+    return 0;
 }
-=======
->>>>>>> b46af8bd1f171736ab940c36225571b5bd01d2ef

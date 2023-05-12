@@ -1,7 +1,5 @@
-<<<<<<< HEAD
 #include <iostream>
 #include <string>
-#include "login&menu.h"
 
 using namespace std;
 bool checkStudentPassword(string username, string password) {
@@ -10,6 +8,8 @@ bool checkStudentPassword(string username, string password) {
 bool checkStaffPassword(string username, string password) {
     return  true;
 }
+void menuStudent(string username);
+void menuStaff(string username);
 void UI() {
     cout << " ___________________________________________________________________________________ " << endl;
     cout << "|" << string(83, ' ') << "|" << endl;
@@ -89,8 +89,8 @@ void menuStaff(string username) {
     string chose;
     UIlite();
     cout << "| User: " << username << endl;
-    cout << "| 0. To log out.                                                                    |\n";
-    cout << "| 1. To view the current account.                                                   |" << '\n';
+    cout << "| 0.   Log out.                                                                    |\n";
+    cout << "| 1. View the current account.                                                   |" << '\n';
     cout << "| 2. To change the password.                                                        |" << '\n';
     cout << "| 3. To view student.                                                               |" << '\n';
     cout << "| 4. To add school year.                                                            |" << '\n';
@@ -191,7 +191,7 @@ void menuStudent(string username) {
     }
     }
 }
-void inputInt(int *i) {
+void inputInt(int* i) {
     cout << "Input: ";
     cin >> *i;
     if (cin.fail()) {
@@ -205,5 +205,3 @@ void inputInt(int *i) {
 int main() {
     login();
 }
-=======
->>>>>>> b46af8bd1f171736ab940c36225571b5bd01d2ef

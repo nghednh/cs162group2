@@ -1,12 +1,10 @@
-#include <iostream>
+﻿#include <iostream>
 #include <filesystem>
 #include <fstream>
 #include <sstream>
 #include <optional>
 #include <algorithm>
 #include "Structure.h"
-#include "View.h"
-
 namespace fs = std::filesystem;
 using namespace fs;
 
@@ -16,6 +14,42 @@ bool updateCourseInfo(Course* courseCur, Course* courseTmp);
 Course* findCourseByIDAndClass(string ID, string className, Semester sm);
 
 // Input
+
+bool checkInfoCourse(Semester sm, string cID, string cName, string cCre, string cLec, string cDay, string cSes, string cMax, string cClass) {
+    bool check = true;
+    for (int i = 0; i < cMax.length(); i++) {
+        if (cMax[i] - 48 < 0 || cMax[i] - 48 > 9) {
+            cout << "Found a non-num character in maximum number of student which is an integer!" << endl;
+            check = false;
+        }
+    }
+    for (int i = 0; i < cCre.length(); i++) {
+        if (cMax[i] - 48 < 0 || cMax[i] - 48 > 9) {
+            cout << "Found a non-num character in number of credits which is an integer!" << endl;
+            check = false;
+        }
+    }
+    if (findCourseByIDAndClass(cID, cName, sm) != NULL) {
+        cout << "This course has been already created in this semester!" << endl;
+        check = false;
+    }
+   // if (convertFloat(cMax) > 50) {
+   //     cout << "The maximum student in a course is 50!" << endl;
+   //     check = false;
+   // }
+    if (cSes != "S1" || cSes != "S2" || cSes != "S3" || cSes != "S4") {
+        cout << "There are only four sessions S1 -> S4!" << endl;
+        check = false;
+    }
+    if (cDay != "MON" || cDay != "TUE" || cDay != "WED" || cDay != "THU" || cDay != "FRI" || cDay != "SAT") {
+        cout << "Default day has been found!" << endl;
+        check = false;
+    }
+    if (check == false) {
+        cout << "Oops! There are some mistakes in the course's data as decribed above! Please check again!" << endl;
+    }
+    return check;
+}
 
 void readListClass(const path& file_path, SchoolYear*& yearCur)
 {
@@ -205,13 +239,13 @@ void readListCourse(const path& file_path, SchoolYear*& yearCur, SchoolYear*& ye
     for (const auto& entry : directory_iterator(file_path)) {
         string tmp = entry.path().filename().stem().string();
 
- //       if (tmp == "dshp")
- //       {
- //           createCoursesFromList(yearCur, entry.path());
- //       }
+        //       if (tmp == "dshp")
+        //       {
+        //           createCoursesFromList(yearCur, entry.path());
+        //       }
         if (tmp == "Info")
         {
-            ifstream in (entry.path());
+            ifstream in(entry.path());
 
             string header;
             getline(in, header, '\n');
@@ -336,7 +370,7 @@ bool checkPasswordInFile_01(string username, string password, SchoolYear* yearHe
     string user, pass;
     getline(in, user, '\t');
     getline(in, pass, '\n');
-    
+
     while (!in.eof())
     {
         getline(in, user, '\t');
@@ -356,6 +390,34 @@ bool checkPasswordInFile_01(string username, string password, SchoolYear* yearHe
     return false;
 }
 */
+
+Student* findStudentByID(string ID, SchoolYear* sYearHead)
+{
+    SchoolYear* sYearCur = sYearHead;
+    while (sYearCur)
+    {
+        if (sYearCur->name[2] == ID[0] && sYearCur->name[3] == ID[1])	// 2022-2023 ~ 2212...
+        {
+            Class* classCur = sYearCur->classHead;
+            while (classCur)
+            {
+                Student* stuCur = classCur->stuHead;
+                if (classCur->stuHead != NULL && stuCur && abs(stoi(stuCur->StuID) - stoi(ID)) < 1000)	// Name class ~ ID (22CTT1 ~ 22..)
+                {
+                    while (stuCur && stuCur->StuID < ID)		// stop if stuCur->StuID >= ID, Class sorted
+                        stuCur = stuCur->stuNext;
+
+                    if (stuCur && stuCur->StuID == ID)
+                        return stuCur;
+
+                }
+                classCur = classCur->classNext;
+            }
+        }
+        sYearCur = sYearCur->yearNext;
+    }
+    return NULL;
+}
 
 // check student's password
 bool checkStudentPasswordInFile(string username, string password, SchoolYear* yearHead)
@@ -736,18 +798,16 @@ bool createSemester(int i, SchoolYear* yearCur, Date start, Date end)
     out << "Semester\tSchoolYear\tStart Date\tEnd Date" << endl;
     out << yearCur->sm[i].num + 1 << '\t' << yearCur->name << '\t';
     out << yearCur->sm[i].start.day << "/" << yearCur->sm[i].start.month << '/' << yearCur->sm[i].start.year << '\t';
-    out << yearCur->sm[i].end.day << "/" << yearCur->sm[i].end.month << '/' << yearCur->sm[i].end.year; 
+    out << yearCur->sm[i].end.day << "/" << yearCur->sm[i].end.month << '/' << yearCur->sm[i].end.year;
     out.close();
 }
 
 // schoolyear must create o cuoi
 // cach su dung: goi ham
-bool createSchoolyear(SchoolYear* yearCur, string schoolYear, SchoolYear*& yearHead, int smCur)      // file and link
+bool createSchoolyear(SchoolYear* yearCur, string schoolYear, SchoolYear*& yearHead)      // file and link
 {
     if (findSchoolyear(yearHead, schoolYear) != nullptr)
         return false;
-    // chua tao du 2 semester cua hoc ki truoc
-    if (smCur != 2) return false;
 
     create_directory("Information/" + schoolYear);
     create_directory("Information/" + schoolYear + "/Class");
@@ -841,7 +901,7 @@ Class* findClassInSchoolYearByClassName(SchoolYear* yearCur, string className)
     return nullptr;
 }
 
-void addStu(Student*& stuCur, Student* stuNew) 
+void addStu(Student*& stuCur, Student* stuNew)
 {
     Student* tmp = stuCur;
     stuCur = stuNew;
@@ -1045,7 +1105,7 @@ void addStudentToCSVFileCourse(SchoolYear* yearCur, StuInCourse* newStu)
 void addStudentToCSVFileClass(SchoolYear* yearCur, Student* newStu)
 {
     ofstream out("Information/" + yearCur->name + "/Class/" + newStu->className + ".txt", ios::app);    // luu chinh sua -> viet o cuoi
-    
+
     out.seekp(0, ios::end);
     out << endl;
     out << newStu->No << '\t';
@@ -1057,7 +1117,7 @@ void addStudentToCSVFileClass(SchoolYear* yearCur, Student* newStu)
     out << newStu->socialID << '\t';
     out << newStu->curriculum << '\t';
     out << newStu->className;
-       
+
     out.close();
 }
 
@@ -1119,12 +1179,12 @@ void exportClassToCSVFile(Class* classCur);
 bool readStudentFromImportFile(const path& path, SchoolYear* yearCur)
 {
     for (const auto& entry : directory_iterator(path)) {
- 
+
         string tmp = entry.path().filename().stem().string();
         Class* classCur = findClassInSchoolYear(yearCur, tmp);
         if (classCur == nullptr) return false;
 
-        fstream in (entry.path());
+        fstream in(entry.path());
         string header;
         getline(in, header, '\n');
 
@@ -1145,8 +1205,8 @@ bool readStudentFromImportFile(const path& path, SchoolYear* yearCur)
 
             if (tmp == stuCur->className)
                 if (addStudentToClass(yearCur, stuCur))
-                   addStudentToCSVFileClass(yearCur, stuCur);
-        }    
+                    addStudentToCSVFileClass(yearCur, stuCur);
+        }
         in.close();
 
         officialClass(classCur);
@@ -1162,9 +1222,9 @@ bool readStudentFromImportFile(const path& path, SchoolYear* yearCur)
 // co the check so hoc sinh -> neu qua it -> ko phai danh sach chinh thuc
 void exportClassToCSVFile(Class* classCur)
 {
-    ofstream out ("Information/" + classCur->inSY->name + "/Class/" + classCur->name + ".txt", ios::trunc);
+    ofstream out("Information/" + classCur->inSY->name + "/Class/" + classCur->name + ".txt", ios::trunc);
     out << "No\tStudent ID\tFirst Name\tLast Name\tGender\tDate of birth\tSocial ID\tCurriculum\tClass";
-    
+
     Student* stuCur = classCur->stuHead;
     while (stuCur)
     {
@@ -1178,7 +1238,7 @@ void exportClassToCSVFile(Class* classCur)
         out << stuCur->socialID << '\t';
         out << stuCur->curriculum << '\t';
         out << stuCur->className;
-        
+
         stuCur = stuCur->stuNext;
     }
     out.close();
@@ -1334,7 +1394,7 @@ void OfficialCourseToCSV(Course* courseCur)
     fout << "SchoolYear\tClass\tID";
 
     StuInCourse* stuHead = courseCur->stuHead;
-   
+
     while (stuHead)
     {
         fout << endl;
@@ -1347,7 +1407,7 @@ void OfficialCourseToCSV(Course* courseCur)
 }
 
 // end: sort & ghi lai official file, doi ten
-void endEnrollCourse(Course* &courseCur)
+void endEnrollCourse(Course*& courseCur)
 {
     if (courseCur->stuHead == nullptr || courseCur->stuHead->stuNext == nullptr) {
         return;
@@ -1389,7 +1449,7 @@ void endEnrollCourse(Course* &courseCur)
     out << courseCur->teacherName << '\n';
     out << "SchoolYear\tClass\tID";
     StuInCourse* stuCur = courseCur->stuHead;
-    
+
     while (stuCur)
     {
         out << endl << stuCur->stuInClass->inClass->inSY->name << '\t';
@@ -1480,8 +1540,8 @@ bool addCourseToSemester(SchoolYear*& yearCur, int smCur)
     tmp->maxStudent = stoi(s);
     getline(cin, tmp->className, '\n');
 
-        // check thong tin
-//    if (checkInfoCourse(yearCur->sm[smCur], ID, Name, Cre, Lec, Day, Ses, Max, Class) == true)
+    // check thong tin
+    if (checkInfoCourse(yearCur->sm[smCur], ID, Name, Cre, Lec, Day, Ses, Max, Class) == true)
         createCourse(tmp, smCur, yearCur);
 
     return true;
@@ -1601,7 +1661,7 @@ bool deleteClass(string className, SchoolYear* yearCur)
         delete classCur;
         return true;
     }
-    
+
     while (classCur && classCur->classNext)
     {
         if (classCur->classNext->name == className)
@@ -1756,7 +1816,7 @@ int main()
     SchoolYear* yearCur = yearHead;
     int semesterNow = -1;
     readInformation("Information", yearCur, yearHead);      // yearCur de chay, yearHead de tim va danh dau
- 
+
     yearCur = yearHead->yearNext->yearNext->yearNext;
 
 //    beginStudentEnrollCourse(&(yearCur->sm[1]));
@@ -1834,37 +1894,37 @@ add student to export official class
     }
     */
 
-/*
-    
-    if (exportListStudentInCourseCSV(yearHead->yearNext->yearNext->yearNext->sm[0].courseHead)) cout << "ok";
-    else cout << "not ok";
+    /*
 
-*/
+        if (exportListStudentInCourseCSV(yearHead->yearNext->yearNext->yearNext->sm[0].courseHead)) cout << "ok";
+        else cout << "not ok";
 
-//    importScoreboardFile("Import", yearHead->yearNext->yearNext->yearNext, 0);
-
-//    findLastSYandSM(yearHead, yearCur, semesterNow);
-//    officialClass(yearHead->classHead);
-//    exportClassToCSVFile(yearHead, yearHead->classHead);
-
-/*
-Student* stuCur = findStudentByID("22125006", yearHead);
-    if (changePasswordInFile(stuCur, "da chuyen doi ok")) cout << "dung";
-    else cout << "sai rui";
     */
 
-/*
-    dshp ->dang ky hoc phan
-    Course* courseCur = yearHead->yearNext->yearNext->yearNext->sm[1].courseHead;
-    while (courseCur)
-    {
-        cout << courseCur->name << " " << courseCur->className << endl;
-        courseCur = courseCur->courseNext;
-    }
-    */
+    //    importScoreboardFile("Import", yearHead->yearNext->yearNext->yearNext, 0);
 
-/*
-   readInformation("Information", yearCur, yearHead);      // yearCur de chay, yearHead de tim va danh dau
+    //    findLastSYandSM(yearHead, yearCur, semesterNow);
+    //    officialClass(yearHead->classHead);
+    //    exportClassToCSVFile(yearHead, yearHead->classHead);
 
-    importListCourse_dshp("Import/dshp.txt", yearHead->yearNext->yearNext->yearNext);
-*/
+    /*
+    Student* stuCur = findStudentByID("22125006", yearHead);
+        if (changePasswordInFile(stuCur, "da chuyen doi ok")) cout << "dung";
+        else cout << "sai rui";
+        */
+
+        /*
+            dshp ->dang ky hoc phan
+            Course* courseCur = yearHead->yearNext->yearNext->yearNext->sm[1].courseHead;
+            while (courseCur)
+            {
+                cout << courseCur->name << " " << courseCur->className << endl;
+                courseCur = courseCur->courseNext;
+            }
+            */
+
+            /*
+               readInformation("Information", yearCur, yearHead);      // yearCur de chay, yearHead de tim va danh dau
+
+                importListCourse_dshp("Import/dshp.txt", yearHead->yearNext->yearNext->yearNext);
+            */
