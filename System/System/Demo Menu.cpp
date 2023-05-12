@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "login&menu.h"
+#include "Structure.h"
 #include "Input.h"
 
 SchoolYear* yearNow;
@@ -43,7 +44,7 @@ bool echo(string source)
     if (check == "YES") return true;
     else return false;
 }
-void login(int firstlog = 1) {
+void login(int firstlog, SchoolYear* yearHead) {
     system("cls");
     string rol;
     UI();
@@ -64,7 +65,7 @@ void login(int firstlog = 1) {
     cin >> rol;
     int role = stoi(rol);
     if (role != 3 && role != 2 && role != 1) {
-        login(0);
+        login(0, yearHead);
     }
     if (role == 3) {
         system("cls");
@@ -76,27 +77,28 @@ void login(int firstlog = 1) {
     system("cls");
     string username, password;
     UI();
+    cin.ignore(1, '\n');
     cout << "| Enter your username: ";
-    cin >> username;
+    getline(cin, username, '\n');
     cout << "| Enter your password: ";
-    cin >> password;
+    getline(cin, password, '\n');
     if (role == 1) {
-        if (checkStaffPassword(username, password)) {
+        if (checkStaffPasswordInFile(username, password)) {
             menuStaff(username, yearNow);
         }
         else {
             system("cls");
-            login(0);
+            login(0, yearHead);
         }
     }
     else if (role == 2) {
-        if (checkStudentPassword(username, password)) {
+        if (checkStudentPasswordInFile(username, password, yearHead)) {
             menuStudent(username);
         }
         else {
             // Wrong password, prompt user to try again
             system("cls");
-            login(0);
+            login(0, yearHead);
         }
     }
 }
@@ -115,6 +117,7 @@ bool checkInputSchoolYear(string s)
 void menuStaff(string username, SchoolYear*& yearHead) {
     system("cls");
     string chose;
+    Semester smCur;
     UIlite();
     cout << "| User: " << username << endl;
     cout << "| 0.   Log out.                                                                     |\n";
@@ -127,11 +130,11 @@ void menuStaff(string username, SchoolYear*& yearHead) {
     cout << "| 7.   Add course from keyboard                                                       |" << '\n';
     cout << "| 8.   Add course from file                                              |" << '\n';
     cout << "| 9.   Update Course Information                                  |" << '\n';
-    cout << "| 10. To view scoreboard.                                                           |" << '\n';
-    cout << "| 11. To update scoreboard info.                                                    |" << '\n';
-    cout << "| 12. To view list of classes.                                                      |" << '\n';
-    cout << "| 13. To view list of courses.                                                      |" << '\n';
-    cout << "| 14. To import first year students from CSV files.                                 |" << '\n';
+    cout << "| 10.  Import scoreboard.                                                           |" << '\n';
+    cout << "| 11.  Export student in course                                                    |" << '\n';
+    cout << "| 12.  Update a student's result                                                     |" << '\n';
+    cout << "| 13.  Export file to enter mark                                                      |" << '\n';
+    cout << "| 14.  Remove course                                 |" << '\n';
     cout << "| Your choice: ";
     getline(cin, chose, '\n');
 
@@ -189,7 +192,6 @@ void menuStaff(string username, SchoolYear*& yearHead) {
         else if (chose == "9") {
             Course* tmp;
             string s, ID, Name, Cre, Lec, Day, Ses, Max, Class;
-            Semester smCur;
 
             cout << "Enter Course to upate information <ID_ClassName>: ";
             getline(cin, s, '\n');
@@ -225,7 +227,7 @@ void menuStaff(string username, SchoolYear*& yearHead) {
                     tmp->session = stoi(Ses.substr(1, 1));
                     tmp->day = Day;
 
-                    if (updateCourseInfo(cur, tmp) == true) 
+                    if (updateCourseInfo(cur, tmp) == true)
                     {
                         cout << "Succeed" << endl;
                     }
@@ -233,14 +235,15 @@ void menuStaff(string username, SchoolYear*& yearHead) {
                 }
                 else
                     cout << "Failed" << endl;
-                
+
             }
             else cout << "Could not fould " << s << endl;
         }
-        else if (chose == "5") 
+        else if (chose == "5")
         {
             findLastSYandSM(yearHead, yearNow, smNow);
-            {
+            
+            
                 cout << "Please pass your file in Import folder.";
                 if (echo("file class") == true)
                 {
@@ -249,7 +252,7 @@ void menuStaff(string username, SchoolYear*& yearHead) {
                         cout << "Done" << endl;
                 }
                 else cout << "Canceled" << endl;
-            }
+            
         }
         else if (chose == "6")
         {
@@ -366,6 +369,186 @@ void menuStaff(string username, SchoolYear*& yearHead) {
                 exportClassToCSVFile(classCur);
             }
         }
+        else if (chose == "10")
+        {
+            findLastSYandSM(yearHead, yearNow, smNow);
+            if (yearNow != nullptr && smNow != -1)
+            {
+                cout << "Please pass your file in Import folder.";
+                if (echo("scoreboard file") == true)
+                {
+                    cout << "Is checking..." << endl;
+                    if (importScoreboardFile("Import", yearNow, smNow) == true)
+                        cout << "Done" << endl;
+                }
+                else cout << "Canceled" << endl;
+            }
+            else cout << "Not have any semester or schoolyear" << endl;
+        }
+        else if (chose == "11") {
+            cout << "Please enter Course <ID_ClassName>: ";
+            getline(cin, s, '\n');
+            Course* courseCur = findCourseByFileNameInAllCourse(yearHead, smCur, s);
+            if (courseCur != nullptr)
+            {
+                if (exportListStudentInCourseCSV_dssv(courseCur) == true)
+                    cout << "Exported course " << s << " to Export folder with name " << s << ".txt" << endl;
+                else cout << "Failed" << endl;
+            }
+            else cout << "Could not fould course " << s << endl;
+        }
+        else if (chose == "12")
+        {
+            bool conti = true;
+            findLastSYandSM(yearHead, yearNow, smNow);
+            string s;
+            cout << "Enter student's Course <ID_ClassName>: ";
+            getline(cin, s, '\n');
+            Course* courseCur = findCourseByFileNameInAllCourse(yearHead, smCur, s);
+            if (courseCur == nullptr || courseCur->inSM->num != smNow || courseCur->inSM->inSY->name != yearNow->name) cout << "Could not find course " << s << " in current semester" << endl;
+            else
+            {
+                if (checkFileMarkExist(courseCur) == true)
+                {
+                    cout << "You are changing student result of course " << s << endl;
+                    while (conti)
+                    {
+                        if (updateStudentResult(courseCur) == true)
+                            cout << "Updated" << endl;
+                        else cout << "Failed." << endl;
+
+                        cout << "Enter Any Key to continue changing result in course " << s << endl;
+                        cout << "Else Press Enter to return to menu.";
+                        getline(cin, s, '\n');
+                        if (s == "") conti = false;
+                    }
+                }
+                else cout << "Course " << courseCur->ID << "_" << courseCur->className << " not have mark information" << endl;
+            }
+
+        }
+        else if (chose == "13") {
+            cout << "Please enter Course <ID_ClassName>: ";
+            getline(cin, s, '\n');
+            Course* courseCur = findCourseByFileNameInAllCourse(yearHead, smCur, s);
+            if (courseCur != nullptr)
+            {
+                if (checkFileMarkExist(courseCur) == false)
+                {
+                    if (exportListStudentInCourseCSV_mark(courseCur) == true)
+                        cout << "Exported course " << s << " to Export folder with name " << s << ".mark" << endl;
+                    else cout << "Failed" << endl;
+                }
+                else cout << "Course " << s << " already have mark information" << endl;
+            }
+            else cout << "Could not fould course " << s << endl;
+        }
+        else if (chose == "14") {
+            cout << "Please enter Course <ID_ClassName>: ";
+            getline(cin, s, '\n');
+            Course* courseCur = findCourseByFileNameInAllCourse(yearHead, smCur, s);
+            if (courseCur == nullptr || courseCur->inSM->num != smNow || courseCur->inSM->inSY->name != yearNow->name) cout << "Could not find course " << s << " in current semester" << endl;
+            else
+            {
+                if (deleteCourse(courseCur, yearNow, smNow) == true)
+                    cout << "Deleted" << endl;
+                else cout << "Failed." << endl;
+            }
+        }
+        else if (chose == "15") {   // remove stu in course
+            bool conti = true;
+            findLastSYandSM(yearHead, yearNow, smNow);
+            string s, name;
+            cout << "Enter student's Course <ID_ClassName>: ";
+            getline(cin, s, '\n');
+            Course* courseCur = findCourseByFileNameInAllCourse(yearHead, smCur, s);
+            if (courseCur == nullptr || courseCur->inSM->num != smNow || courseCur->inSM->inSY->name != yearNow->name) cout << "Could not find course " << s << " in current semester" << endl;
+            else
+            {
+                cout << "You are deleting in course " << s << endl;
+                while (conti)
+                {
+                    cout << "Please enter student ID: ";
+                    getline(cin, s, '\n');
+                    cout << "Please enter student fullname: ";
+                    getline(cin, name, '\n');
+                    StuInCourse* stuCur = findStuInCourse(s, name, courseCur);
+                    if (stuCur != nullptr)
+                    {
+                        if (removeStuInCourse(courseCur, stuCur) == true)
+                            cout << "Updated" << endl;
+                        else cout << "Failed." << endl;
+                    }
+                    cout << "Enter Any Key to continue changing result in course " << s << endl;
+                    cout << "Else Press Enter to return to menu.";
+                    getline(cin, s, '\n');
+                    if (s == "") conti = false;
+                }
+
+                updateCourseInfoInFile(courseCur, courseCur);
+                if (checkFileMarkExist(courseCur)) passScoreboardFileFromImport(courseCur);
+            }
+        }
+        else if (chose == "16") {       // addstuincourse
+            findLastSYandSM(yearHead, yearNow, smNow);
+            // nhap den khi nao chon dung, luu y chi nhap trong lop do
+            string StuID, Class, schoolYear, s;
+            cout << "Please enter Course <ID_ClassName>: ";
+            getline(cin, s, '\n');
+            Course* courseCur = findCourseByFileNameInAllCourse(yearHead, smCur, s);
+            if (courseCur == nullptr || courseCur->inSM->num != smNow || courseCur->inSM->inSY->name != yearNow->name)
+                cout << "Not fould " << s << " in current semester of this schoolyear" << endl;
+            else
+            {
+                cout << "You are adding in course " << s << endl;
+                bool conti = true;
+                while (conti)
+                {
+                    cout << "Enter Student's ID: "; getline(cin, StuID, '\n');
+                    cout << "Enter Student's Class: "; getline(cin, Class, '\n');
+                    cout << "Enter Student's Schoolyear: ";  getline(cin, schoolYear, '\n');
+                
+                    Student* stuInClass = findStuInClass(schoolYear, Class, StuID, yearHead);
+                    // class already enter
+                    if (stuInClass != nullptr)
+                    {
+                        StuInCourse* newStu = new StuInCourse;
+                        newStu->courseID = courseCur->ID;
+                        newStu->stuInClass = stuInClass;
+                        newStu->infoCourse = courseCur;
+                       
+                        if (addStuInCourse(yearNow, newStu, courseCur) == false)
+                            cout << "Already have student with ID " << StuID << endl;
+                        else
+                        {
+                            addStudentToCSVFileCourse(yearNow, newStu);
+                            cout << "Addes succeed" << endl;
+                        }
+                    }
+                    else cout << "Could not fould student in class " << endl;
+                    cout << "Enter Any Key to continue add student to Course " << courseCur->name << endl;
+                    cout << "Else Press Enter to return to menu.";
+                    getline(cin, s, '\n');
+                    if (s == "") conti = false;
+                }
+            }
+            if (courseCur)
+            {
+                OfficialCourseToCSV(courseCur);
+            }
+        }
+        else if (chose == "17") {       // addstuincourseform file
+            findLastSYandSM(yearHead, yearNow, smNow);
+            cout << "Please pass your file in Import folder.";
+            if (echo("file class") == true)
+            {
+                cout << "Is checking..." << endl;
+                if (readStudentFromImportFileToCourse("Import", yearNow, smNow) == true)
+                    cout << "Done" << endl;
+            }
+            else cout << "Canceled" << endl;
+
+        }
         // cin.ignore(1, '\n');
         cout << "Enter you choose: ";
         getline(cin, chose, '\n');
@@ -441,7 +624,8 @@ int main() {
     readInformation("Information", yearCur, yearHead);      // yearCur de chay, yearHead de tim va danh dau
     findLastSYandSM(yearHead, yearNow, smNow);
 
-    menuStaff("Nguyen Kim Khanh", yearHead);
+    int firstLog = 1;
+    login(firstLog, yearHead);
 
 
     return 0;

@@ -1,7 +1,0 @@
-Introduce To Computer Science
-
-5
-50
-MON
-S3
-SchoolYear Class   ID
