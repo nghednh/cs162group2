@@ -269,7 +269,7 @@ bool createCourse(Course* newCourse, int sm, SchoolYear* yearCur);
 // sm cur from 0
 bool addCourseToSemester(SchoolYear*& yearCur, int smCur);
 // file path la: Import/dshp.txt
-bool importListCourse_dshp(const path& file_path, SchoolYear*& yearCur);
+bool importListCourse_dshp(const path& file_path, SchoolYear*& yearCur, int smCur);
 void outWrongCSVInput();
 bool checkMark(string tmp, float& mark);
 StuInCourse* findStuInCourse(string ID, string name, Course* courseCur);
