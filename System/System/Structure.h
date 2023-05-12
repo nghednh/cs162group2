@@ -10,9 +10,9 @@
 using namespace std;
 
 struct Date {
-	string day;
-	string month;
-	string year;
+	string day = "";
+	string month = "";
+	string year = "";
 };
 struct StuInCourse;
 struct Class;

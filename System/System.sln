@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "System", "System\System.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Demo", "Demo\Demo.vcxproj", "{0C112370-5E0C-404F-9BD5-E52FC0200B2A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Menu", "Menu\Menu.vcxproj", "{AF289496-E769-4340-ABEB-016387855AB0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{0C112370-5E0C-404F-9BD5-E52FC0200B2A}.Release|x64.Build.0 = Release|x64
 		{0C112370-5E0C-404F-9BD5-E52FC0200B2A}.Release|x86.ActiveCfg = Release|Win32
 		{0C112370-5E0C-404F-9BD5-E52FC0200B2A}.Release|x86.Build.0 = Release|Win32
+		{AF289496-E769-4340-ABEB-016387855AB0}.Debug|x64.ActiveCfg = Debug|x64
+		{AF289496-E769-4340-ABEB-016387855AB0}.Debug|x64.Build.0 = Debug|x64
+		{AF289496-E769-4340-ABEB-016387855AB0}.Debug|x86.ActiveCfg = Debug|Win32
+		{AF289496-E769-4340-ABEB-016387855AB0}.Debug|x86.Build.0 = Debug|Win32
+		{AF289496-E769-4340-ABEB-016387855AB0}.Release|x64.ActiveCfg = Release|x64
+		{AF289496-E769-4340-ABEB-016387855AB0}.Release|x64.Build.0 = Release|x64
+		{AF289496-E769-4340-ABEB-016387855AB0}.Release|x86.ActiveCfg = Release|Win32
+		{AF289496-E769-4340-ABEB-016387855AB0}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

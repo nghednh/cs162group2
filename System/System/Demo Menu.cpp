@@ -197,17 +197,42 @@ void menuStaff(string username, SchoolYear*& yearHead) {
             else cout << "| Canceled" << endl;
             backmenuStaff(username, yearHead);
         }
-    }
-}
-void backmenuStaff(string username, SchoolYear*& yearHead) {
-    cout << "| Type 1 to back to menu or 2 to continue or 0 to exit: ";
-    string chose;
-    getline(cin, chose, '\n');
-    if (chose == "1") {
-        menuStaff(username, yearHead);
-    }
-    else if (chose=="0"){
-        exit(0);
+        else if (chose == "4") {
+            string StuID, FirstName, LastName, Gender, dateofbirth, socialID, curriculum, cla;
+            cout << "Input Student's Class: ";
+            getline(cin, cla, '\n');
+            if (findClassInSchoolYear(yearNow, cla) == nullptr)
+                cout << "Not fould " << cla << " in schoolyear " << yearNow->name << endl;
+
+            if (echo("Class " + s) == true)
+            {
+                if (createClass(yearNow, s)) cout << "Succeed." << endl;
+            }
+            else cout << "Canceled" << endl;
+        }
+        if (chose == "0") {
+        }
+        if (chose == "0") {
+        }
+        if (chose == "0") {
+        }
+        if (chose == "0") {
+        }
+        if (chose == "0") {
+        }
+        if (chose == "0") {
+        }
+        if (chose == "0") {
+        }
+        if (chose == "0") {
+        }
+        if (chose == "0") {
+        }
+        if (chose == "0")  {
+        }
+              // cin.ignore(1, '\n');
+               cout << "Enter you choose: ";
+               getline(cin, chose, '\n');
     }
 }
 void menuStudent(string username) {
