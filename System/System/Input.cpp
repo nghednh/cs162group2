@@ -1495,6 +1495,42 @@ void readStudentFromImportFileToCourse(const path& path, SchoolYear* yearHead, i
     }
 }
 
+bool checkInfoCourse(Semester sm, string cID, string cName, string cCre, string cLec, string cDay, string cSes, string cMax, string cClass) {
+    bool check = true;
+    for (int i = 0; i < cMax.length(); i++) {
+        if (cMax[i] - 48 < 0 || cMax[i] - 48 > 9) {
+            cout << "Found a non-num character in maximum number of student which is an integer!" << endl;
+            check = false;
+        }
+    }
+    for (int i = 0; i < cCre.length(); i++) {
+        if (cMax[i] - 48 < 0 || cMax[i] - 48 > 9) {
+            cout << "Found a non-num character in number of credits which is an integer!" << endl;
+            check = false;
+        }
+    }
+    if (findCourseByIDAndClass(cID, cClass, sm) != NULL) {
+        cout << "This course has been already created in this semester!" << endl;
+        check = false;
+    }
+    if (convertFloat(cMax) > 50) {
+        cout << "The maximum student in a course is 50!" << endl;
+        check = false;
+    }
+    if (cSes != "S1" || cSes != "S2" || cSes != "S3" || cSes != "S4") {
+        cout << "There are only four sessions S1 -> S4!" << endl;
+        check = false;
+    }
+    if (cDay != "MON" || cDay != "TUE" || cDay != "WED" || cDay != "THU" || cDay != "FRI" || cDay != "SAT") {
+        cout << "Default day has been found!" << endl;
+        check = false;
+    }
+    if (check == false) {
+        cout << "Oops! There are some mistakes in the course's data as decribed above! Please check again!" << endl;
+    }
+    return check;
+}
+
 Course* findCourseByFileName(SchoolYear* yearCur, int sm, string fileName)
 {
     if (!(fileName.size() > 4 && fileName.substr(fileName.size() - 5, 5) == "_mark")) return nullptr;
@@ -1685,7 +1721,7 @@ bool addCourseToSemester(SchoolYear*& yearCur, int smCur)
     getline(cin, tmp->className, '\n');
 
         // check thong tin
-//    if (checkInfoCourse(yearCur->sm[smCur], ID, Name, Cre, Lec, Day, Ses, Max, Class) == true)
+    if (checkInfoCourse(yearCur->sm[smCur], ID, Name, Cre, Lec, Day, Ses, Max, Class) == true)
         createCourse(tmp, smCur, yearCur);
 
     return true;
