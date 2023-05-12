@@ -1495,34 +1495,33 @@ void readStudentFromImportFileToCourse(const path& path, SchoolYear* yearHead, i
     }
 }
 
+bool isInt(string a)
+{
+    for (int i = 0; i < a.size(); i++)
+        if (!(a[i] >= '0' && a[i] <= '9'))
+            return false;
+    return true;
+}
+
 bool checkInfoCourse(Semester sm, string cID, string cName, string cCre, string cLec, string cDay, string cSes, string cMax, string cClass) {
     bool check = true;
-    for (int i = 0; i < cMax.length(); i++) {
-        if (cMax[i] - 48 < 0 || cMax[i] - 48 > 9) {
-            cout << "Found a non-num character in maximum number of student which is an integer!" << endl;
-            check = false;
-        }
+  
+    if (!isInt(cCre) || !isInt(cMax))
+    {
+        cout << "Found a non-num character in number of credits or number max which is an integer!" << endl;
+        check == false;
     }
-    for (int i = 0; i < cCre.length(); i++) {
-        if (cMax[i] - 48 < 0 || cMax[i] - 48 > 9) {
-            cout << "Found a non-num character in number of credits which is an integer!" << endl;
-            check = false;
-        }
-    }
+
     if (findCourseByIDAndClass(cID, cClass, sm) != NULL) {
         cout << "This course has been already created in this semester!" << endl;
         check = false;
     }
-    if (convertFloat(cMax) > 50) {
-        cout << "The maximum student in a course is 50!" << endl;
-        check = false;
-    }
-    if (cSes != "S1" || cSes != "S2" || cSes != "S3" || cSes != "S4") {
+    if (cSes != "S1" && cSes != "S2" && cSes != "S3" && cSes != "S4") {
         cout << "There are only four sessions S1 -> S4!" << endl;
         check = false;
     }
-    if (cDay != "MON" || cDay != "TUE" || cDay != "WED" || cDay != "THU" || cDay != "FRI" || cDay != "SAT") {
-        cout << "Default day has been found!" << endl;
+    if (cDay != "MON" && cDay != "TUE" && cDay != "WED" && cDay != "THU" && cDay != "FRI" && cDay != "SAT") {
+        cout << "Default day has not been found!" << endl;
         check = false;
     }
     if (check == false) {
@@ -1705,26 +1704,41 @@ bool createCourse(Course* newCourse, int sm, SchoolYear* yearCur)
 // sm cur from 0
 bool addCourseToSemester(SchoolYear*& yearCur, int smCur)
 {
-    Course* tmp = new Course;
+    Course* tmp;
     string s, ID, Name, Cre, Lec, Day, Ses, Max, Class;
 
-    getline(cin, tmp->ID, '\t');
-    getline(cin, tmp->name, '\t');
-    getline(cin, s, '\t');
-    tmp->numCredit = stoi(s);
-    getline(cin, tmp->teacherName, '\t');
-    getline(cin, tmp->day, '\t');
-    getline(cin, s, '\t');
-    tmp->session = stoi(s.substr(1, 1));
-    getline(cin, s, '\t');
-    tmp->maxStudent = stoi(s);
-    getline(cin, tmp->className, '\n');
+    cout << "Enter Course's ID: ";
+    getline(cin, ID, '\n');
+    cout << "Enter Course's Name: ";
+    getline(cin, Name, '\n');
+    cout << "Enter Course's number of credit: ";
+    getline(cin, Cre, '\n');
+    cout << "Enter Course's Lecturer: ";
+    getline(cin, Lec, '\n');
+    cout << "Enter Coures's day of perform (Ex: MON): ";
+    getline(cin, Day, '\n');
+    cout << "Enter Course's session (S1 to S4): ";
+    getline(cin, Ses, '\n');
+    cout << "Enter Course's Max number of student: ";
+    getline(cin, Max, '\n');
+    cout << "Enter Course's ClassName: ";
+    getline(cin, Class, '\n');
 
         // check thong tin
     if (checkInfoCourse(yearCur->sm[smCur], ID, Name, Cre, Lec, Day, Ses, Max, Class) == true)
-        createCourse(tmp, smCur, yearCur);
-
-    return true;
+    {
+        tmp = new Course;
+        tmp->ID = ID;
+        tmp->name = Name;
+        tmp->className = Class;
+        tmp->teacherName;
+        tmp->numCredit = stoi(Cre);
+        tmp->maxStudent = stoi(Max);
+        tmp->session = stoi(Ses.substr(1, 1));
+        tmp->day = Day;
+        return createCourse(tmp, smCur, yearCur);
+    }
+    return false;
 }
 
 
