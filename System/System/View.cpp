@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "login&menu.h"
 #include "Structure.h"
-
+#include "View.h"
 void viewListClasses(SchoolYear* sYearHead)
 {
 	system("cls");
@@ -31,7 +31,6 @@ void viewListCourses(Course* courseHead)
 	}
 }
 
-void viewStudentProfile(Student* stuCur);
 
 void viewStudentProfile(Student* stuCur)
 {
