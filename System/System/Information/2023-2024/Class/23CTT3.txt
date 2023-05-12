@@ -1,1 +1,5 @@
-No	Student ID	First Name	Last Name	Gender	Date of Birth	SocialID	Curriculim	Class
+No	Student ID	First Malee	Last Malee	Gender	Date of birth	Social ID	Curriculum	Class
+1	22125024	Cao	Hau	Male	05/06/2004	79204014	Information_Technology	22CLC
+2	22125025	Huynh	Hau	Male	17/04/2004	79204071	Information_Technology	22CLC
+6	22125032	Tran	Huy	Male	08/02/2004	79204034	Information_Technology	22CLC
+7	22125036	Nguyen	Khanh	Female	02/11/2004	79204020	Information_Technology	22CLC
