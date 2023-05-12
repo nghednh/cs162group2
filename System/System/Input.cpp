@@ -1542,10 +1542,10 @@ bool checkInfoCourse(Semester sm, string cID, string cName, string cCre, string 
         check == false;
     }
 
- //   if (findCourseByIDAndClass(cID, cClass, sm) != NULL) {
- //       cout << cID << "_" << cClass << " has been already created in this semester!" << endl;
- //       check = false;
- //   }
+    //   if (findCourseByIDAndClass(cID, cClass, sm) != NULL) {
+    //       cout << cID << "_" << cClass << " has been already created in this semester!" << endl;
+    //       check = false;
+    //   }
     if (cSes != "S1" && cSes != "S2" && cSes != "S3" && cSes != "S4") {
         cout << "There are only four sessions S1 -> S4!" << endl;
         check = false;
@@ -1587,7 +1587,7 @@ Course* findCourseByFileName(SchoolYear* yearCur, int sm, string fileName)
     return nullptr;
 }
 
-Course* findCourseByFileNameInAllCourse(SchoolYear* yearHead, Semester &smCur, string fileName)
+Course* findCourseByFileNameInAllCourse(SchoolYear* yearHead, Semester& smCur, string fileName)
 {
     string courseID = "", className = "";
     for (int i = 0; i < size(fileName); i++)
@@ -1788,7 +1788,7 @@ bool addCourseToSemester(SchoolYear*& yearCur, int smCur)
     cout << "Enter Course's ClassName: ";
     getline(cin, Class, '\n');
 
-        // check thong tin
+    // check thong tin
     if (findClassInSchoolYear(yearCur, Class) != nullptr)
     {
         if (checkInfoCourse(yearCur->sm[smCur], ID, Name, Cre, Lec, Day, Ses, Max, Class) == true)
@@ -1844,7 +1844,7 @@ bool importListCourse_dshp(const path& file_path, SchoolYear*& yearCur, int smCu
 
         if (findClassInSchoolYear(yearCur, Class) != nullptr)
         {
-            if (checkInfoCourse(yearCur->sm[stoi(hk)-1], ID, Name, Cre, Lec, Day, Ses, Max, Class) == true)
+            if (checkInfoCourse(yearCur->sm[stoi(hk) - 1], ID, Name, Cre, Lec, Day, Ses, Max, Class) == true)
             {
                 tmp = new Course;
                 tmp->ID = ID;

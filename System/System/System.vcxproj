@@ -139,6 +139,7 @@
     <ClCompile Include="CourseSemester.cpp" />
     <ClCompile Include="Delete.cpp" />
     <ClCompile Include="Demo Menu.cpp" />
+    <ClCompile Include="FileName.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Source1.cpp" />
     <ClCompile Include="View.cpp" />
