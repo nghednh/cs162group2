@@ -156,6 +156,7 @@ path root_path("Data") : Hàm này tạo một đối tượng path từ đườ
 // da check
 
 
+Course* findCourseByFileNameInAllCourse(SchoolYear* yearHead, int sm, string fileName);
 
 SchoolYear* findSchoolyear(SchoolYear* yearHead, string syName);
 
@@ -174,6 +175,8 @@ void findLastSYandSM(SchoolYear* yearHead, SchoolYear*& yearNow, int& semesterNo
 // chi thao tac tren last semester and last schoolyear
 // class create o dau
 // cach su dung: findLastSYandSm -> goi ham
+
+Course* findCourseByFileNameInAllCourse(SchoolYear* yearHead, Semester& smCur, string fileName);
 bool createClass(SchoolYear* yearCur, string ClassName);
 /*
 dung ham create SchoolYear
