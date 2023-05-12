@@ -7,3 +7,4 @@ void menuStaff(string username, SchoolYear*& yearHead);
 void menuStudent(string);
 void UI();
 void UIlite();
+void backmenuStaff(string username, SchoolYear*& yearHead);

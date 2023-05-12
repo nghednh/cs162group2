@@ -163,42 +163,50 @@ void menuStaff(string username, SchoolYear*& yearHead) {
                 }
             }
             else cout << "| Input wrong" << endl;
-            break;
+            backmenuStaff(username, yearHead);
         }
         else if(chose == "2") {
-            cout << "Please input Class's Name (Ex: 22CTT1): ";
+            string n;
+            system("cls");
+            UIlite();
+            cout << "| Please input Class's Name (Ex: 22CTT1): ";
             getline(cin, s, '\n');
             
             if (echo("Class " + s) == true)
             {
-                if (createClass(yearNow, s)) cout << "Succeed." << endl;
+                if (createClass(yearNow, s)) cout << "| Succeed." << endl;
             }
-            else cout << "Canceled" << endl;
+            else cout << "| Canceled" << endl;
+            backmenuStaff(username, yearHead);
         }
         else if (chose == "3")
         {
-            cout << "Please pass your file in Import folder.";
+            system("cls");
+            UIlite();
+            cout << "| Please pass your file in Import folder.";
            
-            cout << "Enter your file name (Ex: ListClass): ";
+            cout << "| Enter your file name (Ex: ListClass): ";
             getline(cin, s, '\n');
             if (echo(s) == true)
             {
-                cout << "Is checking..." << endl;
+                cout << "| Is checking..." << endl;
                 if (importListClass_dslh("Import/" + s + ".txt", yearNow) == true)
-                    cout << "Done" << endl;
-                else cout << "Can not open file or wrong schoolyear in file." << endl;
+                    cout << "| Done" << endl;
+                else cout << "| Can not open file or wrong schoolyear in file." << endl;
             }
-            else cout << "Canceled" << endl;
-        }
-        if (chose == "0")  {
+            else cout << "| Canceled" << endl;
+            backmenuStaff(username, yearHead);
         }
     }
-    cout << "| Type 1 to back to menu or 0 to exit: ";
+}
+void backmenuStaff(string username, SchoolYear*& yearHead) {
+    cout << "| Type 1 to back to menu or 2 to continue or 0 to exit: ";
+    string chose;
     getline(cin, chose, '\n');
-    if (chose=="1") {
+    if (chose == "1") {
         menuStaff(username, yearHead);
     }
-    else { 
+    else if (chose=="0"){
         exit(0);
     }
 }
