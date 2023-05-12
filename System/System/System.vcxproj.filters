@@ -30,9 +30,6 @@
     <ClCompile Include="Input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="login&amp;menu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CourseSemester.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

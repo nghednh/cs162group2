@@ -6,9 +6,10 @@
 #include <string>
 #include <sstream>
 #include <optional>
-
+#include "Structure.h"
 using namespace std;
 
+<<<<<<< Updated upstream
 struct Date;
 struct Class;
 struct SchoolYear;
@@ -18,12 +19,18 @@ struct Semester;
 struct Staff;
 struct Semester;
 
+=======
+>>>>>>> Stashed changes
 struct Date {
 	string day;
 	string month;
 	string year;
 };
-
+struct StuInCourse;
+struct Class;
+struct Semester;
+struct SchoolYear;
+struct Course;
 struct Student {
 	//detail
 	string No;
@@ -45,8 +52,6 @@ struct Student {
 	Student* stuNext = NULL; //next of linkedlist
 	StuInCourse* pStuCourseHead = NULL;
 };
-
-struct Course;
 
 struct StuInCourse {
 	//detail 
@@ -70,17 +75,25 @@ struct Class {
 	int requiredCredits; //22TT1-165 tin chi de tot nghiep
 	int numStu = 50;
 	bool courseSes[6][4] = {}; //courses' sessions during days of week: empty session 0 and taken session 1
-	
+
 	//node
 	Student* stuHead = NULL;
 	Class* classNext = NULL;
 	SchoolYear* inSY = NULL;
 };
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 struct Session {
 	Class* cur_class = NULL;
 	bool isEmpty = true;
+};
+
+struct Day {
+	string name; //Mon - ... - Sat
+	Session s[4];
 };
 
 struct Course {
@@ -94,6 +107,7 @@ struct Course {
 	int cntStudent = 0;
 	int session;
 	string day;
+	Day dayB[6]; //Mon - ... - Sat
 
 	//node
 	StuInCourse* stuHead = NULL;
@@ -106,7 +120,10 @@ struct Semester {
 	Date start;
 	Date end;
 	string syName;
+<<<<<<< Updated upstream
 //	string syName;
+=======
+>>>>>>> Stashed changes
 	bool state = 0; //if 1 - accessible
 	int num;
 
