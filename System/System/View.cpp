@@ -12,7 +12,7 @@ void viewListClasses(SchoolYear* sYearHead)
 		Class* classCur = sYearCur->classHead;
 		while (classCur)
 		{
-			cout << classCur->name << endl;
+			cout <<"|  " <<classCur->name << endl;
 			classCur = classCur->classNext;
 		}
 		sYearCur = sYearCur->yearNext;
@@ -26,7 +26,7 @@ void viewListCourses(Course* courseHead)
 	Course* courseCur = courseHead;
 	while (courseCur)
 	{
-		cout << courseCur->name << endl;
+		cout <<"|  " << courseCur->name << endl;
 		courseCur = courseCur->courseNext;
 	}
 }
@@ -37,13 +37,13 @@ void viewStudentProfile(Student* stuCur)
 {
 	system("cls");
 	UIlite();
-	cout << "ID: " << stuCur->StuID << endl;
-	cout << "First name: " << stuCur->firstName << endl;
-	cout << "Last name: " << stuCur->lastName << endl;
-	cout << "Gender: " << stuCur->gender << endl;
-	cout << "Date of birth: " << stuCur->dateOfBirth.day << "/" << stuCur->dateOfBirth.month << "/" << stuCur->dateOfBirth.year << endl;
-	cout << "Social ID: " << stuCur->socialID << endl;
-	cout << "Curriculum: " << stuCur->curriculum << endl;
+	cout << "|  ID: " << stuCur->StuID << endl;
+	cout << "|  First name: " << stuCur->firstName << endl;
+	cout << "|  Last name: " << stuCur->lastName << endl;
+	cout << "|  Gender: " << stuCur->gender << endl;
+	cout << "|  Date of birth: " << stuCur->dateOfBirth.day << "/" << stuCur->dateOfBirth.month << "/" << stuCur->dateOfBirth.year << endl;
+	cout << "|  Social ID: " << stuCur->socialID << endl;
+	cout << "|  Curriculum: " << stuCur->curriculum << endl;
 	//	cout << "Class name: " << stuCur->className << endl;
 }
 
@@ -55,7 +55,7 @@ void viewListStudentsInCourse(Course* courseCur)	// lop sinh hoat
 	while (stuCur)
 	{
 		//		viewStudentProfile(stuCur);
-		cout << stuCur->lastName << " " << stuCur->firstName << endl;
+		cout <<"|  " << stuCur->lastName << " " << stuCur->firstName << endl;
 		stuCur = stuCur->stuNext;
 	}
 }
@@ -69,7 +69,7 @@ void viewListOfStudentInClass(Class* classCur)
 	while (stuCur)
 	{
 		//		viewStudentProfile(stuCur);
-		cout << stuCur->lastName << " " << stuCur->firstName << endl;
+		cout <<"|  " << stuCur->lastName << " " << stuCur->firstName << endl;
 		stuCur = stuCur->stuNext;
 	}
 }
