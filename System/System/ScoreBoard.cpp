@@ -19,7 +19,7 @@ void viewScoreBoard(SchoolYear* sy, int numSm, Student* stuInClass) {
 
 	cout << " Diem TB tich luy" << string(19, ' ');
 	if (stuInClass->accumScore / stuInClass->accumCredits > 0) cout << to_string(stuInClass->accumScore / stuInClass->accumCredits).substr(0, 3);
-	else cout << "NA";
+	else cout << "N/A";
 
 	cout << string(25, ' ') << "TCCS" << string(28, ' ') << "36" << endl;
 
@@ -145,3 +145,144 @@ void viewScoreboardCourse(Course* course) {
 		}
 
 }
+/*
+int countCntNum(Course*& c) {  //doc file
+	ifstream fin(".\\Files\\DSHP\\" + c->ID + "_" + c->className + ".txt");
+	if (!fin) return 0;
+	// them dong ghi thong tin
+	string s;
+	int cnt = 0;
+	while (!fin.eof()) {
+		fin >> s;
+		fin >> s;
+		fin >> s;
+		cnt++;
+	}
+	fin.close();
+	return cnt - 1;
+}
+
+bool InfoStu::checkCourseName(Course*& c, string s) { //check if the course ID entered is appropriate or not
+	while (c != NULL) {
+		if (s == c->ID && ((c->className.length() == 4 && c->className == stuInClass->className.substr(0, 4) && stuInClass->className[4] < '5') || (c->className.substr(0, 2) > stuInClass->className.substr(0, 2) && c->className.substr(2, 2) == stuInClass->className.substr(2, 2) && stuInClass->className.length() >= c->className.length()) || c->className == stuInClass->className)) {
+			c->cntStudent = countCntNum(c);
+			return 1;
+		}
+		c = c->courseNext;
+	}
+	return 0;
+}
+
+bool checkIfExist(Course*& c, Student* stuInClass) { //doc file
+	ifstream fin(".\\Files\\DSHP\\" + c->ID + "_" + c->className + ".txt");
+
+	if (!fin) return 0;
+	string s;
+	while (!fin.eof()) {
+		fin >> s;
+		if (s == stuInClass->StuID) {
+			fin.close();
+			return 1;
+		}
+	}
+	fin.close();
+	return 0;
+}
+
+void InfoStu::importStuToCourseCSV(Course*& c) { //Doc file
+	ofstream ft(".\\Files\\DSHP\\" + c->ID + "_" + c->className + ".txt", ofstream::app);
+	ft << sy->name << " " << stuInClass->className << " " << stuInClass->StuID << endl;
+}
+
+void InfoStu::countCredit(Course* c, int& cre, int& numCourse) {
+	while (c) {
+		if (checkIfExist(c)) {
+			numCourse++;
+			cre += c->numCredit;
+		}
+		c = c->courseNext;
+	}
+}
+
+void InfoStu::printListCourse(Course* c, int cre, int numCourse) {
+	cout << stuInClass->firstName << " " << stuInClass->lastName << " - " << stuInClass->StuID << string(30, ' ');
+	cout << "Number of credits: " << cre << "/" << "24" << endl;
+	cout << string(stuInClass->firstName.length() + stuInClass->lastName.length() + stuInClass->StuID.length() + 34, ' ');
+	cout << "Number of courses: " << numCourse << "/" << "6" << endl << endl;
+
+	cout << "ID" << string(9, ' ') << "Course" << string(30, ' ') << "Credits" << string(3, ' ') << "Class" << string(7, ' ') << "Lecturer" << string(8, ' ') << "Day    " << "Session    " << "Registered    " << "State" << endl << endl;
+	while (c->courseNext) {
+		if ((c->className.length() == 4 && c->className == stuInClass->className.substr(0, 4) && stuInClass->className[4] < '5') || (c->className.substr(0, 2) > stuInClass->className.substr(0, 2) && c->className.substr(2, 2) == stuInClass->className.substr(2, 2) && stuInClass->className.length() >= c->className.length()) || c->className == stuInClass->className) {
+			c->cntStudent = countCntNum(c);
+			cout << c->ID << string(11 - c->ID.length(), ' ') << c->name << string(36 - c->name.length(), ' ') << "   " << c->numCredit << "      ";
+			cout << c->className << string(9 - c->className.length(), ' ') << c->teacherName << string(19 - c->teacherName.length(), ' ') << c->day << string(8, ' ');
+			cout << c->session << string(10, ' ') << c->cntStudent << "/" << c->maxStudent << " " << string(9 - to_string(c->cntStudent).length() - to_string(c->maxStudent).length(), ' ');
+
+			if (checkIfExist(c)) cout << "Da chon";
+			cout << endl << endl;
+		}
+		c = c->courseNext;
+	}
+}
+
+void InfoStu::selectCourse() { //doc file
+	ifstream fin(".\\Files\\DSHP\\dshp.txt");
+	if (!fin) {
+		cout << "Not time for registering course!" << endl;
+		return;
+	}
+
+	//Print out all courses for the student to choose
+	string s;
+	fin >> s;
+	cout << s << " "; //HK2
+	string t = s;
+	fin >> s;
+	cout << s << endl; //2022-2023
+
+	SchoolYear* tmpsy = sy;
+	while (tmpsy->name != s) {
+		tmpsy = tmpsy->yearNext;
+	}
+
+	Course* c = tmpsy->sm[stoi(t.substr(2, 1)) - 1].courseHead;
+	Course* tmpC = c;
+
+	int cre = 0;
+	int numCourse = 0;
+	countCredit(c, cre, numCourse);
+	printListCourse(c, cre, numCourse);
+
+	while (cre < 16 && numCourse < 4) {
+		cout << "Register: ";
+		getline(cin, s, '\n');
+		if (s == "0") return;
+		if (checkCourseName(tmpC, s)) {
+			if (tmpC->maxStudent == tmpC->cntStudent) cout << "No more slot!" << endl;	// slots <> max && cnt
+			else {
+				if (!checkIfExist(tmpC)) {		// mo file dskhp
+					cre += tmpC->numCredit;
+					numCourse++;
+					tmpC->cntStudent++;
+					importStuToCourseCSV(tmpC);
+					system("cls");
+					printListCourse(c, cre, numCourse);
+				}
+				else cout << "Hoc phan " << tmpC->ID << " da duoc dang ky! " << endl;
+			}
+		}
+		else cout << "Invalid ID!" << endl;
+		tmpC = c;
+	}
+	fin.close();
+}
+
+dshp- --- (CS161_22CTT1)  ---> file
+staff --- beginEroll(CS161_22CTT1->CS161_22CTT1_dsdkhp)---> staff+student : remove/add
+																	staff: linked 
+														---> staff: remove/add
+
+	semester1 A B_dsdkhp -> dang ky
+	---> linked list
+	staff stopEroll: _dsdkhp-> file thuong (CS162_22CTT1)
+	*/

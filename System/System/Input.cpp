@@ -93,11 +93,12 @@ Student* findStuInClass(string syTmp, string classTmp, string IDTmp, SchoolYear*
         if (classCur)
         {
             Student* stuCur = classCur->stuHead;
-            while (stuCur && stuCur->StuID < IDTmp)
+            while (stuCur) // && stuCur->StuID < IDTmp)
+            {
+                if (stuCur && stuCur->StuID == IDTmp)
+                    return stuCur;
                 stuCur = stuCur->stuNext;
-
-            if (stuCur && stuCur->StuID == IDTmp)
-                return stuCur;
+            }
         }
     }
     return nullptr;
@@ -291,45 +292,44 @@ void readListCourse(const path& file_path, SchoolYear*& yearCur, SchoolYear*& ye
             // xoa dong 1
             getline(in, header, '\n');
 
-            if (check != "dsdkhp")
-                while (!in.eof())
-                {
-                    if (stuCur != NULL) {
-                        stuCur->stuNext = new StuInCourse;
-                        stuCur = stuCur->stuNext;
-                    }
-                    else {
-                        courseCur->stuHead = new StuInCourse;
-                        stuCur = courseCur->stuHead;
-                    }
-
-                    string syTmp, classTmp, IDTmp;
-                    getline(in, syTmp, '\t');
-                    getline(in, classTmp, '\t');
-                    getline(in, IDTmp, '\n');
-
-                    stuCur->courseID = ID;
-                    stuCur->stuNext = nullptr;
-
-                    Student* stuInClass = findStuInClass(syTmp, classTmp, IDTmp, yearHead);
-                    stuCur->stuInClass = stuInClass;
-                    stuCur->infoCourse = courseCur;
-
-                    StuInCourse* pStuCourseCur = stuInClass->pStuCourseHead;
-
-                    // reverselinked
-                    if (pStuCourseCur == nullptr)
-                    {
-                        stuInClass->pStuCourseHead = stuCur;
-                    }
-                    else
-                    {
-                        while (pStuCourseCur->pStuCourseNext != nullptr)
-                            pStuCourseCur = pStuCourseCur->pStuCourseNext;
-                        pStuCourseCur->pStuCourseNext = stuCur;
-                    }
-                    stuCur->pStuCourseNext = nullptr;
+            while (!in.eof())
+            {
+                if (stuCur != NULL) {
+                    stuCur->stuNext = new StuInCourse;
+                    stuCur = stuCur->stuNext;
                 }
+                else {
+                    courseCur->stuHead = new StuInCourse;
+                    stuCur = courseCur->stuHead;
+                }
+
+                string syTmp, classTmp, IDTmp;
+                getline(in, syTmp, '\t');
+                getline(in, classTmp, '\t');
+                getline(in, IDTmp, '\n');
+
+                stuCur->courseID = ID;
+                stuCur->stuNext = nullptr;
+
+                Student* stuInClass = findStuInClass(syTmp, classTmp, IDTmp, yearHead);
+                stuCur->stuInClass = stuInClass;
+                stuCur->infoCourse = courseCur;
+
+                StuInCourse* pStuCourseCur = stuInClass->pStuCourseHead;
+
+                // reverselinked
+                if (pStuCourseCur == nullptr)
+                {
+                    stuInClass->pStuCourseHead = stuCur;
+                }
+                else
+                {
+                    while (pStuCourseCur->pStuCourseNext != nullptr)
+                        pStuCourseCur = pStuCourseCur->pStuCourseNext;
+                    pStuCourseCur->pStuCourseNext = stuCur;
+                }
+                stuCur->pStuCourseNext = nullptr;
+            }
             in.close();
         }
     }
@@ -474,7 +474,7 @@ bool changeStaffPasswordInFile(string user, string newPass)
     string copyFile = "Information/Temp_password.txt";
     ifstream in(inputFile);
     ofstream out(copyFile);
-    if (!in.is_open() || !out.is_open()) return false;
+    if (!in.is_open() || !out.is_open()) return false;;
 
     string username, name, password;
 
@@ -490,7 +490,7 @@ bool changeStaffPasswordInFile(string user, string newPass)
         getline(in, password, '\n');
         out << '\n' << username << '\t' << name << '\t';
 
-        if (username == user)
+        if (name == user)
             out << newPass;
         else out << password;
     }
@@ -499,6 +499,7 @@ bool changeStaffPasswordInFile(string user, string newPass)
 
     remove(inputFile.c_str());
     rename(copyFile.c_str(), inputFile.c_str());
+    return true;
 }
 
 void readInformation(const path& path, SchoolYear*& yearCur, SchoolYear*& yearHead)
@@ -845,6 +846,10 @@ bool createClass(SchoolYear* yearCur, string ClassName)        // yearHead == ye
     ofstream out(class_path);
     out << "No\tStudent ID\tFirst Name\tLast Name\tGender\tDate of Birth\tSocialID\tCurriculim\tClass";
     out.close();
+    path password_path = "Information/" + yearCur->name + "/Class/" + ClassName + "_password.txt";
+    ofstream out2(password_path);
+    out2 << "Username\tPassword";
+    out2.close();
     return true;
 }
 /*
@@ -1356,8 +1361,8 @@ Student* createStudent(string No, string StuID, string FirstName, string LastNam
 // readStudentFromImportFile("Import", year hien tai)
 void addStudentInPasswordFile(Student* stuCur)
 {
-    ofstream out("Information/" + stuCur->inClass->inSY->name + "/Class/" + stuCur->inClass->name + ".txt", ios::app);
-
+    ofstream out("Information/" + stuCur->inClass->inSY->name + "/Class/" + stuCur->inClass->name + "_password.txt", ios::app);
+    if (!out.is_open()) return;
     out.seekp(0, ios::end);
     out << endl;
     out << stuCur->StuID << '\t';
@@ -1559,7 +1564,9 @@ bool readStudentFromImportFileToCourse(const path& path, SchoolYear* yearHead, i
                 // check thong tin
 
                 if (addStuInCourse(yearHead, stuTmp, courseCur))
+                {
                     addStudentToCSVFileCourse(yearHead, stuTmp);
+                }
             }
             in.close();
 
@@ -1943,10 +1950,27 @@ StuInCourse* findStuInCourse(string ID, string name, Course* courseCur)
     while (stuCur)
     {
         if (stuCur->stuInClass->StuID == ID)
-            if (stuCur->stuInClass->firstName + ' ' + stuCur->stuInClass->lastName == name)
+            //if (stuCur->stuInClass->lName + ' ' + stuCur->stuInClass->lastName == name)
                 return stuCur;
-            else return nullptr;
+       //     else return nullptr;
         stuCur = stuCur->stuNext;
+    }
+    return nullptr;
+}
+
+Semester* findSchoolYearAndSemester(SchoolYear* yearHead, string syTmp, string smTmp)
+{
+    if (smTmp != "1" && smTmp != "2" && smTmp != "3")
+        return nullptr;
+
+    while (yearHead)
+    {
+        if (yearHead->name == syTmp)
+        {
+            if (yearHead->sm[stoi(smTmp) - 1].inSY == yearHead)
+                return &(yearHead->sm[stoi(smTmp) - 1]);
+        }
+        yearHead = yearHead->yearNext;
     }
     return nullptr;
 }

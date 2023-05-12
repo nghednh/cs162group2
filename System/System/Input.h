@@ -276,6 +276,7 @@ bool importListCourse_dshp(const path& file_path, SchoolYear*& yearCur, int smCu
 void outWrongCSVInput();
 bool checkMark(string tmp, float& mark);
 bool deleteCourse(Course*& courseCur, SchoolYear* yearNow, int smNow);
+Semester* findSchoolYearAndSemester(SchoolYear* yearHead, string syTmp, string smTmp);
 
 bool updateCourseInfoInFile(Course* courseCur, Course* courseTmp);
 StuInCourse* findStuInCourse(string ID, string name, Course* courseCur);

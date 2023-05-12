@@ -1,0 +1,10 @@
+Course: Introduction to Computer Science II
+ID: CS162
+Class name: 22CTT1
+Teacher name: Dinh Ba Tien
+No	Student ID	First Name	Last Name	Gender	Date of birth	Social ID	Curriculum	Class
+1	22125003	Anh	Lam	Male	28/03/2004	7920414	Information_Technology	22CTT1
+2	22125013	Hau	Cao	Male	19/02/2004	7920410	Information_Technology	22CTT1
+3	22125027	Huy	Le	Male	30/05/2004	7620418	Information_Technology	22CTT1
+4	22125053	Quan	Ta	Male	11/11/2004	7620523	Information_Technology	22CTT1
+5	22125070	Thy	Nguyen	Female	12/04/2004	7620812	Information_Technology	22CTT1

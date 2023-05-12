@@ -1,0 +1,6 @@
+No	Student ID	First Name	Last Name	Gender	Date of birth	Social ID	Curriculum	Class
+1	02112004
+2	22120000	Nguyen	Khanh	Male	01/01/2004	328f	IT	22CTT2
+2	22125001	Nguyen	Khanh	Female	02/11/2004	3j2rj	IT	22CTT2
+3	22125036	Nguyen Kim	Khanh	Female	02/11/2004	hf23	IT	22CTT2
+4	22127053	Nguyen	Kim Khanh	Male	02/11/2004	fu3ify	IT	22CTT2

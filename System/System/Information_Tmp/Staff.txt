@@ -1,5 +1,0 @@
-ID	Name	Password
-GV001	Tran Anh	check lai
-GV002	Nguyen Khanh	123
-GV003	Bui Nghe	123
-GV004	Nguyen Tan	123

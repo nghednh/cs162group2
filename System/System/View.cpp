@@ -1,5 +1,58 @@
 #include <stdlib.h>
 #include "Structure.h"
+#include "login&menu.h"
+
+void viewListClasses2(SchoolYear* yhead, SchoolYear* ynow)
+{
+	system("cls");
+	UIlite();
+	cout << "| List of classes in: " << ynow->name << endl;
+	SchoolYear* sYearCur = ynow;
+	while (sYearCur)
+	{
+		Class* classCur = sYearCur->classHead;
+		while (classCur)
+		{
+			cout << "|  " << classCur->name << endl;
+			classCur = classCur->classNext;
+		}
+		sYearCur = sYearCur->yearNext;
+	}
+	cout << "| Type in: \n";
+	cout << "| 1. To view the year after this year \n";
+	cout << "| 2. To view the year before this year \n| ";
+	string m;
+	getline(cin, m, '\n');
+	if (m == "1") {
+		if (ynow->yearNext) {
+			viewListClasses2(yhead, ynow->yearNext);
+		}
+		else {
+			cout << "| The year after this year doesn't exist!\n";
+		}
+	}
+	if (m == "2") {
+
+		if (yhead == ynow) {
+			cout << "| The year before this year doesn't exist!\n";
+		}
+		else {
+			SchoolYear* ycur = yhead;
+			if (ycur->yearNext == ynow) {
+				viewListClasses2(yhead, ycur);
+			}
+			while (ycur->yearNext != ynow) {
+				ycur = ycur->yearNext;
+				if (ycur->yearNext == ynow) {
+					viewListClasses2(yhead, ycur);
+				}
+			}
+		}
+	}
+	else {
+		return;
+	}
+}
 
 void viewListClasses(SchoolYear* sYearHead)
 {
@@ -51,6 +104,21 @@ void viewListStudentsInCourse(Course* courseCur)	// lop sinh hoat
 	}
 }
 
+void viewCourseOfStudent(Student* stuCur, int smCur, SchoolYear* yearCur)
+{
+	cout << endl << "This is list of your course in semester " << smCur + 1 << "in School year " << yearCur->name << endl << endl;
+	Course* courseCur = yearCur->sm[smCur].courseHead;
+	while (courseCur)
+	{
+		if (courseCur->inSM->inSY == yearCur && courseCur->inSM->num == smCur)
+		{
+			cout << courseCur->name << "\t < " << courseCur->ID << "_" << courseCur->className << " > " << endl;
+		}
+		courseCur = courseCur->courseNext;
+	}
+	cout << endl;
+}
+
 void viewListOfStudentInClass(Class* classCur)
 {
 	if (classCur == NULL) return;
@@ -66,36 +134,56 @@ void viewListOfStudentInClass(Class* classCur)
 void viewListOfStudentInClass2(Class* classCur)
 {
 	Student* stuCur = classCur->stuHead;
-	cout << "No\tStudent ID\tFirst Name\tLast Name\tGender\tDate of birth\tSocial ID\tCurriculum\tClass";
+	cout << endl << "No" << string(6, ' ') << "Student ID" << string(6, ' ') << "First Name" << string(3, ' ') << "Last Name" << string(4, ' ') << "Gender" << string(4, ' ');
+	cout << "Date of birth" << string(4, ' ') << "Social ID" << string(7, ' ') << "Curriculum" << string(10, ' ') << "Class" << endl;
+
 	while (stuCur)
 	{
-		cout << endl;
-		cout << stuCur->No << '\t';
-		cout << stuCur->StuID << '\t';
-		cout << stuCur->firstName << '\t';
-		cout << stuCur->lastName << '\t';
-		cout << stuCur->gender << '\t';
-		cout << stuCur->dateOfBirth.day << '/' << stuCur->dateOfBirth.month << '/' << stuCur->dateOfBirth.year << '\t';
-		cout << stuCur->socialID << '\t';
-		cout << stuCur->curriculum << '\t';
-		cout << stuCur->className;
+		cout << stuCur->No << string(8 - (stuCur->No).length(), ' ');
+		cout << stuCur->StuID << string(8, ' ');
+		cout << stuCur->firstName << string(14 - stuCur->firstName.length(), ' ');
+		cout << stuCur->lastName << string(11 - stuCur->lastName.length(), ' ');
+		if (stuCur->gender == "Female") cout << "Female" << string(5, ' ');
+		else cout << " Male " << string(5, ' ');
+		cout << stuCur->dateOfBirth.day << '/' << stuCur->dateOfBirth.month << '/' << stuCur->dateOfBirth.year << string(7, ' ');
+		cout << stuCur->socialID << string(3, ' ');
+		cout << stuCur->curriculum << string(24 - stuCur->curriculum.length(), ' ');
+		cout << stuCur->className << endl;
 
 		stuCur = stuCur->stuNext;
 	}
+	cout << endl;
+}
+
+Class* findClassInAll(SchoolYear* yearHead, string className)
+{
+	while (yearHead)
+	{
+		Class* classCur = yearHead->classHead;
+		while (classCur)
+		{
+			if (classCur->name == className)
+				return classCur;
+			classCur = classCur->classNext;
+		}
+		yearHead = yearHead->yearNext;
+	}
+	return nullptr;
 }
 
 void viewCourseOfSemester(SchoolYear* yearCur, int smCur)
 {
-	cout << "This is list of course of semester " << smCur + 1 << "in School year " << yearCur->name << endl;
+	cout << endl << "This is list of course of semester " << smCur + 1 << "in School year " << yearCur->name << endl << endl;
 	Course* courseCur = yearCur->sm[smCur].courseHead;
 	while (courseCur)
 	{
-		cout << courseCur->name << " < " << courseCur->ID << "_" << courseCur->className << " > " << endl;
+		cout << courseCur->name << "\t < " << courseCur->ID << "_" << courseCur->className << " > " << endl;
 		courseCur = courseCur->courseNext;
 	}
+	cout << endl;
 }
 // view list of student in course
-void viewListOfStudentInCourse(Course* courseCur)
+/*void viewListOfStudentInCourse(Course* courseCur)
 {
 	int i = 1;
 	cout << "Course: " << courseCur->name;
@@ -119,6 +207,33 @@ void viewListOfStudentInCourse(Course* courseCur)
 
 		stuCur = stuCur->stuNext;
 	}
+}*/
+void viewListOfStudentInCourse(Course* courseCur)
+{
+	int i = 1;
+	cout << endl << "Course:   " << courseCur->name;
+	cout << endl << "ID:       " << courseCur->ID;
+	cout << endl << "Class:    " << courseCur->className;
+	cout << endl << "Lecturer: " << courseCur->teacherName << endl;
+	cout << "No  " << "Student ID   " << "First Name   " << "Last Name   " << "Gender  " << "Date of birth   " << "Social ID       " << "Curriculum        " << "Class" << endl;
+
+	StuInCourse* stuCur = courseCur->stuHead;
+	while (stuCur)
+	{
+		cout << i++ << string(4 - to_string(i).length(), ' ');
+		cout << stuCur->stuInClass->StuID << string(7, ' ');
+		cout << stuCur->stuInClass->firstName << string(12 - stuCur->stuInClass->firstName.length(), ' ');
+		cout << stuCur->stuInClass->lastName << string(10 - stuCur->stuInClass->lastName.length(), ' ');
+		if (stuCur->stuInClass->gender == "Female") cout << "Female   ";
+		else cout << " Male    ";
+		cout << stuCur->stuInClass->dateOfBirth.day << '/' << stuCur->stuInClass->dateOfBirth.month << '/' << stuCur->stuInClass->dateOfBirth.year << string(6, ' ');
+		cout << stuCur->stuInClass->socialID << string(2, ' ');
+		cout << stuCur->stuInClass->curriculum << string(23 - stuCur->stuInClass->curriculum.length(), ' ');
+		cout << stuCur->stuInClass->className << endl;
+
+		stuCur = stuCur->stuNext;
+	}
+	cout << endl;
 }
 
 Student* findStudentByID_01(string ID, SchoolYear* sYearHead)
@@ -163,14 +278,12 @@ Student* findStudentByID(string ID, SchoolYear* sYearHead)
 			while (classCur)
 			{
 				Student* stuCur = classCur->stuHead;
-				if (classCur->stuHead != NULL && stuCur &&  abs(stoi(stuCur->StuID) - stoi(ID)) < 1000)	// Name class ~ ID (22CTT1 ~ 22..)
+				if (classCur->stuHead != NULL && stuCur) // &&  abs(stoi(stuCur->StuID) - stoi(ID)) < 1000)	// Name class ~ ID (22CTT1 ~ 22..)
 				{
-					while (stuCur && stuCur->StuID < ID)		// stop if stuCur->StuID >= ID, Class sorted
-						stuCur = stuCur->stuNext;
-
-					if (stuCur && stuCur->StuID == ID)
-						return stuCur;
-					
+					while (stuCur)// && stuCur->StuID)// < ID)		// stop if stuCur->StuID >= ID, Class sorted
+						if (stuCur && stuCur->StuID == ID)
+							return stuCur;
+						else stuCur = stuCur->stuNext;
 				}
 				classCur = classCur->classNext;
 			}
