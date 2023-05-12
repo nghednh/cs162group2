@@ -33,12 +33,10 @@ void UIlite() {
 
 bool echo(string source)
 {
-    cout << "Are you sure want to add " << source << ". Please enter YES else enter NO: ";
+    cout << "| Are you sure want to add " << source << ". \n| Type 1 for YES or 0 for NO: ";
     string check;
-    do {
-        getline(cin, check, '\n');
-    } while (!(check == "YES" || check == "NO"));
-    if (check == "YES") return true;
+    getline(cin, check, '\n');
+    if (check == "1") return true;
     else return false;
 }
 void login(int firstlog = 1) {
@@ -115,49 +113,57 @@ void menuStaff(string username, SchoolYear*& yearHead) {
     string chose;
     UIlite();
     cout << "| User: " << username << endl;
-    cout << "| 0.   Log out.                                                                     |\n";
-    cout << "| 1.   Add school year.                                                            |" << '\n';
-    cout << "| 2.   Create Class by keyboard                                                     |" << '\n';
-    cout << "| 3.   Create Class by file                                                         |" << '\n';
-    cout << "| 4. To view student.                                                               |" << '\n';
-    cout << "| 5. To add semester.                                                               |" << '\n';
-    cout << "| 6. To update course information.                                                  |" << '\n';
-    cout << "| 7. To delete course by ID.                                                        |" << '\n';
-    cout << "| 8. To input course into CSV files.                                                |" << '\n';
-    cout << "| 9. To get info of the scoreboard from CSV files.                                  |" << '\n';
-    cout << "| 10. To view scoreboard.                                                           |" << '\n';
-    cout << "| 11. To update scoreboard info.                                                    |" << '\n';
-    cout << "| 12. To view list of classes.                                                      |" << '\n';
-    cout << "| 13. To view list of courses.                                                      |" << '\n';
-    cout << "| 14. To import first year students from CSV files.                                 |" << '\n';
+    cout << "| 1.   Create a school year                                                         |" << '\n';
+    cout << "| 2.   Create several classes for 1st-year students                                 |" << '\n';
+    cout << "| 3.   Add students to class                                                        |" << '\n';
+    cout << "| 4.   Create a semester                                                            |" << '\n';
+    cout << "| 5.   Add a course to this semester                                                |" << '\n';
+    cout << "| 6.   Add students to course                                                       |" << '\n';
+    cout << "| 7.   Remove studentfrom a course                                                  |" << '\n';
+    cout << "| 8.   Delete a course                                                              |" << '\n';
+    cout << "| 9.   Import scoreboard                                                            |" << '\n';
+    cout << "| 10.  Update a student's resul                                                     |" << '\n';
+    cout << "| 11.  View                                                                         |" << '\n';
+    cout << "| 12.  Log out                                                                      |" << '\n';
+    cout << "| 13.  Exit                                                                         |\n";
     cout << "| Your choice: ";
     getline(cin, chose, '\n');
 
     string s;
     while (true)
     {
-        if (chose == "0") {
+        if (chose == "13") {
             deleteAll(yearHead);
+            cout << "| See you later!";
             exit(0);
         }
+        if (chose == "12") {
+            deleteAll(yearHead);
+            login();
+        }
         else if (chose == "1") {
-            cout << "Please input Schoolyear's Name (Ex: 2022-2023): ";
+            system("cls");
+            UIlite();
+            cout << "| Please input schoolyear's name (ex: 2022-2023): ";
             getline(cin, s, '\n');
             if (checkInputSchoolYear(s) == true)
             {
-                if (echo("SChoolYear " + s) == true)
+                if (echo("school year " + s) == true)
                 {
                     if (createSchoolyear(yearNow, s, yearHead, smNow))
                     {
                         findLastSYandSM(yearHead, yearNow, smNow);
                         // chuyen qua year
-                        cout << "Succeed. You are now in Schoolyear " << yearNow->name << endl;
+                        cout << "| Succeed. School year " << yearNow->name <<" have been created!" << endl;
                     }
-                    else cout << "Not full all last semester or already have that schoolyear" << endl;
+                    else cout << "| That school year already exists or last school year have't finished!" << endl;
                 }
-                else cout << "Canceled" << endl;
+                else {
+                    cout << "| Canceled" << endl;
+                }
             }
-            else cout << "Input wrong" << endl;
+            else cout << "| Input wrong" << endl;
+            break;
         }
         else if(chose == "2") {
             cout << "Please input Class's Name (Ex: 22CTT1): ";
@@ -184,31 +190,16 @@ void menuStaff(string username, SchoolYear*& yearHead) {
             }
             else cout << "Canceled" << endl;
         }
-        if (chose == "0") {
-        }
-        if (chose == "0") {
-        }
-        if (chose == "0") {
-        }
-        if (chose == "0") {
-        }
-        if (chose == "0") {
-        }
-        if (chose == "0") {
-        }
-        if (chose == "0") {
-        }
-        if (chose == "0") {
-        }
-        if (chose == "0") {
-        }
-        if (chose == "0") {
-        }
         if (chose == "0")  {
         }
-              // cin.ignore(1, '\n');
-               cout << "Enter you choose: ";
-               getline(cin, chose, '\n');
+    }
+    cout << "| Type 1 to back to menu or 0 to exit: ";
+    getline(cin, chose, '\n');
+    if (chose=="1") {
+        menuStaff(username, yearHead);
+    }
+    else { 
+        exit(0);
     }
 }
 void menuStudent(string username) {
