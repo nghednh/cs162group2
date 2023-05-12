@@ -156,6 +156,7 @@ path root_path("Data") : Hàm này tạo một đối tượng path từ đườ
 // da check
 
 
+Course* findCourseByFileNameInAllCourse(SchoolYear* yearHead, int sm, string fileName);
 
 SchoolYear* findSchoolyear(SchoolYear* yearHead, string syName);
 
@@ -174,6 +175,8 @@ void findLastSYandSM(SchoolYear* yearHead, SchoolYear*& yearNow, int& semesterNo
 // chi thao tac tren last semester and last schoolyear
 // class create o dau
 // cach su dung: findLastSYandSm -> goi ham
+
+Course* findCourseByFileNameInAllCourse(SchoolYear* yearHead, Semester& smCur, string fileName);
 bool createClass(SchoolYear* yearCur, string ClassName);
 /*
 dung ham create SchoolYear
@@ -269,7 +272,7 @@ bool createCourse(Course* newCourse, int sm, SchoolYear* yearCur);
 // sm cur from 0
 bool addCourseToSemester(SchoolYear*& yearCur, int smCur);
 // file path la: Import/dshp.txt
-bool importListCourse_dshp(const path& file_path, SchoolYear*& yearCur);
+bool importListCourse_dshp(const path& file_path, SchoolYear*& yearCur, int smCur);
 void outWrongCSVInput();
 bool checkMark(string tmp, float& mark);
 StuInCourse* findStuInCourse(string ID, string name, Course* courseCur);

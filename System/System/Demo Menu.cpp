@@ -124,9 +124,9 @@ void menuStaff(string username, SchoolYear*& yearHead) {
     cout << "| 4.   Add student to class                                                         |" << '\n';
     cout << "| 5.   Import file student in class                                                 |" << '\n';
     cout << "| 6.   CreateSemester                                                 |" << '\n';
-    cout << "| 7. To delete course by ID.                                                        |" << '\n';
-    cout << "| 8. To input course into CSV files.                                                |" << '\n';
-    cout << "| 9. To get info of the scoreboard from CSV files.                                  |" << '\n';
+    cout << "| 7.   Add course from keyboard                                                       |" << '\n';
+    cout << "| 8.   Add course from file                                              |" << '\n';
+    cout << "| 9.   Update Course Information                                  |" << '\n';
     cout << "| 10. To view scoreboard.                                                           |" << '\n';
     cout << "| 11. To update scoreboard info.                                                    |" << '\n';
     cout << "| 12. To view list of classes.                                                      |" << '\n';
@@ -186,66 +186,56 @@ void menuStaff(string username, SchoolYear*& yearHead) {
             }
             else cout << "Canceled" << endl;
         }
-        else if (chose == "4") {
-            findLastSYandSM(yearHead, yearNow, smNow);
-            // nhap den khi nao chon dung, luu y chi nhap trong lop do
-            string StuID, FirstName, LastName, Gender, dateofbirth, socialID, curriculum, cla;
-            cout << "Enter Student's Class: ";
-            getline(cin, cla, '\n');
-            Class* classCur = findClassInSchoolYear(yearNow, cla);
-            if (classCur == nullptr)
-                cout << "Not fould " << cla << " in schoolyear " << yearNow->name << endl;
-            else
+        else if (chose == "9") {
+            Course* tmp;
+            string s, ID, Name, Cre, Lec, Day, Ses, Max, Class;
+            Semester smCur;
+
+            cout << "Enter Course to upate information <ID_ClassName>: ";
+            getline(cin, s, '\n');
+            Course* cur = findCourseByFileNameInAllCourse(yearHead, smCur, s);
+            if (cur != nullptr)
             {
-                bool conti = true;
-                while(conti)
+                cout << "Enter Course's ID: ";
+                getline(cin, ID, '\n');
+                cout << "Enter Course's Name: ";
+                getline(cin, Name, '\n');
+                cout << "Enter Course's number of credit: ";
+                getline(cin, Cre, '\n');
+                cout << "Enter Course's Lecturer: ";
+                getline(cin, Lec, '\n');
+                cout << "Enter Coures's day of perform (Ex: MON): ";
+                getline(cin, Day, '\n');
+                cout << "Enter Course's session (S1 to S4): ";
+                getline(cin, Ses, '\n');
+                cout << "Enter Course's Max number of student: ";
+                getline(cin, Max, '\n');
+                cout << "Enter Course's ClassName: ";
+                getline(cin, Class, '\n');
+
+                if (checkInfoCourse(smCur, ID, Name, Cre, Lec, Day, Ses, Max, Class) == true)
                 {
-                    cout << "Enter Student's ID: "; getline(cin, StuID, '\n');
-                    cout << "Enter Student's First Name: "; getline(cin, FirstName, '\n');
-                    cout << "Enter Student's Last Name: ";  getline(cin, LastName, '\n');
-                    cout << "Enter Student's Gender: ";     getline(cin, Gender, '\n');
-                    cout << "Enter Student's Date of Birth (Ex: 02/11/2004): "; getline(cin, dateofbirth, '\n');
-                    cout << "Enter Student's Social ID: "; getline(cin, socialID, '\n');
-                    cout << "Enter Student's Curriculum: "; getline(cin, curriculum, '\n');
-                    // class already enter
-                    if (checkInfoStu(StuID, FirstName, LastName, Gender, dateofbirth, socialID, cla) == true)
+                    tmp = new Course;
+                    tmp->ID = ID;
+                    tmp->name = Name;
+                    tmp->className = Class;
+                    tmp->teacherName = Lec;
+                    tmp->numCredit = stoi(Cre);
+                    tmp->maxStudent = stoi(Max);
+                    tmp->session = stoi(Ses.substr(1, 1));
+                    tmp->day = Day;
+
+                    if (updateCourseInfo(cur, tmp) == true) 
                     {
-                        Student* newStu = new Student;
-                        newStu->No = classCur->numStu;
-                        newStu->StuID = StuID;
-                        newStu->firstName = FirstName;
-                        newStu->lastName = LastName;
-                        newStu->gender = Gender;
-                        newStu->dateOfBirth.day = dateofbirth[0];
-                        newStu->dateOfBirth.day += dateofbirth[1];
-                        newStu->dateOfBirth.month = dateofbirth[3];
-                        newStu->dateOfBirth.month += dateofbirth[4];
-                        newStu->dateOfBirth.year = dateofbirth[6];
-                        newStu->dateOfBirth.year += dateofbirth[7];
-                        newStu->dateOfBirth.year += dateofbirth[8];
-                        newStu->dateOfBirth.year += dateofbirth[9];
-                        newStu->socialID = socialID;
-                        newStu->className = cla;
-                        newStu->curriculum = curriculum;
-                        if (addStudentToClass(yearNow, newStu) == false)
-                            cout << "Already have student with ID " << StuID << endl;
-                        else
-                        {
-                            addStudentToCSVFileClass(yearNow, newStu);
-                            cout << "Addes succeed" << endl;
-                        }
+                        cout << "Succeed" << endl;
                     }
-                    cout << "Enter Any Key to continue add student to Class " << classCur->name << endl;
-                    cout << "Else Press Enter to return to menu.";
-                    getline(cin, s, '\n');
-                    if (s == "") conti = false;
+                    else cout << "Already have " << tmp->ID << "_" << tmp->className << endl;
                 }
+                else
+                    cout << "Failed" << endl;
+                
             }
-            if (classCur)
-            {
-                officialClass(classCur);
-                exportClassToCSVFile(classCur);
-            }
+            else cout << "Could not fould " << s << endl;
         }
         else if (chose == "5") 
         {
@@ -300,11 +290,89 @@ void menuStaff(string username, SchoolYear*& yearHead) {
                 else cout << "Failed" << endl;
             }
         }
+        else if (chose == "8")
+        {
+            cout << "Please pass your file in Import folder.";
+
+            cout << "Enter your file name (Ex: ListCourse): ";
+            getline(cin, s, '\n');
+            if (echo(s) == true)
+            {
+                cout << "Is checking..." << endl;
+                if (importListCourse_dshp("Import/" + s + ".txt", yearNow, smNow) == true)
+                    cout << "Done" << endl;
+                else cout << "Can not open file or wrong schoolyear or semsester in file." << endl;
+            }
+            else cout << "Canceled" << endl;
+        }
+        else if (chose == "4") {
+            findLastSYandSM(yearHead, yearNow, smNow);
+            // nhap den khi nao chon dung, luu y chi nhap trong lop do
+            string StuID, FirstName, LastName, Gender, dateofbirth, socialID, curriculum, cla;
+            cout << "Enter Student's Class: ";
+            getline(cin, cla, '\n');
+            Class* classCur = findClassInSchoolYear(yearNow, cla);
+            if (classCur == nullptr)
+                cout << "Not fould " << cla << " in schoolyear " << yearNow->name << endl;
+            else
+            {
+                bool conti = true;
+                while (conti)
+                {
+                    cout << "Enter Student's ID: "; getline(cin, StuID, '\n');
+                    cout << "Enter Student's First Name: "; getline(cin, FirstName, '\n');
+                    cout << "Enter Student's Last Name: ";  getline(cin, LastName, '\n');
+                    cout << "Enter Student's Gender: ";     getline(cin, Gender, '\n');
+                    cout << "Enter Student's Date of Birth (Ex: 02/11/2004): "; getline(cin, dateofbirth, '\n');
+                    cout << "Enter Student's Social ID: "; getline(cin, socialID, '\n');
+                    cout << "Enter Student's Curriculum: "; getline(cin, curriculum, '\n');
+                    // class already enter
+                    if (checkInfoStu(StuID, FirstName, LastName, Gender, dateofbirth, socialID, cla) == true)
+                    {
+                        Student* newStu = new Student;
+                        newStu->No = classCur->numStu;
+                        newStu->StuID = StuID;
+                        newStu->firstName = FirstName;
+                        newStu->lastName = LastName;
+                        newStu->gender = Gender;
+                        newStu->dateOfBirth.day = dateofbirth[0];
+                        newStu->dateOfBirth.day += dateofbirth[1];
+                        newStu->dateOfBirth.month = dateofbirth[3];
+                        newStu->dateOfBirth.month += dateofbirth[4];
+                        newStu->dateOfBirth.year = dateofbirth[6];
+                        newStu->dateOfBirth.year += dateofbirth[7];
+                        newStu->dateOfBirth.year += dateofbirth[8];
+                        newStu->dateOfBirth.year += dateofbirth[9];
+                        newStu->socialID = socialID;
+                        newStu->className = cla;
+                        newStu->curriculum = curriculum;
+                        if (addStudentToClass(yearNow, newStu) == false)
+                            cout << "Already have student with ID " << StuID << endl;
+                        else
+                        {
+                            addStudentToCSVFileClass(yearNow, newStu);
+                            cout << "Addes succeed" << endl;
+                        }
+                    }
+                    cout << "Enter Any Key to continue add student to Class " << classCur->name << endl;
+                    cout << "Else Press Enter to return to menu.";
+                    getline(cin, s, '\n');
+                    if (s == "") conti = false;
+                }
+            }
+            if (classCur)
+            {
+                officialClass(classCur);
+                exportClassToCSVFile(classCur);
+            }
+        }
         // cin.ignore(1, '\n');
         cout << "Enter you choose: ";
         getline(cin, chose, '\n');
     }
 }
+
+
 void menuStudent(string username) {
     system("cls");
     UIlite();
