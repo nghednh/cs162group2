@@ -276,7 +276,7 @@ int main() {
     SchoolYear* yearHead = NULL;
     SchoolYear* yearCur = yearHead;
     int semesterNow = -1;
-    readInformation("Information", yearCur, yearHead);      // yearCur de chay, yearHead de tim va danh dau
+    readInformation("Information", yearCur, yearHead);
     findLastSYandSM(yearHead, yearNow, smNow);
 
     menuStaff("Nguyen Kim Khanh", yearHead);

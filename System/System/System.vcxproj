@@ -140,7 +140,6 @@
     <ClCompile Include="Delete.cpp" />
     <ClCompile Include="Demo Menu.cpp" />
     <ClCompile Include="Input.cpp" />
-    <ClCompile Include="password.cpp" />
     <ClCompile Include="Source1.cpp" />
     <ClCompile Include="View.cpp" />
   </ItemGroup>

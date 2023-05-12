@@ -33,9 +33,6 @@
     <ClCompile Include="CourseSemester.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="password.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Demo Menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
