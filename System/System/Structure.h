@@ -9,18 +9,6 @@
 #include "Structure.h"
 using namespace std;
 
-<<<<<<< Updated upstream
-struct Date;
-struct Class;
-struct SchoolYear;
-struct StuInCourse;
-struct Student;
-struct Semester;
-struct Staff;
-struct Semester;
-
-=======
->>>>>>> Stashed changes
 struct Date {
 	string day;
 	string month;
@@ -82,10 +70,6 @@ struct Class {
 	SchoolYear* inSY = NULL;
 };
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 struct Session {
 	Class* cur_class = NULL;
 	bool isEmpty = true;
@@ -120,10 +104,6 @@ struct Semester {
 	Date start;
 	Date end;
 	string syName;
-<<<<<<< Updated upstream
-//	string syName;
-=======
->>>>>>> Stashed changes
 	bool state = 0; //if 1 - accessible
 	int num;
 
