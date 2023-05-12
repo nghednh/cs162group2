@@ -1,0 +1,9 @@
+Course: Introduction to Computer Science II
+ID: CS162
+Class name: 22CTT1
+Teacher name: Dinh Ba Tien
+No	Student ID	Student Full Name	Total	Final	Midterm	Other
+1	22125003	Lam Anh	9.5	8.9	9.0	9
+2	22125013	Cao Hau	9.4	9.2	9.0	7
+3	22125027	Le Huy	10	10	10	8
+4	22125053	Ta Quan	9.0	9.1	9.2	8

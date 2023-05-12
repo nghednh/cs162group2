@@ -1,0 +1,6 @@
+No	Student ID	First Name	Last Name	Gender	Date of birth	Social ID	Curriculum	Class
+1	19125002	Anh	Tran	Male	08/04/2001	6720218	Information_Technology	19CTT2
+2	19125024	Hanh	Le	Female	20/12/2001	7110411	Information_Technology	19CTT2
+3	19125050	Phuoc	Le	Male	30/12/2001	6623514	Information_Technology	19CTT2
+4	19125089	Tan	Bui	Male	12/05/2001	6604623	Information_Technology	19CTT2
+5	19125112	Thuy	Nguyen	Female	09/02/2001	6605814	Information_Technology	19CTT2

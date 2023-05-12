@@ -1,7 +1,6 @@
-No	Student ID	First Name	Last Name	Gender	Date of birth	Social ID	Curriculum	Class														
-1	20125005	Thi	Nhut	Male	19/09/2002	79266595	Information_Technology	20CLC1											
-2	20125019	Dang	Khiem	Male	22/09/2002	79298336	Information_Technology	20CLC1											
-3	20125040	Bui	An	Male	10/03/2002	79229524	Information_Technology	20CLC1											
-4	20125118	Ho	Bao	Male	25/09/2002	79254730	Information_Technology	20CLC1											
-5	20125124	Vo	Truong	Male	05/11/2002	79212716	Information_Technology	20CLC1										
-6	20127254	To	Nghi	Female	08/06/2002	79238161	Information_Technology	20CLC1		
+No	Student ID	First Name	Last Name	Gender	Date of birth	Social ID	Curriculum	Class
+1	20127003	Binh	Tran	Female	27/04/2002	6910121	Information_Technology	20CLC1
+2	20127008	Dinh	Nguyen	Male	22/03/2002	6720881	Information_Technology	20CLC1
+3	20127022	Le	Nguyen	Male	31/12/2002	6320009	Information_Technology	20CLC1
+4	20127089	Thinh	Nguyen	Male	12/01/2002	6420828	Information_Technology	20CLC1
+5	20127091	Truong	Bui	Male	28/06/2002	6120111	Information_Technology	20CLC1

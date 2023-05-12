@@ -1,0 +1,6 @@
+No	Student ID	First Name	Last Name	Gender	Date of birth	Social ID	Curriculum	Class
+1	19127001	Anh	Tran	Male	08/01/2001	8920211	Information_Technology	19CLC2
+2	19127021	Hau	Le	Male	20/05/2001	8010412	Information_Technology	19CLC2
+3	19127022	Hoang	Nguyen	Male	20/09/2001	8023213	Information_Technology	19CLC2
+4	19127090	Tan	Nguyen	Male	22/01/2001	8204334	Information_Technology	19CLC2
+5	19127100	Thanh	Tran	Male	09/02/2001	8705815	Information_Technology	19CLC2

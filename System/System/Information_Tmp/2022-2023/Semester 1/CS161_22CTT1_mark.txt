@@ -1,0 +1,11 @@
+Course: Introduce to Computer Science I
+ID: CS162
+Class name: 22TT1
+Teacher name: Dinh Ba Tien
+No	Student ID	Student Full Name	Total	Final	Midterm	Other			
+1	22125001	Nguyen An	9.3	9	10	9
+2	22125003	Tran Anh	10	10	10	10
+3	22125005	Mai Bach	9.6	10	9.5	9
+4	22125006	Ngo Bach	9.6	9.8	10	9
+5	22125008	Luu Bao	9.2	9	9.5	9
+6	20125039	Nguyen Minh	9.3	8	8.5	9

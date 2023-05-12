@@ -62,6 +62,64 @@ void viewListOfStudentInClass(Class* classCur)
 		stuCur = stuCur->stuNext;
 	}
 }
+// view list of course of that semester
+void viewListOfStudentInClass2(Class* classCur)
+{
+	Student* stuCur = classCur->stuHead;
+	cout << "No\tStudent ID\tFirst Name\tLast Name\tGender\tDate of birth\tSocial ID\tCurriculum\tClass";
+	while (stuCur)
+	{
+		cout << endl;
+		cout << stuCur->No << '\t';
+		cout << stuCur->StuID << '\t';
+		cout << stuCur->firstName << '\t';
+		cout << stuCur->lastName << '\t';
+		cout << stuCur->gender << '\t';
+		cout << stuCur->dateOfBirth.day << '/' << stuCur->dateOfBirth.month << '/' << stuCur->dateOfBirth.year << '\t';
+		cout << stuCur->socialID << '\t';
+		cout << stuCur->curriculum << '\t';
+		cout << stuCur->className;
+
+		stuCur = stuCur->stuNext;
+	}
+}
+
+void viewCourseOfSemester(SchoolYear* yearCur, int smCur)
+{
+	cout << "This is list of course of semester " << smCur + 1 << "in School year " << yearCur->name << endl;
+	Course* courseCur = yearCur->sm[smCur].courseHead;
+	while (courseCur)
+	{
+		cout << courseCur->name << " < " << courseCur->ID << "_" << courseCur->className << " > " << endl;
+		courseCur = courseCur->courseNext;
+	}
+}
+// view list of student in course
+void viewListOfStudentInCourse(Course* courseCur)
+{
+	int i = 1;
+	cout << "Course: " << courseCur->name;
+	cout << endl << "ID: " << courseCur->ID;
+	cout << endl << "Class name: " << courseCur->className;
+	cout << endl << "Teacher name: " << courseCur->teacherName << endl;
+	cout << "No\tStudent ID\tFirst Name\tLast Name\tGender\tDate of birth\tSocial ID\tCurriculum\tClass";
+
+	StuInCourse* stuCur = courseCur->stuHead;
+	while (stuCur)
+	{
+		cout << endl << i++ << '\t';
+		cout << stuCur->stuInClass->StuID << '\t';
+		cout << stuCur->stuInClass->firstName << '\t' << '\t';
+		cout << stuCur->stuInClass->lastName << '\t' << '\t';
+		cout << stuCur->stuInClass->gender << '\t';
+		cout << stuCur->stuInClass->dateOfBirth.day << '/' << stuCur->stuInClass->dateOfBirth.month << '/' << stuCur->stuInClass->dateOfBirth.year << '\t';
+		cout << stuCur->stuInClass->socialID << '\t';
+		cout << stuCur->stuInClass->curriculum << " ";
+		cout << stuCur->stuInClass->className;
+
+		stuCur = stuCur->stuNext;
+	}
+}
 
 Student* findStudentByID_01(string ID, SchoolYear* sYearHead)
 {

@@ -281,7 +281,12 @@ bool updateCourseInfoInFile(Course* courseCur, Course* courseTmp);
 StuInCourse* findStuInCourse(string ID, string name, Course* courseCur);
 // chuyen file tu import vao imformation;
 bool checkFileMarkExist(Course* courseCur);
+void addStudentInPasswordFile(Student* stuCur);
+bool changeStaffPasswordInFile(string user, string newPass);
 void passScoreboardFileFromImport(Course* courseCur);
+
+bool changeStudentPasswordInFile(Student* stuCur, string newPass);
+
 // truong hop nhap sai, delete Class trong yearCur do, chi duoc dung ham beginning schoolyear
 // tra ve false => ko co trong schoolyear, nhap sai ten
 bool deleteClass(string className, SchoolYear* yearCur);

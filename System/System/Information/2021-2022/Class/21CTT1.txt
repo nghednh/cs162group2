@@ -1,0 +1,6 @@
+No	Student ID	First Name	Last Name	Gender	Date of birth	Social ID	Curriculum	Class
+1	21125001	Anh	Nguyen	Female	27/02/2003	7910415	Information_Technology	21CTT1
+2	21125017	Hao	Nguyen	Male	19/02/2003	7820411	Information_Technology	21CTT1
+3	21125019	Hong	Tran	Female	31/01/2003	7320419	Information_Technology	21CTT1
+4	21125064	Thinh	Nguyen	Male	12/03/2003	7620723	Information_Technology	21CTT1
+5	21125089	Thy	Nguyen	Male	09/07/2003	7620210	Information_Technology	21CTT1

@@ -1,0 +1,2 @@
+Semester	SchoolYear	Start Date	End Date
+3	2021-2022	27/05/2022	12/08/2022

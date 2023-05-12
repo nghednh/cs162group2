@@ -1,0 +1,9 @@
+Course: Introduction to Computer Science I
+ID: CS161
+Class name: 22CTT1
+Teacher name: Dinh Ba Tien
+No	Student ID	Student Full Name	Total	Final	Midterm	Other
+1	22125003	Lam Anh	9.0	8.9	7.2	5
+2	22125013	Cao Hau	9.3	9.0	9.0	6
+3	22125027	Le Huy	10	10	10	7
+4	22125053	Ta Quan	9.4	9.5	8.9	7

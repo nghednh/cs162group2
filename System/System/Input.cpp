@@ -4,6 +4,7 @@
 #include <sstream>
 #include <optional>
 #include <algorithm>
+#include "Structure.h"
 #include <string>
 #include "Structure.h"
 #include "View.h"
@@ -17,7 +18,7 @@ bool updateCourseInfo(Course* courseCur, Course* courseTmp);
 Course* findCourseByIDAndClass(string ID, string className, Semester sm);
 
 // Input
-
+StuInCourse* findStuInCourse(string ID, string name, Course* courseCur);
 void readListClass(const path& file_path, SchoolYear*& yearCur)
 {
     Class* classCur = yearCur->classHead;
@@ -171,28 +172,42 @@ void readScoreboardFile(const path& path, SchoolYear* yearCur, int sm)
     fstream in(path);
     if (courseCur == nullptr || !in.is_open()) return;
     string header;
+    float tmpF;
     getline(in, header, '\n');
     getline(in, header, '\n');
     getline(in, header, '\n');
     getline(in, header, '\n');
     getline(in, header, '\n');
 
+    string ID, FullName;
     StuInCourse* stuCur = courseCur->stuHead;
 
-    while (stuCur)
+    while (!in.eof())
     {
         getline(in, header, '\t');
-        getline(in, header, '\t');
-        getline(in, header, '\t');
-        in >> stuCur->totalM;
-        in.ignore(1, '\t');
-        in >> stuCur->finalM;
-        in.ignore(1, '\t');
-        in >> stuCur->midM;
-        in.ignore(1, '\t');
-        in >> stuCur->otherM;
-
-        stuCur = stuCur->stuNext;
+        getline(in, ID, '\t');
+        getline(in, FullName, '\t');
+        StuInCourse* stuCur = findStuInCourse(ID, FullName, courseCur);
+        if (stuCur != nullptr)
+        {
+            in >> stuCur->totalM;
+            in.ignore(1, '\t');
+            in >> stuCur->finalM;
+            in.ignore(1, '\t');
+            in >> stuCur->midM;
+            in.ignore(1, '\t');
+            in >> stuCur->otherM;
+        }
+        else
+        {
+            in >> tmpF;
+            in.ignore(1, '\t');
+            in >> tmpF;
+            in.ignore(1, '\t');
+            in >> tmpF;
+            in.ignore(1, '\t');
+            in >> tmpF;
+        }
     }
     in.close();
     return;
@@ -453,7 +468,7 @@ bool changeStudentPasswordInFile(Student* stuCur, string newPass)
 }
 
 // phai chay ham checkPassword truoc, neu dung moi doi
-bool changeStudentPasswordInFile(string user, string newPass)
+bool changeStaffPasswordInFile(string user, string newPass)
 {
     string inputFile = "Information/Staff.txt";
     string copyFile = "Information/Temp_password.txt";
@@ -1339,6 +1354,17 @@ Student* createStudent(string No, string StuID, string FirstName, string LastNam
 
 // cau 4. findyearCur (findLastSYandSM)-> readStudentFromImportFile -> officalCourse -> exportClassToCSVFile
 // readStudentFromImportFile("Import", year hien tai)
+void addStudentInPasswordFile(Student* stuCur)
+{
+    ofstream out("Information/" + stuCur->inClass->inSY->name + "/Class/" + stuCur->inClass->name + ".txt", ios::app);
+
+    out.seekp(0, ios::end);
+    out << endl;
+    out << stuCur->StuID << '\t';
+    out << stuCur->dateOfBirth.day << stuCur->dateOfBirth.month << stuCur->dateOfBirth.year;
+    out.close();
+}
+
 bool readStudentFromImportFile(const path& path, SchoolYear* yearCur)
 {
     for (const auto& entry : directory_iterator(path)) {
@@ -1375,7 +1401,10 @@ bool readStudentFromImportFile(const path& path, SchoolYear* yearCur)
                     if (tmp == stuCur->className)
                     {
                         if (addStudentToClass(yearCur, stuCur))
+                        {
                             addStudentToCSVFileClass(yearCur, stuCur);
+                            addStudentInPasswordFile(stuCur);
+                        }
                         else
                         {
                             cout << "Already have student with same ID." << endl;

@@ -1,0 +1,6 @@
+No	Student ID	First Name	Last Name	Gender	Date of birth	Social ID	Curriculum	Class
+1	20125002	Anh	Tran	Female	27/05/2002	6910215	Information_Technology	20CTT1
+2	20125023	Hien	Nguyen	Female	22/01/2002	6820711	Information_Technology	20CTT1
+3	20125044	Linh	Tran	Female	31/07/2002	6320019	Information_Technology	20CTT1
+4	20125079	Thinh	Nguyen	Male	12/10/2002	6720823	Information_Technology	20CTT1
+5	20125102	Trieu	Tran	Male	09/06/2002	6320110	Information_Technology	20CTT1

@@ -50,11 +50,11 @@ struct Course;
 
 struct StuInCourse {
 	//detail 
-	float totalM;
-	float finalM;
-	float midM;
-	float otherM;
-	float GPA;
+	float totalM = 0;
+	float finalM = 0;
+	float midM = 0;
+	float otherM = 0;
+	float GPA = 0;
 	string courseID;
 	Course* infoCourse = NULL;
 

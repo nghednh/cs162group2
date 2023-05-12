@@ -141,6 +141,7 @@
     <ClCompile Include="Demo Menu.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="password.cpp" />
+    <ClCompile Include="ScoreBoard.cpp" />
     <ClCompile Include="Source1.cpp" />
     <ClCompile Include="View.cpp" />
   </ItemGroup>
@@ -150,6 +151,7 @@
     <ClInclude Include="Delete.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="login&amp;menu.h" />
+    <ClInclude Include="ScoreBoard.h" />
     <ClInclude Include="Structure.h" />
     <ClInclude Include="View.h" />
   </ItemGroup>
