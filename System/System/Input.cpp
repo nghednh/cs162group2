@@ -1572,7 +1572,7 @@ Course* findCourseByFileName(SchoolYear* yearCur, int sm, string fileName)
             courseID += fileName[i];
         else
         {
-            for (++i; fileName[i] != '_'; i++)
+            for (++i; i < fileName.size() && fileName[i] != '_'; i++)
                 className += fileName[i];
             break;
         }
@@ -1586,6 +1586,7 @@ Course* findCourseByFileName(SchoolYear* yearCur, int sm, string fileName)
     }
     return nullptr;
 }
+
 
 Course* findCourseByFileNameInAllCourse(SchoolYear* yearHead, Semester& smCur, string fileName)
 {
@@ -1958,12 +1959,20 @@ bool deleteClass(string className, SchoolYear* yearCur)
     return false;
 }
 
+bool checkFileMarkExist(Course* courseCur)
+{
+    ifstream in("Information/" + courseCur->inSM->inSY->name + "/Semester " + to_string(courseCur->inSM->num + 1) + '/' + courseCur->ID + '_' + courseCur->className + "_mark.txt");
+    if (!in.is_open())
+        return false;
+    in.close();
+    return true;
+}
+
 // cout << "you are change the course: courseCur->ID + courseCur->ClassName
 bool updateStudentResult(Course* courseCur) {
-    if (courseCur->stuHead) return false;
+
     string header, ID, name, totalTmp, finalTmp, midTmp, otherTmp;
     float total, final, mid, other;
-
     cout << "Enter student ID: ";
     getline(cin, ID, '\n');
     cout << "Enter student full name: ";
@@ -2046,7 +2055,11 @@ bool importScoreboardFile(const path& path, SchoolYear* yearCur, int sm)
         string tmp = entry.path().filename().stem().string();   // tmp = CS612_22CTT1_mark;
         Course* courseCur = findCourseByFileName(yearCur, sm, tmp);
         fstream in(entry.path());
-        if (courseCur == nullptr || !in.is_open()) return false;
+        if (courseCur == nullptr || !in.is_open())
+        {
+            cout << "Could not find course " << tmp << " in current semester this schoolyear" << endl;
+            continue;
+        }
         string header, ID, name, totalTmp, finalTmp, midTmp, otherTmp;
         float total, final, mid, other;
         getline(in, header, '\n');
@@ -2075,11 +2088,14 @@ bool importScoreboardFile(const path& path, SchoolYear* yearCur, int sm)
                     stuCur->midM = mid;
                     stuCur->otherM = other;
                 }
+                else cout << "Wrong data of student: " << ID << " of course " << courseCur->ID << "_" << courseCur->className << endl;
             }
+            else cout << "Could not fould student: " << ID << " of course " << courseCur->ID << "_" << courseCur->className << endl;
             // xu ly have wrong data
         }
         // chuyen file vao information
         passScoreboardFileFromImport(courseCur);
+        cout << "Succeed read " << tmp << endl;
 
         in.close();
         remove(entry.path());
@@ -2087,6 +2103,47 @@ bool importScoreboardFile(const path& path, SchoolYear* yearCur, int sm)
     return true;
 }
 
+bool deleteCourse(Course*& courseCur, SchoolYear* yearNow, int smNow)
+{
+    Course* courseHead = yearNow->sm[smNow].courseHead;
+    if (courseCur == courseHead)
+    {
+        yearNow->sm[smNow].courseHead = yearNow->sm[smNow].courseHead->courseNext;
+        while (courseCur->stuHead)
+        {
+            StuInCourse* tmp = courseCur->stuHead;
+            courseCur->stuHead = courseCur->stuHead->stuNext;
+            removeStuInCourse(courseCur, tmp);
+            delete tmp;
+        }
+        remove("Information/" + yearNow->name + "/Semester " + to_string(smNow + 1) + "/" + courseCur->ID + "_" + courseCur->className + ".txt");
+        if (checkFileMarkExist(courseCur)) remove("Information/" + yearNow->name + "/Semester " + to_string(smNow + 1) + "/" + courseCur->ID + "_" + courseCur->className + "_mark.txt");
+        delete courseCur;
+        return true;
+    }
+    else
+    {
+        while (courseHead->courseNext)
+        {
+            if (courseHead->courseNext == courseCur)
+            {
+                courseHead->courseNext = courseHead->courseNext->courseNext;
+                while (courseCur->stuHead)
+                {
+                    StuInCourse* tmp = courseCur->stuHead;
+                    courseCur->stuHead = courseCur->stuHead->stuNext;
+                    removeStuInCourse(courseCur, tmp);
+                }
+                if (checkFileMarkExist(courseCur)) remove("Information/" + yearNow->name + "/Semester " + to_string(smNow + 1) + "/" + courseCur->ID + "_" + courseCur->className + "_mark.txt");
+                remove("Information/" + yearNow->name + "/Semester " + to_string(smNow + 1) + "/" + courseCur->ID + "_" + courseCur->className + ".txt");
+                delete courseCur;
+                return true;
+            }
+            else courseHead = courseHead->courseNext;
+        }
+    }
+
+}
 
 // delete trong linked list va delete trong file
 

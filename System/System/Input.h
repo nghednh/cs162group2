@@ -275,8 +275,10 @@ bool addCourseToSemester(SchoolYear*& yearCur, int smCur);
 bool importListCourse_dshp(const path& file_path, SchoolYear*& yearCur, int smCur);
 void outWrongCSVInput();
 bool checkMark(string tmp, float& mark);
+bool deleteCourse(Course*& courseCur, SchoolYear* yearNow, int smNow);
 StuInCourse* findStuInCourse(string ID, string name, Course* courseCur);
 // chuyen file tu import vao imformation
+bool checkFileMarkExist(Course* courseCur);
 void passScoreboardFileFromImport(Course* courseCur);
 // truong hop nhap sai, delete Class trong yearCur do, chi duoc dung ham beginning schoolyear
 // tra ve false => ko co trong schoolyear, nhap sai ten

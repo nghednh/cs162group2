@@ -2,11 +2,12 @@
 #include "login&menu.h"
 #include "Structure.h"
 #include "View.h"
-void viewListClasses(SchoolYear* sYearHead)
+void viewListClasses(SchoolYear* yhead,SchoolYear* ynow)
 {
 	system("cls");
-	UIlite;
-	SchoolYear* sYearCur = sYearHead;
+	UIlite();
+	cout << "| List of classes in: " << ynow->name << endl;
+	SchoolYear* sYearCur = ynow;
 	while (sYearCur)
 	{
 		Class* classCur = sYearCur->classHead;
@@ -17,12 +18,47 @@ void viewListClasses(SchoolYear* sYearHead)
 		}
 		sYearCur = sYearCur->yearNext;
 	}
+	cout << "| Type in: \n";
+	cout << "| 1. To view the year after this year course \n";
+	cout << "| 2. To view the year before this year course \n";
+	string m;
+	getline(cin, m, '\n');
+	if (m == "1") {
+		if (ynow->yearNext) {
+			viewListClasses(yhead,ynow->yearNext);
+		}
+		else {
+			cout << "| The year after this year doesn't exist!\n";
+		}
+	}
+	if (m == "2") {
+		
+		if (yhead == ynow) {
+			cout << "| The year before this year doesn't exist!\n";
+		}
+		else {
+			SchoolYear* ycur = yhead;
+			if (ycur->yearNext == ynow) {
+				viewListClasses(yhead, ycur);
+			}
+			while (ycur->yearNext != ynow) {
+				ycur = ycur->yearNext;
+				if (ycur->yearNext == ynow) {
+					viewListClasses(yhead, ycur);
+				}
+			}
+		}
+	}
+	else {
+		return;
+	}
 }
 
 void viewListCourses(Course* courseHead)
 {
 	system("cls");
-	UIlite;
+	UIlite();
+	cout << "| List of courses: " << endl;
 	Course* courseCur = courseHead;
 	while (courseCur)
 	{
@@ -62,7 +98,8 @@ void viewListStudentsInCourse(Course* courseCur)	// lop sinh hoat
 void viewListOfStudentInClass(Class* classCur)
 {
 	system("cls");
-	UIlite;
+	UIlite();
+	cout << "| List of student in class " << classCur->name << ": \n";
 	if (classCur == NULL) return;
 	Student* stuCur = classCur->stuHead;
 	while (stuCur)

@@ -2,6 +2,7 @@
 #include <string>
 #include "login&menu.h"
 #include "Input.h"
+#include "View.h"
 
 SchoolYear* yearNow;
 int smNow;
@@ -109,6 +110,7 @@ bool checkInputSchoolYear(string s)
 }
 
 void menuStaff(string username, SchoolYear*& yearHead) {
+    Semester smCur;
     system("cls");
     string chose;
     UIlite();
@@ -404,18 +406,109 @@ void menuStaff(string username, SchoolYear*& yearHead) {
                     cout << "| Failed" << endl;
 
             }
-            else cout << "| Could not fould! " << s << endl;
+            else cout << "| Could not fould " << s << "!"<<endl;
             backmenuStaff(username, yearHead, "n");
         }
+        else if (chose == "8") {
+            system("cls");
+            UIlite();
+            cout << "| Please enter Course <ID_ClassName>: ";
+            getline(cin, s, '\n');
+            Course* courseCur = findCourseByFileNameInAllCourse(yearHead, smCur, s);
+            if (courseCur == nullptr || courseCur->inSM->num != smNow || courseCur->inSM->inSY->name != yearNow->name) cout << "| Could not find course " << s << " in current semester" << endl;
+            else
+            {
+                if (deleteCourse(courseCur, yearNow, smNow) == true)
+                    cout << "| Deleted" << endl;
+                else cout << "| Failed." << endl;
+            }
+            backmenuStaff(username, yearHead, "n");
+        }
+        else if (chose == "9")
+        {
+            system("cls");
+            UIlite();
+            findLastSYandSM(yearHead, yearNow, smNow);
+            if (yearNow != nullptr && smNow != -1)
+            {
+                cout << "| Please pass your file in Import folder.";
+                if (echo("| scoreboard file") == true)
+                {
+                    cout << "| Is checking..." << endl;
+                    if (importScoreboardFile("Import", yearNow, smNow) == true)
+                        cout << "| Done" << endl;
+                }
+                else cout << "| Canceled" << endl;
+            }
+            else cout << "| Not have any semester or schoolyear" << endl;
+            backmenuStaff(username, yearHead, "n");
+        }
+        else if (chose == "10")
+        {
+            system("cls");
+            UIlite();
+            bool conti = true;
+            findLastSYandSM(yearHead, yearNow, smNow);
+            string s;
+            cout << "| Enter student's Course <ID_ClassName>: ";
+            getline(cin, s, '\n');
+            Course* courseCur = findCourseByFileNameInAllCourse(yearHead, smCur, s);
+            if (courseCur == nullptr || courseCur->inSM->num != smNow || courseCur->inSM->inSY->name != yearNow->name) cout << "Could not find course " << s << " in current semester" << endl;
+            else
+            {
+                if (checkFileMarkExist(courseCur) == true)
+                {
+                    cout << "| You are changing student result of course " << s << endl;
+                    while (conti)
+                    {
+                        if (updateStudentResult(courseCur) == true)
+                            cout << "| Updated" << endl;
+                        else cout << "| Failed." << endl;
+
+                        cout << "| +> Enter to continue changing student's result\n";
+                        cout << "| +> Or type in any key to return to menu\n";
+                        getline(cin, s, '\n');
+                        if (s != "") conti = false;
+                    }
+                    backmenuStaff(username, yearHead, "1");
+                }
+                else cout << "| Course " << courseCur->ID << "_" << courseCur->className << " not have mark information" << endl;
+            }
+            backmenuStaff(username, yearHead, "n");
+        }
+
         else if (chose=="13") {
             deleteAll(yearHead);
             cout << "| See you later!";
             exit(0);
         }
+        else if (chose == "11") {
+            system("cls");
+            UIlite();
+            string n;
+            cout << "| Type in: \n";
+            cout << "| 1. To view list classes\n";
+            cout << "| 2. To view list courses\n";
+            cout << "| 3. To view list of student in class\n";
+            cout << "| 4. To view list of student in course\n| ";
+            getline(cin, n, '\n');
+            if (n == "1") {
+                viewListClasses(yearHead, yearNow);
+            }
+            else if (n == "2") {
+                viewListCourses(smCur.courseHead);
+            }
+            else if (n == "3") {
+                viewListOfStudentInClass(yearHead->classHead);  
+            }
+            else if (n == "4") {
+                viewListStudentsInCourse(smCur.courseHead);
+            }
+            backmenuStaff(username, yearHead, "n");
+        }
         else {
             menuStaff(username, yearHead);
         }
-        
     }
 }
 
@@ -470,7 +563,6 @@ void menuStudent(string username) {
     }
 }
 void backmenuStaff(string username, SchoolYear*& yearHead, string chose="n") {
-    cout << "| Or any other key to exit                                                          |\n";
     cout << "| Type in:                                                                          |\n";
     cout << "| 1. To return to menu                                                              |\n";
     cout << "| 2. To continue                                                                    |\n";
@@ -502,6 +594,7 @@ int main() {
     int semesterNow = -1;
     readInformation("Information", yearCur, yearHead);
     findLastSYandSM(yearHead, yearNow, smNow);
+    Semester cur;
     menuStaff("Nguyen Kim Khanh", yearHead);
     return 0;
 }
