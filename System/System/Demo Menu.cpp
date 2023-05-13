@@ -731,6 +731,6 @@ int main() {
     readInformation("Information", yearCur, yearHead);
     findLastSYandSM(yearHead, yearNow, smNow);
     Semester cur;
-    menuStaff("Nguyen Kim Khanh", yearHead);
+    menuStaff("DanhNghe", yearHead);
     return 0;
 }
