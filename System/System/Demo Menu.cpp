@@ -1200,7 +1200,7 @@ void menuStaff(string username, SchoolYear* yearHead) {
             cout << "| 1. To view list classes\n";
             cout << "| 2. To view list courses\n";
             cout << "| 3. To view list of student in class\n";
-            cout << "| 4. To view list of student in course\n ";
+            cout << "| 4. To view list of student in course\n";
             cout << "| 5. To view Course's scoreboard\n";
             cout << "| 6. To view Class's scoreboard\n";
             cout << "Your choice: "; getline(cin, n, '\n');
