@@ -729,6 +729,7 @@ int main() {
     readInformation("Information", yearCur, yearHead);
     findLastSYandSM(yearHead, yearNow, smNow);
     Semester cur;
+    login(0, yearHead);
     menuStaff("nghe", yearHead);
     return 0;
 }
