@@ -1,4 +1,4 @@
-HK2 2022-2023
+HK2 2023-2024
 ID	Name	Credits	Lecturer	Day	Session	Max	Class Name
 CS162	Introduction to Computer Science I	4	Dinh Ba Tien	SAT	S1	50	22CTT1
 CS162	Introduction to Computer Science I	4	Dinh Ba Tien	MON	S1	50	22CTT2

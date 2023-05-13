@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "login&menu.h"
+#include "Structure.h"
 #include "Input.h"
 #include "View.h"
 
@@ -40,7 +41,7 @@ bool echo(string source)
     if (check == "1") return true;
     else return false;
 }
-void login(int firstlog = 1) {
+void login(int firstlog, SchoolYear* yearHead) {
     system("cls");
     string rol;
     UI();
@@ -61,7 +62,7 @@ void login(int firstlog = 1) {
     cin >> rol;
     int role = stoi(rol);
     if (role != 3 && role != 2 && role != 1) {
-        login(0);
+        login(0, yearHead);
     }
     if (role == 3) {
         system("cls");
@@ -73,27 +74,28 @@ void login(int firstlog = 1) {
     system("cls");
     string username, password;
     UI();
+    cin.ignore(1, '\n');
     cout << "| Enter your username: ";
-    cin >> username;
+    getline(cin, username, '\n');
     cout << "| Enter your password: ";
-    cin >> password;
+    getline(cin, password, '\n');
     if (role == 1) {
-        if (checkStaffPassword(username, password)) {
+        if (checkStaffPasswordInFile(username, password)) {
             menuStaff(username, yearNow);
         }
         else {
             system("cls");
-            login(0);
+            login(0, yearHead);
         }
     }
     else if (role == 2) {
-        if (checkStudentPassword(username, password)) {
+        if (checkStudentPasswordInFile(username, password, yearHead)) {
             menuStudent(username);
         }
         else {
             // Wrong password, prompt user to try again
             system("cls");
-            login(0);
+            login(0, yearHead);
         }
     }
 }
@@ -113,6 +115,7 @@ void menuStaff(string username, SchoolYear*& yearHead) {
     Semester smCur;
     system("cls");
     string chose;
+    Semester smCur;
     UIlite();
     cout << "| User: " << username << endl;
     cout << "| 1.   Create a school year                                                         |" << '\n';
@@ -360,7 +363,6 @@ void menuStaff(string username, SchoolYear*& yearHead) {
             UIlite();
             Course* tmp;
             string s, ID, Name, Cre, Lec, Day, Ses, Max, Class;
-            Semester smCur;
 
             cout << "| Enter course to upate information <ID_ClassName>: ";
             getline(cin, s, '\n');
@@ -403,28 +405,27 @@ void menuStaff(string username, SchoolYear*& yearHead) {
                     else cout << "| Already have " << tmp->ID << "_" << tmp->className << endl;
                 }
                 else
-                    cout << "| Failed" << endl;
-
+                    cout << "Failed" << endl;
+                
             }
             else cout << "| Could not fould " << s << "!"<<endl;
             backmenuStaff(username, yearHead, "n");
         }
-        else if (chose == "8") {
-            system("cls");
-            UIlite();
-            cout << "| Please enter Course <ID_ClassName>: ";
-            getline(cin, s, '\n');
-            Course* courseCur = findCourseByFileNameInAllCourse(yearHead, smCur, s);
-            if (courseCur == nullptr || courseCur->inSM->num != smNow || courseCur->inSM->inSY->name != yearNow->name) cout << "| Could not find course " << s << " in current semester" << endl;
-            else
+        else if (chose == "5") 
+        {
+            findLastSYandSM(yearHead, yearNow, smNow);
             {
-                if (deleteCourse(courseCur, yearNow, smNow) == true)
-                    cout << "| Deleted" << endl;
-                else cout << "| Failed." << endl;
+                cout << "Please pass your file in Import folder.";
+                if (echo("file class") == true)
+                {
+                    cout << "Is checking..." << endl;
+                    if (readStudentFromImportFile("Import", yearNow) == true)
+                        cout << "Done" << endl;
+                }
+                else cout << "Canceled" << endl;
             }
-            backmenuStaff(username, yearHead, "n");
         }
-        else if (chose == "9")
+        else if (chose == "6")
         {
             system("cls");
             UIlite();
@@ -502,11 +503,15 @@ void menuStaff(string username, SchoolYear*& yearHead) {
             }
             else if (n == "4") {
             }
-            backmenuStaff(username, yearHead, "n");
+            if (classCur)
+            {
+                officialClass(classCur);
+                exportClassToCSVFile(classCur);
+            }
         }
-        else {
-            menuStaff(username, yearHead);
-        }
+        // cin.ignore(1, '\n');
+        cout << "Enter you choose: ";
+        getline(cin, chose, '\n');
     }
 }
 

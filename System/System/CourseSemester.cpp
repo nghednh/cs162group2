@@ -63,7 +63,7 @@ bool Staff::addAStudentInCourse(Course* a, Student* newStu){
         StuInCourse* tmp = newStu->pStuCourseHead;
         while(tmp){
             tmp = tmp->pStuCourseNext;
-        }
+        }           // chay ra khoi linked list luon r :)))
         tmp = cur;
         tmp->pStuCourseNext = NULL;
     }

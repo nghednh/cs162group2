@@ -1070,6 +1070,18 @@ bool updateCourseInfo(Course* courseCur, Course* courseTmp)
     return true;
 }
 
+void removeStuInCourseInFileMark(StuInCourse* stuCur, Course* courseCur);
+
+void removeStuInCourseInFileCourse(StuInCourse* stuCur, Course* courseCur)
+{
+    string inputFile = "Information/" + courseCur->inSM->inSY->name + "/Semester " + to_string(courseCur->inSM->num + 1) + "/" + courseCur->ID + "_" + courseCur->className + ".txt";
+    string copyFile = "Information / " + courseCur->inSM->inSY->name + " / Semester " + to_string(courseCur->inSM->num + 1) + " / " + courseCur->ID + "_" + courseCur->className + "_temp.txt";
+    ifstream in(inputFile);
+    ofstream out(copyFile);
+  
+    rename(copyFile.c_str(), inputFile.c_str());
+}
+
 bool removeStuInCourse(Course* courseCur, StuInCourse* stuCur)
 {
     Student* stuInClass = stuCur->stuInClass;
@@ -1088,15 +1100,15 @@ bool removeStuInCourse(Course* courseCur, StuInCourse* stuCur)
     if (stuCourse && stuCourse == stuCur) courseCur->stuHead = courseCur->stuHead->stuNext;
     else
     {
-        while (stuCourse->stuNext && stuCourse->stuNext != stuCur)
+        while (stuCourse && stuCourse->stuNext && stuCourse->stuNext != stuCur)
             stuCourse = stuCourse->stuNext;
-        if (stuCourse->stuNext == nullptr) return false;
-        else stuCourse = stuCourse->stuNext;
+        if (stuCourse && stuCourse->stuNext == nullptr) return false;
+        else stuCourse->stuNext = stuCourse->stuNext->stuNext;
     }
     delete stuCur;
     stuCur = nullptr;
+    return true;
 }
-
 
 // thieu
 // can ham tim kiem check courseCur truoc va tim noi StuInClass cua newStu, da link stuinclass nhung chua link tu stuinclass sang
@@ -1479,7 +1491,7 @@ bool exportListStudentInCourseCSV_dssv(Course* courseCur)
     return true;
 }
 
-void readStudentFromImportFileToCourse(const path& path, SchoolYear* yearHead, int smCur)    // smCur from 0
+bool readStudentFromImportFileToCourse(const path& path, SchoolYear* yearHead, int smCur)    // smCur from 0
 {
     for (const auto& entry : directory_iterator(path)) {
         ifstream in;
@@ -1487,42 +1499,45 @@ void readStudentFromImportFileToCourse(const path& path, SchoolYear* yearHead, i
         string tmp = entry.path().filename().stem().string() + "_mark";
         Course* courseCur = findCourseByFileName(yearHead, smCur, tmp);
 
-        if (courseCur == nullptr) return;
-        string header;
-
-        getline(in, courseCur->name, '\n');
-        getline(in, courseCur->teacherName, '\n');
-        in >> courseCur->numCredit;
-        in >> courseCur->maxStudent;
-        in.ignore(1, '\n');
-        getline(in, courseCur->day, '\n');
-        getline(in, header, '\n');
-        courseCur->session = stoi(header.substr(1, 1));
-        // dang sua
-
-        // xoa dong 1
-        getline(in, header, '\n');
-        while (!in.eof())
+        if (courseCur != nullptr)
         {
-            StuInCourse* stuTmp = new StuInCourse;
-            string syTmp, classTmp, IDTmp;
-            getline(in, syTmp, '\t');
-            getline(in, classTmp, '\t');
-            getline(in, IDTmp, '\n');
+            string header;
 
-            Student* stuInClass = findStuInClass(syTmp, classTmp, IDTmp, yearHead);
-            stuTmp->stuInClass = stuInClass;
-            stuTmp->infoCourse = courseCur;
+            getline(in, courseCur->name, '\n');
+            getline(in, courseCur->teacherName, '\n');
+            in >> courseCur->numCredit;
+            in >> courseCur->maxStudent;
+            in.ignore(1, '\n');
+            getline(in, courseCur->day, '\n');
+            getline(in, header, '\n');
+            courseCur->session = stoi(header.substr(1, 1));
+            // dang sua
 
-            // check thong tin
+            // xoa dong 1
+            getline(in, header, '\n');
+            while (!in.eof())
+            {
+                StuInCourse* stuTmp = new StuInCourse;
+                string syTmp, classTmp, IDTmp;
+                getline(in, syTmp, '\t');
+                getline(in, classTmp, '\t');
+                getline(in, IDTmp, '\n');
 
-            if (addStuInCourse(yearHead, stuTmp, courseCur))
-                addStudentToCSVFileCourse(yearHead, stuTmp);
+                Student* stuInClass = findStuInClass(syTmp, classTmp, IDTmp, yearHead);
+                stuTmp->stuInClass = stuInClass;
+                stuTmp->infoCourse = courseCur;
+
+                // check thong tin
+
+                if (addStuInCourse(yearHead, stuTmp, courseCur))
+                    addStudentToCSVFileCourse(yearHead, stuTmp);
+            }
+            in.close();
+
+            OfficialCourseToCSV(courseCur);
         }
-        in.close();
-
-        OfficialCourseToCSV(courseCur);
     }
+    return true;
 }
 
 bool isInt(string a)
@@ -1588,7 +1603,7 @@ Course* findCourseByFileName(SchoolYear* yearCur, int sm, string fileName)
 }
 
 
-Course* findCourseByFileNameInAllCourse(SchoolYear* yearHead, Semester& smCur, string fileName)
+Course* findCourseByFileNameInAllCourse(SchoolYear* yearHead, Semester &smCur, string fileName)
 {
     string courseID = "", className = "";
     for (int i = 0; i < size(fileName); i++)
@@ -2113,6 +2128,7 @@ bool deleteCourse(Course*& courseCur, SchoolYear* yearNow, int smNow)
         {
             StuInCourse* tmp = courseCur->stuHead;
             courseCur->stuHead = courseCur->stuHead->stuNext;
+            removeStuInCourse(courseCur, tmp);
             delete tmp;
         }
         remove("Information/" + yearNow->name + "/Semester " + to_string(smNow + 1) + "/" + courseCur->ID + "_" + courseCur->className + ".txt");
@@ -2131,7 +2147,7 @@ bool deleteCourse(Course*& courseCur, SchoolYear* yearNow, int smNow)
                 {
                     StuInCourse* tmp = courseCur->stuHead;
                     courseCur->stuHead = courseCur->stuHead->stuNext;
-                    delete tmp;
+                    removeStuInCourse(courseCur, tmp);
                 }
                 if (checkFileMarkExist(courseCur)) remove("Information/" + yearNow->name + "/Semester " + to_string(smNow + 1) + "/" + courseCur->ID + "_" + courseCur->className + "_mark.txt");
                 remove("Information/" + yearNow->name + "/Semester " + to_string(smNow + 1) + "/" + courseCur->ID + "_" + courseCur->className + ".txt");
@@ -2140,8 +2156,8 @@ bool deleteCourse(Course*& courseCur, SchoolYear* yearNow, int smNow)
             }
             else courseHead = courseHead->courseNext;
         }
-    }
-
+    } 
+    
 }
 
 // delete trong linked list va delete trong file
