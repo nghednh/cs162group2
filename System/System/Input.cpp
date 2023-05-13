@@ -2113,7 +2113,6 @@ bool deleteCourse(Course*& courseCur, SchoolYear* yearNow, int smNow)
         {
             StuInCourse* tmp = courseCur->stuHead;
             courseCur->stuHead = courseCur->stuHead->stuNext;
-            removeStuInCourse(courseCur, tmp);
             delete tmp;
         }
         remove("Information/" + yearNow->name + "/Semester " + to_string(smNow + 1) + "/" + courseCur->ID + "_" + courseCur->className + ".txt");
@@ -2132,7 +2131,7 @@ bool deleteCourse(Course*& courseCur, SchoolYear* yearNow, int smNow)
                 {
                     StuInCourse* tmp = courseCur->stuHead;
                     courseCur->stuHead = courseCur->stuHead->stuNext;
-                    removeStuInCourse(courseCur, tmp);
+                    delete tmp;
                 }
                 if (checkFileMarkExist(courseCur)) remove("Information/" + yearNow->name + "/Semester " + to_string(smNow + 1) + "/" + courseCur->ID + "_" + courseCur->className + "_mark.txt");
                 remove("Information/" + yearNow->name + "/Semester " + to_string(smNow + 1) + "/" + courseCur->ID + "_" + courseCur->className + ".txt");

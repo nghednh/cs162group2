@@ -2,7 +2,7 @@
 #include "login&menu.h"
 #include "Structure.h"
 #include "View.h"
-void viewListClasses(SchoolYear* yhead,SchoolYear* ynow)
+void viewListClasses2(SchoolYear* yhead,SchoolYear* ynow)
 {
 	system("cls");
 	UIlite();
@@ -19,13 +19,13 @@ void viewListClasses(SchoolYear* yhead,SchoolYear* ynow)
 		sYearCur = sYearCur->yearNext;
 	}
 	cout << "| Type in: \n";
-	cout << "| 1. To view the year after this year course \n";
-	cout << "| 2. To view the year before this year course \n";
+	cout << "| 1. To view the year after this year \n";
+	cout << "| 2. To view the year before this year \n| ";
 	string m;
 	getline(cin, m, '\n');
 	if (m == "1") {
 		if (ynow->yearNext) {
-			viewListClasses(yhead,ynow->yearNext);
+			viewListClasses2(yhead,ynow->yearNext);
 		}
 		else {
 			cout << "| The year after this year doesn't exist!\n";
@@ -39,12 +39,12 @@ void viewListClasses(SchoolYear* yhead,SchoolYear* ynow)
 		else {
 			SchoolYear* ycur = yhead;
 			if (ycur->yearNext == ynow) {
-				viewListClasses(yhead, ycur);
+				viewListClasses2(yhead, ycur);
 			}
 			while (ycur->yearNext != ynow) {
 				ycur = ycur->yearNext;
 				if (ycur->yearNext == ynow) {
-					viewListClasses(yhead, ycur);
+					viewListClasses2(yhead, ycur);
 				}
 			}
 		}
@@ -53,20 +53,71 @@ void viewListClasses(SchoolYear* yhead,SchoolYear* ynow)
 		return;
 	}
 }
+void viewListClasses1(SchoolYear* ynow)
+{
+	system("cls");
+	UIlite();
+	cout << "| List of classes in: " << ynow->name << endl;
+	SchoolYear* sYearCur = ynow;
+	while (sYearCur)
+	{
+		Class* classCur = sYearCur->classHead;
+		while (classCur)
+		{
+			cout << "|  " << classCur->name << endl;
+			classCur = classCur->classNext;
+		}
+		sYearCur = sYearCur->yearNext;
+	}
 
-void viewListCourses(Course* courseHead)
+}
+
+void viewListCourses2(Course* chead, Course* cnow)
 {
 	system("cls");
 	UIlite();
 	cout << "| List of courses: " << endl;
-	Course* courseCur = courseHead;
+	Course* courseCur = chead;
 	while (courseCur)
 	{
 		cout <<"|  " << courseCur->name << endl;
 		courseCur = courseCur->courseNext;
 	}
-}
+	cout << "| Type in: \n";
+	cout << "| 1. To view the course after this course \n";
+	cout << "| 2. To view the course before this course \n| ";
+	string m;
+	getline(cin, m, '\n');
+	if (m == "1") {
+		if (cnow->courseNext) {
+			viewListCourses2(chead, cnow->courseNext);
+		}
+		else {
+			cout << "| The year after this year doesn't exist!\n";
+		}
+	}
+	if (m == "2") {
 
+		if (chead == cnow) {
+			cout << "| The year before this year doesn't exist!\n";
+		}
+		else {
+			Course* cur = chead;
+			if (cur->courseNext == cnow) {
+				viewListCourses2(chead, cur);
+			}
+			while (cur->courseNext != cnow) {
+				cur = cur->courseNext;
+				if (cur->courseNext == cnow) {
+					viewListCourses2(chead, cur);
+				}
+			}
+		}
+	}
+	else {
+		return;
+	}
+}
 
 void viewStudentProfile(Student* stuCur)
 {

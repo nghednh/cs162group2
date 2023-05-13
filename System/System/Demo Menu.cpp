@@ -494,15 +494,13 @@ void menuStaff(string username, SchoolYear*& yearHead) {
             getline(cin, n, '\n');
             if (n == "1") {
                 viewListClasses(yearHead, yearNow);
+
             }
             else if (n == "2") {
-                viewListCourses(smCur.courseHead);
             }
-            else if (n == "3") {
-                viewListOfStudentInClass(yearHead->classHead);  
+            else if (n == "3") { 
             }
             else if (n == "4") {
-                viewListStudentsInCourse(smCur.courseHead);
             }
             backmenuStaff(username, yearHead, "n");
         }
