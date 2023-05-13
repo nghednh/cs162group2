@@ -1078,7 +1078,7 @@ void removeStuInCourseInFileCourse(StuInCourse* stuCur, Course* courseCur)
     string copyFile = "Information / " + courseCur->inSM->inSY->name + " / Semester " + to_string(courseCur->inSM->num + 1) + " / " + courseCur->ID + "_" + courseCur->className + "_temp.txt";
     ifstream in(inputFile);
     ofstream out(copyFile);
-  
+
     rename(copyFile.c_str(), inputFile.c_str());
 }
 
@@ -1603,7 +1603,7 @@ Course* findCourseByFileName(SchoolYear* yearCur, int sm, string fileName)
 }
 
 
-Course* findCourseByFileNameInAllCourse(SchoolYear* yearHead, Semester &smCur, string fileName)
+Course* findCourseByFileNameInAllCourse(SchoolYear* yearHead, Semester& smCur, string fileName)
 {
     string courseID = "", className = "";
     for (int i = 0; i < size(fileName); i++)
@@ -2156,8 +2156,8 @@ bool deleteCourse(Course*& courseCur, SchoolYear* yearNow, int smNow)
             }
             else courseHead = courseHead->courseNext;
         }
-    } 
-    
+    }
+
 }
 
 // delete trong linked list va delete trong file

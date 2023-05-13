@@ -279,7 +279,7 @@ bool deleteCourse(Course*& courseCur, SchoolYear* yearNow, int smNow);
 
 bool updateCourseInfoInFile(Course* courseCur, Course* courseTmp);
 StuInCourse* findStuInCourse(string ID, string name, Course* courseCur);
-// chuyen file tu import vao imformation;
+// chuyen file tu import vao imformation
 bool checkFileMarkExist(Course* courseCur);
 void passScoreboardFileFromImport(Course* courseCur);
 // truong hop nhap sai, delete Class trong yearCur do, chi duoc dung ham beginning schoolyear

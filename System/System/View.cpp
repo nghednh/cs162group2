@@ -2,7 +2,7 @@
 #include "login&menu.h"
 #include "Structure.h"
 #include "View.h"
-void viewListClasses2(SchoolYear* yhead,SchoolYear* ynow)
+void viewListClasses2(SchoolYear* yhead, SchoolYear* ynow)
 {
 	system("cls");
 	UIlite();
@@ -13,7 +13,7 @@ void viewListClasses2(SchoolYear* yhead,SchoolYear* ynow)
 		Class* classCur = sYearCur->classHead;
 		while (classCur)
 		{
-			cout <<"|  " <<classCur->name << endl;
+			cout << "|  " << classCur->name << endl;
 			classCur = classCur->classNext;
 		}
 		sYearCur = sYearCur->yearNext;
@@ -25,14 +25,14 @@ void viewListClasses2(SchoolYear* yhead,SchoolYear* ynow)
 	getline(cin, m, '\n');
 	if (m == "1") {
 		if (ynow->yearNext) {
-			viewListClasses2(yhead,ynow->yearNext);
+			viewListClasses2(yhead, ynow->yearNext);
 		}
 		else {
 			cout << "| The year after this year doesn't exist!\n";
 		}
 	}
 	if (m == "2") {
-		
+
 		if (yhead == ynow) {
 			cout << "| The year before this year doesn't exist!\n";
 		}
@@ -80,7 +80,7 @@ void viewListCourses2(Course* chead, Course* cnow)
 	Course* courseCur = chead;
 	while (courseCur)
 	{
-		cout <<"|  " << courseCur->name << endl;
+		cout << "|  " << courseCur->name << endl;
 		courseCur = courseCur->courseNext;
 	}
 	cout << "| Type in: \n";
@@ -115,7 +115,7 @@ void viewListCourses2(Course* chead, Course* cnow)
 		}
 	}
 	else {
-		return;
+		exit(0);
 	}
 }
 
@@ -141,7 +141,7 @@ void viewListStudentsInCourse(Course* courseCur)	// lop sinh hoat
 	while (stuCur)
 	{
 		//		viewStudentProfile(stuCur);
-		cout <<"|  " << stuCur->lastName << " " << stuCur->firstName << endl;
+		cout << "|  " << stuCur->lastName << " " << stuCur->firstName << endl;
 		stuCur = stuCur->stuNext;
 	}
 }
@@ -156,7 +156,7 @@ void viewListOfStudentInClass(Class* classCur)
 	while (stuCur)
 	{
 		//		viewStudentProfile(stuCur);
-		cout <<"|  " << stuCur->lastName << " " << stuCur->firstName << endl;
+		cout << "|  " << stuCur->lastName << " " << stuCur->firstName << endl;
 		stuCur = stuCur->stuNext;
 	}
 }

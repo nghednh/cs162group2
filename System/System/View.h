@@ -1,5 +1,5 @@
 #include "Structure.h"
-void viewListClasses1(SchoolYear*,SchoolYear*);
+void viewListClasses2(SchoolYear*,SchoolYear*);
 void viewListCourses(Course* courseHead);
 void viewListStudentsInCourse(Course* courseCur);
 void viewListOfStudentInClass(Class* classCur);
