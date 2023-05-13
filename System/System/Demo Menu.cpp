@@ -8,12 +8,6 @@ SchoolYear* yearNow;
 int smNow;
 
 using namespace std;
-bool checkStudentPassword(string username, string password) {
-    return true;
-} /*=> cho cai ham cua ba vo, tai tui k chay duoc nen de vay*/
-bool checkStaffPassword(string username, string password) {
-    return  true;
-}
 void UI() {
     cout << " ___________________________________________________________________________________ " << endl;
     cout << "|" << string(83, ' ') << "|" << endl;
@@ -40,7 +34,7 @@ bool echo(string source)
     if (check == "1") return true;
     else return false;
 }
-void login(int firstlog = 1) {
+void login(int firstlog, SchoolYear* yearHead) {
     system("cls");
     string rol;
     UI();
@@ -61,7 +55,7 @@ void login(int firstlog = 1) {
     cin >> rol;
     int role = stoi(rol);
     if (role != 3 && role != 2 && role != 1) {
-        login(0);
+        login(0, yearHead);
     }
     if (role == 3) {
         system("cls");
@@ -73,30 +67,32 @@ void login(int firstlog = 1) {
     system("cls");
     string username, password;
     UI();
+    cin.ignore(1, '\n');
     cout << "| Enter your username: ";
-    cin >> username;
+    getline(cin, username, '\n');
     cout << "| Enter your password: ";
-    cin >> password;
+    getline(cin, password, '\n');
     if (role == 1) {
-        if (checkStaffPassword(username, password)) {
+        if (checkStaffPasswordInFile(username, password)) {
             menuStaff(username, yearNow);
         }
         else {
             system("cls");
-            login(0);
+            login(0, yearHead);
         }
     }
     else if (role == 2) {
-        if (checkStudentPassword(username, password)) {
+        if (checkStudentPasswordInFile(username, password, yearHead)) {
             menuStudent(username);
         }
         else {
             // Wrong password, prompt user to try again
             system("cls");
-            login(0);
+            login(0, yearHead);
         }
     }
 }
+
 
 bool checkInputSchoolYear(string s)
 {
@@ -126,19 +122,19 @@ void menuStaff(string username, SchoolYear*& yearHead) {
     cout << "| 9.   Import scoreboard                                                            |" << '\n';
     cout << "| 10.  Update a student's result                                                    |" << '\n';
     cout << "| 11.  View                                                                         |" << '\n';
-    cout << "| 12.  Log out                                                                      |" << '\n';
-    cout << "| 13.  Exit                                                                         |\n";
-    cout << "| 14.  Add students to course                                                       |" << '\n';
-    cout << "| 15.  Export                                                                       |" << '\n';
+    cout << "| 12.  Add student to course                                                        |" << '\n';
+    cout << "| 13.  Export                                                                       |\n";
+    cout << "| 14.  Log out                                                                      |" << '\n';
+    cout << "| 15.  Exit                                                                         |" << '\n';
     cout << "| Your choice: ";
     getline(cin, chose, '\n');
 
     string s;
     while (true)
     {
-        if (chose == "12") {
+        if (chose == "14") {
             deleteAll(yearHead);
-            login();
+            login(0,yearHead);
         }
         else if (chose == "1") {
             system("cls");
@@ -537,7 +533,7 @@ void menuStaff(string username, SchoolYear*& yearHead) {
             }
             backmenuStaff(username, yearHead, "n");
         }
-        else if (chose == "14") {       // addstuincourse
+        else if (chose == "12") {       // addstuincourse
             system("cls");
             UIlite();
             findLastSYandSM(yearHead, yearNow, smNow);
@@ -589,11 +585,14 @@ void menuStaff(string username, SchoolYear*& yearHead) {
             }
             backmenuStaff(username, yearHead, "n");
         }
-        else if (chose == "15") {
+        else if (chose == "13") {
             system("cls");
             UIlite();
             string n;
-            cout << "| Type in 1 ...to ...2 to 3 to ...or other to return to menu\n| ";
+            cout << "| Type in: \n";
+            cout << "| 1. Export list of student in course\n";
+            cout << "| 2. Export list of student in course to enter mark\n";
+            cout << "| Or other key to return to menu!\n| ";
             getline(cin, n, '\n');
             if (n == "1") {
                 system("cls");
@@ -631,9 +630,8 @@ void menuStaff(string username, SchoolYear*& yearHead) {
                 else cout << "| Could not found course " << s << endl;
                 backmenuStaff(username, yearHead, "n");
             }
-            backmenuStaff(username, yearHead, "1");
         }
-        else if (chose == "13") {
+        else if (chose == "15") {
             deleteAll(yearHead);
             cout << "| See you later!";
             exit(0);
@@ -731,6 +729,6 @@ int main() {
     readInformation("Information", yearCur, yearHead);
     findLastSYandSM(yearHead, yearNow, smNow);
     Semester cur;
-    menuStaff("DanhNghe", yearHead);
+    menuStaff("nghe", yearHead);
     return 0;
 }
