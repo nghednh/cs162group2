@@ -1,4 +1,0 @@
-No	Student ID	First Name	Last Name	Gender	Date of birth	Social ID	Curriculum	Class
-1	19126022	Le	Kim	Female	20/10/2001	79218068	Software_Engineering	19VP
-2	19126070	Phan	Vien	Male	14/07/2001	79224591	Software_Engineering	19VP
-3	19126028	Tran	Nhu	Female	01/09/2001	79240116	Software_Engineering	19VP

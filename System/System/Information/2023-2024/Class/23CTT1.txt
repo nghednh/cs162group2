@@ -1,2 +1,0 @@
-No	Student ID	First Name	Last Name	Gender	Date of Birth	SocialID	Curriculim	Class
-1	h3	2u3f	h32uif	u2hf	u3/2e/2r	2u3fuh	h2uf	u3ihi

@@ -6,24 +6,19 @@
 #include <string>
 #include <sstream>
 #include <optional>
-
+#include "Structure.h"
 using namespace std;
 
-struct Date;
-struct Class;
-struct SchoolYear;
-struct StuInCourse;
-struct Student;
-struct Semester;
-struct Staff;
-
-
 struct Date {
-	string day;
-	string month;
-	string year;
+	string day = "";
+	string month = "";
+	string year = "";
 };
-
+struct StuInCourse;
+struct Class;
+struct Semester;
+struct SchoolYear;
+struct Course;
 struct Student {
 	//detail
 	string No;
@@ -45,8 +40,6 @@ struct Student {
 	Student* stuNext = NULL; //next of linkedlist
 	StuInCourse* pStuCourseHead = NULL;
 };
-
-struct Course;
 
 struct StuInCourse {
 	//detail 
@@ -70,19 +63,27 @@ struct Class {
 	int requiredCredits; //22TT1-165 tin chi de tot nghiep
 	int numStu = 50;
 	bool courseSes[6][4] = {}; //courses' sessions during days of week: empty session 0 and taken session 1
-	
+
 	//node
 	Student* stuHead = NULL;
 	Class* classNext = NULL;
 	SchoolYear* inSY = NULL;
 };
 
-/*
 struct Session {
 	Class* cur_class = NULL;
 	bool isEmpty = true;
 };
+<<<<<<< HEAD
 */
+=======
+
+struct Day {
+	string name; //Mon - ... - Sat
+	Session s[4];
+};
+
+>>>>>>> 1509760cc22cef013c779ef8e2a6ba208bafbef4
 struct Course {
 	//detail
 	string ID;
@@ -94,12 +95,17 @@ struct Course {
 	int cntStudent = 0;
 	int session;
 	string day;
+	Day dayB[6]; //Mon - ... - Sat
 
 	//node
 	StuInCourse* stuHead = NULL;
 	Course* courseNext = NULL;
 	Semester* inSM = NULL;
 };
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1509760cc22cef013c779ef8e2a6ba208bafbef4
 struct Semester {
 	//detail
 	Date start;

@@ -1,0 +1,3 @@
+No	Student ID	First Name	Last Name	Gender	Date of birth	Social ID	Curriculum	Class
+1	324234	fsdfsd	fsd	Male	02/11/2004	234234234	423	22CTT1
+2	sdfasdf	dfasdf	dfasdf	Male	09/04/3923	23rfd	ewwef	22CTT1

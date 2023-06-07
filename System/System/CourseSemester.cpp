@@ -3,9 +3,8 @@
 #include <iostream>
 #include "Structure.h"
 
-
 using namespace std;
-
+/*
 //Input a date (day-month-year)
 void inputADate(Date& d){
     cin >> d.day >> d.month >> d.year;
@@ -70,7 +69,7 @@ bool Staff::addAStudentInCourse(Course*& a, Student* newStu){
         StuInCourse* tmp = newStu->pStuCourseHead;
         while(tmp){
             tmp = tmp->pStuCourseNext;
-        }
+        }           // chay ra khoi linked list luon r :)))
         tmp = cur;
         tmp->pStuCourseNext = NULL;
     }
@@ -136,7 +135,7 @@ void viewAvailableSession(Class* c){
     cout << "A: Available session" << endl;
     cout << "T: Taken session";
     cout << endl;
-}
+}*/
 //Choose a session of a class that a course will take 
 /*void classAttendToCourse(Course* a, Class* c){
     //clear screen
@@ -163,7 +162,7 @@ void viewAvailableSession(Class* c){
     c->courseSes[d][ses] = true;
     a->dayB[d].s[ses].cur_class = c;
     a->dayB[d].s[ses].isEmpty = false;
-}*/
+}*//*
 //Add a course to a semester
 void addCourse(Semester& s, Course* a){
     inputACourse(a);
@@ -272,8 +271,9 @@ bool Staff::deleteACourse(Course*& courseHead, string courseID){
         delete tmp;
         return true;
     }
-}
+}*/
 //Student upgrade 14: check if a student is following a course or not
+/*
 StuInCourse* checkStuInCourse(Course* c, Student* stu){
     StuInCourse* curStu = c->stuHead;
     while(curStu){
@@ -283,6 +283,7 @@ StuInCourse* checkStuInCourse(Course* c, Student* stu){
     }
     return NULL;
 }
+*//*
 //View all the courses in a semester
 void InfoStu::viewCourses(Semester s){
     Course* cur = s.courseHead;
@@ -295,6 +296,7 @@ void InfoStu::viewCourses(Semester s){
         cur = cur->courseNext;
     }
 }
+
 //find the final GPA of a student
 float final_GPA(Semester sm, Student* s){
     float gpa = 0;
@@ -323,17 +325,9 @@ void viewOptions(){
     cout << "0. Stop updating and save" << endl;
 } 
 void viewCourseInfo(Course* course){
-    cout << course->name << " - " << course->ID << " by " << course->teacherName << endl;
-    /*Class* cur = course->classHead;
-    cout << "Current classes attend to this course: " << endl;
-    while(cur){
-        if(cur->classNext == NULL){
-            cout << cur->name;
-            break;
-        }
-        cout << cur->name << " - ";
-        cur = cur->classNext;
-    }*/
+    cout << "Course: " << course->name << endl;
+    cout << course->ID << "_" << course->className << endl;
+    cout << "Teacher: " << course->teacherName << endl;
     cout << "Number of credits: ";
     cout << course->numCredit << endl;
     cout << "Maximum students: ";
@@ -362,6 +356,43 @@ void viewCourseInfo(Course* course){
         }
     }
 }
+
+bool checkInfoCourse(Semester sm, string cID, string cName, string cCre, string cLec, string cDay, string cSes, string cMax, string cClass) {
+    bool check = true;
+    for (int i = 0; i < cMax.length(); i++) {
+        if (cMax[i] - 48 < 0 || cMax[i] - 48 > 9) {
+            cout << "Found a non-num character in maximum number of student which is an integer!" << endl;
+            check = false;
+        }
+    }
+    for (int i = 0; i < cCre.length(); i++) {
+        if (cMax[i] - 48 < 0 || cMax[i] - 48 > 9) {
+            cout << "Found a non-num character in number of credits which is an integer!" << endl;
+            check = false;
+        }
+    }
+    if (findCourseByIDAndClass(cID, cName, sm) != NULL) {
+        cout << "This course has been already created in this semester!" << endl;
+        check = false;
+    }
+    if (convertFloat(cMax) > 50) {
+        cout << "The maximum student in a course is 50!" << endl;
+        check = false;
+    }
+    if (cSes != "S1" || cSes != "S2" || cSes != "S3" || cSes != "S4") {
+        cout << "There are only four sessions S1 -> S4!" << endl;
+        check = false;
+    }
+    if (cDay != "MON" || cDay != "TUE" || cDay != "WED" || cDay != "THU" || cDay != "FRI" || cDay != "SAT") {
+        cout << "Default day has been found!" << endl;
+        check = false;
+    }
+    if (check == false) {
+        cout << "Oops! There are some mistakes in the course's data as decribed above! Please check again!" << endl;
+    }
+    return check;
+}
+
 void updateCourseInfo(Course* course){
     viewOptions();
     int check = 10;
@@ -408,6 +439,7 @@ void updateCourseInfo(Course* course){
                 cout << "New day and session (Day + num-th session): ";
                 cin >> course->day >> course->session;
                 break;
+<<<<<<< HEAD
             }
             case 7:
             {
@@ -415,6 +447,9 @@ void updateCourseInfo(Course* course){
                 cin >> course->className;
                 break;
             }
+=======
+            }*/
+>>>>>>> 1509760cc22cef013c779ef8e2a6ba208bafbef4
             /*case 7:
             {
                 string tmp;
@@ -443,7 +478,7 @@ void updateCourseInfo(Course* course){
                 cin >> new_day >> new_ses;
                 cur->courseSes[numPresentAsDay(new_day)][new_ses] = true;
                 break;
-            }*/
+            }*//*
         }
     }
 }
@@ -521,6 +556,7 @@ Course* findCourseByIDAndClass(Semester sm, string inputID, string nameClass){
     }
     return NULL;
 }
+<<<<<<< HEAD
 bool checkInfoCourse(Semester sm, string cID, string cName, string cCre, string cLec, string cDay, string cSes, string cMax, string cClass){
     bool check = true;
     for(int i = 0; i < cMax.length(); i++){
@@ -556,3 +592,7 @@ bool checkInfoCourse(Semester sm, string cID, string cName, string cCre, string 
     }
     return check;
 }
+=======
+
+*/
+>>>>>>> 1509760cc22cef013c779ef8e2a6ba208bafbef4
